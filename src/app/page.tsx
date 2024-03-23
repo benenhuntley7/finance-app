@@ -10,9 +10,9 @@ export default function Home() {
       </SignedIn>
       <SignedOut>
         <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-3 lg:text-left">
-          <Card title="Title" body="Body goes here" />
-          <Card title="Docs" body="Documentation" />
-          <Card title="Learn" body="Learn how to use the app" />
+          <Card title="Title" body="Body goes here" link="#" />
+          <Card title="Docs" body="Documentation" link="#" />
+          <Card title="Learn" body="Learn how to use the app. This link opens a new tab" link="#" target="_blank" />
         </div>
       </SignedOut>
     </main>

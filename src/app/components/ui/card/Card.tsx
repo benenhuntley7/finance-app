@@ -1,14 +1,18 @@
+import Link from "next/link";
+
 interface CardProps {
   title: string;
   body: string;
+  link: string;
+  target?: string;
 }
 
-export default function Card({ title, body }: CardProps) {
+export default function Card({ title, body, link, target = "" }: CardProps) {
   return (
-    <a
-      href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+    <Link
+      href={link}
       className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-400"
-      target="_blank"
+      target={target}
       rel="noopener noreferrer"
     >
       <h2 className={`mb-3 text-2xl font-semibold`}>
@@ -18,6 +22,6 @@ export default function Card({ title, body }: CardProps) {
         </span>
       </h2>
       <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>{body}</p>
-    </a>
+    </Link>
   );
 }
