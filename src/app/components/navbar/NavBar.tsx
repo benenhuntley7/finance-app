@@ -81,8 +81,8 @@ const Navbar: React.FC = () => {
 
         {menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
 
-        <button onClick={toggleMenu} className="sm:hidden">
-          {menuOpen ? <p className="h-7 w-7">X </p> : <p className="h-7 w-7">Menu</p>}
+        <button onClick={toggleMenu} className="sm:hidden pe-4">
+          {menuOpen ? <p className="h-7 w-7">Close </p> : <p className="h-7 w-7">Menu</p>}
         </button>
       </div>
     </header>
