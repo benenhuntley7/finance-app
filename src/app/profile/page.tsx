@@ -17,10 +17,10 @@ export default async function Profile() {
   }
 
   return (
-    <>
+    <main className="flex flex-col items-center justify-between p-10">
       <div>Profile Page</div>
       <div className="container mx-auto">
-        <div className="flex flex-col columns-1 w-96">
+        <div className="flex flex-col columns-1 gap-2">
           <input type="text" placeholder="First Name" className="input input-bordered w-full max-w-xs" value={name} />
           <input type="text" placeholder="Last Name" className="input input-bordered w-full max-w-xs" />
           <label className="input input-bordered flex items-center gap-2">
@@ -32,6 +32,6 @@ export default async function Profile() {
           </label>
         </div>
       </div>
-    </>
+    </main>
   );
 }
