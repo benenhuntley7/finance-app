@@ -13,7 +13,7 @@ const routes: { title: string; href: string }[] = [
 
 const signedInRoutes: { title: string; href: string }[] = [
   { title: "Dashboard", href: "#dashboard" },
-  { title: "Profile", href: "#profile" },
+  { title: "Profile", href: "/profile" },
 ];
 
 const Navbar: React.FC = () => {
