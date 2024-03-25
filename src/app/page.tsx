@@ -3,11 +3,14 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Card from "./components/ui/card/Card";
 import { getUser, getUsers } from "@/server/api/user";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function Home() {
   const { userId, sessionClaims } = auth();
 
-  if (userId) {
+  const user = userId ? await getUser(userId) : null;
+
+  /* if (userId) {
     const user = await getUser(userId);
 
     if (user) {
@@ -18,10 +21,22 @@ export default async function Home() {
     }
   } else {
     //redirect("/sign-in");
-  }
+  } */
 
+  console.log(user);
   return (
     <main className="flex flex-col items-center justify-between p-10">
+      {userId && !user && (
+        <div className="mb-5">
+          <span>
+            You need to set up your profile on the{" "}
+            <Link href="/profile" className="link">
+              Profile
+            </Link>{" "}
+            page.
+          </span>
+        </div>
+      )}
       <SignedIn>
         <Dashboard />
       </SignedIn>
