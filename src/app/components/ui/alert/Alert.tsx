@@ -1,10 +1,13 @@
+// Alert component.
+
 interface AlertProps {
-  title: string;
+  title?: string;
   body: React.ReactNode;
-  type: "success" | "warning" | "error";
+  type?: "success" | "warning" | "error";
 }
 
-export default function Alert({ title, body, type }: AlertProps) {
+// Title Optional, Type will default to success.
+export default function Alert({ title = "", body, type = "success" }: AlertProps) {
   // Define color sets for each type
   const colorSets = {
     success: { border: "border-green-500", text: "text-green-700", background: "bg-green-100" },
@@ -13,7 +16,7 @@ export default function Alert({ title, body, type }: AlertProps) {
   };
 
   // Select the appropriate color set based on the type prop
-  const colors = colorSets[type] || colorSets["success"]; // Default to 'success' if type is not recognized
+  const colors = colorSets[type];
 
   return (
     <div

@@ -24,23 +24,25 @@ export default async function Profile() {
 
     console.log(firstName, lastName, email);
 
-    if (user) {
-      const result = await db
-        .update(schema.user)
-        .set({ firstName: firstName, lastName: lastName, email: email })
-        .where(eq(schema.user.id, userId));
-    } else {
-      const result = await db
-        .insert(schema.user)
-        .values({ id: userId, firstName: firstName, lastName: lastName, email: email });
-    }
+    try {
+      if (user) {
+        await db
+          .update(schema.user)
+          .set({ firstName: firstName, lastName: lastName, email: email })
+          .where(eq(schema.user.id, userId));
+      } else {
+        await db.insert(schema.user).values({ id: userId, firstName: firstName, lastName: lastName, email: email });
+      }
 
-    revalidatePath("/profile");
+      revalidatePath("/profile");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <main className="flex flex-col items-center justify-between p-10">
-      <div>Profile Page</div>
+      <h1>Profile Page</h1>
       {!user ? (
         <Alert title="Welcome!" body="Complete your profile information below to get started..." type="success" />
       ) : (
@@ -85,7 +87,7 @@ export default async function Profile() {
               type="text"
               defaultValue={user?.email ? user.email : ""}
             />
-            <p className="text-gray-600 text-xs italic">Location information:</p>
+            <p className="text-gray-600 text-xs italic mt-10">Location information:</p>
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-2">
