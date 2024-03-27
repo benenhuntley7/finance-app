@@ -6,22 +6,8 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 
 export default async function Home() {
-  const { userId, sessionClaims } = auth();
-
-  const user = userId ? await getUser(userId) : null;
-
-  /* if (userId) {
-    const user = await getUser(userId);
-
-    if (user) {
-      // User is logged in and has profile information in the database.
-    } else {
-      // User has no profile information in the database. Re-direct to profile page.
-      redirect("/profile");
-    }
-  } else {
-    //redirect("/sign-in");
-  } */
+  const { userId } = auth(); // get userId from Clerk
+  const user = userId ? await getUser(userId) : null; // get user info from supabase using userId
 
   console.log(user);
   return (
