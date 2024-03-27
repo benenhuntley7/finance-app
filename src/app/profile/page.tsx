@@ -5,6 +5,7 @@ import * as schema from "../../server/db/schema";
 import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import Alert from "../components/ui/alert/Alert";
 
 export default async function Profile() {
   const { userId } = auth();
@@ -40,6 +41,11 @@ export default async function Profile() {
   return (
     <main className="flex flex-col items-center justify-between p-10">
       <div>Profile Page</div>
+      {!user ? (
+        <Alert title="Welcome!" body="Complete your profile information below to get started..." type="success" />
+      ) : (
+        <Alert title="Warning" body="Changing profile information might cause unwanted results..." type="warning" />
+      )}
       <form className="w-full max-w-lg mt-5" action={updateUser}>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
