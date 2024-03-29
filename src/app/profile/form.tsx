@@ -41,12 +41,14 @@ export default function Form({ user }: any) {
             id="email"
             name="email"
             type="text"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             defaultValue={user?.email ? user.email : ""}
+            required
           />
-          <p className="text-gray-600 text-xs italic mt-10">Location information:</p>
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-2">
+        <p className="text-gray-600 text-xs italic mt-10">Location information:</p>
         <div className="w-full md:w-2/3 px-3 mb-6 md:mb-0">
           <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="state">
             State

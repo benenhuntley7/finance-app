@@ -2,7 +2,7 @@ import { getUser } from "@/server/api/user";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import Alert from "../components/ui/alert/Alert";
-import Form from "./Form";
+import Form from "./form";
 
 export default async function Profile() {
   const { userId } = auth();
@@ -18,7 +18,7 @@ export default async function Profile() {
       {!user ? (
         <Alert title="Welcome!" body="Complete your profile information below to get started..." type="success" />
       ) : (
-        <Alert title="Warning" body="Changing profile information might cause unwanted results..." type="warning" />
+        <></>
       )}
       <Form user={user} />
     </main>
