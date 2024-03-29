@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { getUser } from "@/server/api/user";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { join } from "path";
 
 export const updateUser = async (formData: FormData) => {
   const { userId } = auth();
@@ -22,17 +23,33 @@ export const updateUser = async (formData: FormData) => {
   const lastName = formData.get("last-name") as string;
   const email = formData.get("email") as string;
   const income = parseFloat((formData.get("income") as string).replace(/[$,]/g, "")); // Remove non-numeric characters (dollar sign and commas) from income string
+  const income_frequency = parseInt(formData.get("income-frequency") as string);
+
+  console.log(income_frequency);
+  console.log(formData.get("income-frequency"));
+  console.log(formData);
 
   try {
     if (user) {
       await db
         .update(schema.user)
-        .set({ firstName: firstName, lastName: lastName, email: email, income: income })
+        .set({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          income: income,
+          income_frequency: income_frequency,
+        })
         .where(eq(schema.user.id, userId));
     } else {
-      await db
-        .insert(schema.user)
-        .values({ id: userId, firstName: firstName, lastName: lastName, email: email, income: income });
+      await db.insert(schema.user).values({
+        id: userId,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        income: income,
+        income_frequency: income_frequency,
+      });
     }
 
     revalidatePath("/profile");

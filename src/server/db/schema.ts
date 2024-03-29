@@ -11,4 +11,5 @@ export const user = pgTable("user", {
   createdAt: timestamp("created_at"),
   updatedAt: timestamp("updated_at"),
   income: integer("income"),
+  income_frequency: integer("income_frequency"),
 });

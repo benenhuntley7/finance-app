@@ -116,11 +116,19 @@ export default function Form({ user }: any) {
           />
         </div>
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="state">
+          <label
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="income-frequency"
+          >
             Frequency
           </label>
           <div className="relative">
-            <select className={inputClass} id="state" name="state">
+            <select
+              className={inputClass}
+              id="income-frequency"
+              name="income-frequency"
+              defaultValue={user?.income_frequency ? user.income_frequency : "1"}
+            >
               {frequencyOptions.map((option, index) => (
                 <option key={index} value={option.value}>
                   {option.label}
