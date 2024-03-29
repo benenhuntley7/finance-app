@@ -6,8 +6,8 @@ import { useFormStatus } from "react-dom";
 export default function Button() {
   const { pending } = useFormStatus();
   return (
-    <button id="submit" name="submit" className="btn btn-primary ">
-      {pending ? "Saving..." : "Save Profile"}
+    <button id="submit" name="submit" className="btn btn-primary btn-outline w-1/4">
+      {pending ? "Saving..." : "Save"}
     </button>
   );
 }
