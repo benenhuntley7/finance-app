@@ -133,6 +133,7 @@ export default function Form({ user }: any) {
         </div>
       </div>
       <div className="flex flex-wrap mt-4 mb-6">
+        {/* Reset the form to the last saved data */}
         <label className="btn btn-outline bg-neutral-200 me-5 w-1/4" onClick={() => ref.current?.reset()}>
           Reset
         </label>
