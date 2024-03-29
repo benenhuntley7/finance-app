@@ -79,8 +79,10 @@ export default function Form({ user }: any) {
           </label>
           <div className="relative">
             <select className={inputClass} id="state" name="state">
-              {stateOptions.map((state) => (
-                <option value={state}>{state}</option>
+              {stateOptions.map((state, index) => (
+                <option value={state} key={index}>
+                  {state}
+                </option>
               ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -97,9 +99,10 @@ export default function Form({ user }: any) {
           <input className={inputClass} id="postcode" name="postcode" type="text" />
         </div>
       </div>
+      <p className="text-gray-600 text-xs italic mt-10 pb-2">Finance Information:</p>
       <div className="flex flex-wrap -mx-3 mb-2">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="postcode">
+          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="income">
             Income
           </label>
           <input
@@ -118,8 +121,8 @@ export default function Form({ user }: any) {
           </label>
           <div className="relative">
             <select className={inputClass} id="state" name="state">
-              {frequencyOptions.map((option) => (
-                <option key={option.value} value={option.value}>
+              {frequencyOptions.map((option, index) => (
+                <option key={index} value={option.value}>
                   {option.label}
                 </option>
               ))}
