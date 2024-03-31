@@ -34,8 +34,6 @@ export const getShareList = async (searchString: string) => {
       .select()
       .from(schema.shareSearchHistory)
       .where(sql`symbol LIKE ${searchString2}`);
-
-    console.log(result);
     return result;
   } catch (error) {
     console.error(error);

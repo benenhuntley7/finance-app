@@ -34,6 +34,7 @@ export default function Shares() {
 
   const handleOptionClick = async (symbol: string) => {
     setSearchResults(null);
+    setShare(null);
     setButtonText("Searching...");
 
     const symbolInput = document.getElementById("share-id") as HTMLInputElement;
@@ -101,7 +102,7 @@ export default function Shares() {
       {share && (
         <div className="flex justify-start w-3/5">
           <p>
-            {share.symbol}: {share.longName} - ${share.regularMarketPrice}
+            {share.symbol.toUpperCase()}: {share.longName} - ${share.regularMarketPrice}
           </p>
         </div>
       )}
