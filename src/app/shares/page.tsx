@@ -73,7 +73,7 @@ export default function Shares() {
       <h1>Shares</h1>
       <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
         <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full md:w-2/3">
+          <div className="w-2/3">
             <input
               className={inputClass}
               type="text"
@@ -85,7 +85,7 @@ export default function Shares() {
               onChange={searchShareList}
             />
           </div>
-          <div className="w-full md:w-1/3 px-3">
+          <div className="w-1/3 px-3">
             <button className="btn btn-outline btn-primary">{buttonText}</button>
           </div>
           {searchResults && searchResults.length > 0 && (
