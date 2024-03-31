@@ -89,7 +89,7 @@ export default function Shares() {
             <button className="btn btn-outline btn-primary">{buttonText}</button>
           </div>
           {searchResults && searchResults.length > 0 && (
-            <p id="share-options" className="z-50 border border-neutral-500 px-5">
+            <p id="share-options" className="z-50 border border-neutral-500 px-5 text-xs md:text-base">
               {searchResults.map((result, index) => (
                 <option key={index} value={result.symbol || ""} onClick={() => handleOptionClick(result.symbol || "")}>
                   {result.symbol}: {result.longName}
