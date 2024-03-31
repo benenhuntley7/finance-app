@@ -94,7 +94,7 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
   const router = useRouter();
 
   return (
-    <nav className="absolute right-0 top-16 flex h-[calc(100vh-70px)] w-1/3 flex-col z-50 bg-neutral-200 border-x border-b border-neutral-400">
+    <nav className="absolute right-0 top-16 flex h-[calc(100vh-70px)] w-2/5 flex-col z-50 bg-neutral-200 border-x border-b border-neutral-400">
       <div className="bg-background  flex w-full grow flex-col gap-1 px-4 pb-2 sm:hidden">
         <SignedOut>
           {routes.map((route, index) => (
@@ -121,21 +121,23 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
               key={index}
               href={route.href}
               onClick={toggleMenu}
-              className={`hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center text-sm transition-colors sm:w-auto`}
+              className={`hover:text-accent-foreground text-muted-foreground inline-flex h-11 w-full items-center justify-end text-sm transition-colors sm:w-auto`}
             >
               {route.title}
             </Link>
           ))}
-          <Link
-            href="#"
-            onClick={() => {
-              signOut(() => router.push("/"));
-              toggleMenu();
-            }}
-            className={`hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center text-sm transition-colors sm:w-auto`}
-          >
-            Sign Out
-          </Link>
+          <div className="bg-background absolute inset-x-0 bottom-0 w-100">
+            <Link
+              href="#"
+              onClick={() => {
+                signOut(() => router.push("/"));
+                toggleMenu();
+              }}
+              className={`hover:text-accent-foreground  inline-flex h-10 w-full items-center justify-center text-sm tracking-widest text-red-500 font-medium transition-colors sm:w-auto`}
+            >
+              Sign Out
+            </Link>
+          </div>
         </SignedIn>
       </div>
       <div className="bg-background/60 h-screen w-full sm:hidden" />
