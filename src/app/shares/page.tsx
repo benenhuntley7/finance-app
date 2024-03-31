@@ -32,11 +32,20 @@ export default function Shares() {
     }
   };
 
-  const handleOptionClick = (symbol: string) => {
+  const handleOptionClick = async (symbol: string) => {
+    setSearchResults(null);
+    setButtonText("Searching...");
+
     const symbolInput = document.getElementById("share-id") as HTMLInputElement;
     const symbolWithoutPeriod = symbol.substring(0, symbol.indexOf("."));
     symbolInput.value = symbolWithoutPeriod;
-    setSearchResults(null);
+    const symbol2 = symbolInput.value + ".AX";
+
+    const result = await getShare(symbol2);
+
+    if (result) setShare(result);
+
+    setButtonText("Search");
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
