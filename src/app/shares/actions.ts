@@ -28,14 +28,14 @@ export const getShare = async (shareId: string) => {
 };
 
 export const getShareList = async (searchString: string) => {
-  const searchString2 = `%${searchString}%.AX`;
-
+  const searchString2 = `${searchString.toUpperCase()}%.AX`;
   try {
     const result = await db
       .select()
       .from(schema.shareSearchHistory)
       .where(sql`symbol LIKE ${searchString2}`);
 
+    console.log(result);
     return result;
   } catch (error) {
     console.error(error);
