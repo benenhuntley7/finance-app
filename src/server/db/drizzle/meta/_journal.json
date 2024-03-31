@@ -15,6 +15,13 @@
       "when": 1711266430723,
       "tag": "0001_third_glorian",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1711868181833,
+      "tag": "0002_wide_onslaught",
+      "breakpoints": true
     }
   ]
 }

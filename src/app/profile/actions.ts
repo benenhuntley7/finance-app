@@ -7,7 +7,6 @@ import { revalidatePath } from "next/cache";
 import { getUser } from "@/server/api/user";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { join } from "path";
 
 export const updateUser = async (formData: FormData) => {
   const { userId } = auth();

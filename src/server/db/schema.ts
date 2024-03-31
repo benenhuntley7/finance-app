@@ -13,3 +13,9 @@ export const user = pgTable("user", {
   income: integer("income"),
   income_frequency: integer("income_frequency"),
 });
+
+export const shareSearchHistory = pgTable("share_search_history", {
+  row_id: serial("row_id").primaryKey(),
+  symbol: text("symbol").unique(),
+  longName: text("long_name"),
+});
