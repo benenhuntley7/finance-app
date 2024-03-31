@@ -100,10 +100,11 @@ export default function Shares() {
         </div>
       </form>
       {share && (
-        <div className="flex justify-start w-3/5">
-          <p>
+        <div className="flex justify-start w-full md:w-4/5 text-sm md:text-base items-center">
+          <p className="">
             {share.symbol.toUpperCase()}: {share.longName} - ${share.regularMarketPrice}
           </p>
+          <label className="btn btn-outline btn-xs md:btn-md ms-4">Add</label>
         </div>
       )}
     </main>
