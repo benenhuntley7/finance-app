@@ -99,10 +99,10 @@ export default function Shares() {
         </div>
       </form>
       {share && (
-        <div>
-          <p>Symbol: {share.symbol}</p>
-          <p>Share Name: {share.longName}</p>
-          <p>Current Price: ${share.regularMarketPrice}</p>
+        <div className="flex">
+          <p>
+            {share.symbol}: {share.longName} - ${share.regularMarketPrice}
+          </p>
         </div>
       )}
     </main>
