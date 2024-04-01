@@ -72,7 +72,7 @@ export default function Shares() {
     <main className="flex flex-col items-center justify-between p-10">
       <h1>Shares</h1>
       <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
-        <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="flex flex-wrap mb-6">
           <div className="w-2/3">
             <input
               className={inputClass}
@@ -85,26 +85,35 @@ export default function Shares() {
               onChange={searchShareList}
             />
           </div>
-          <div className="w-1/3 px-3">
-            <button className="btn btn-outline btn-primary">{buttonText}</button>
+          <div className="w-1/3">
+            <div className="ms-4">
+              <button className="btn btn-outline btn-primary min-w-full">{buttonText}</button>
+            </div>
           </div>
           {searchResults && searchResults.length > 0 && (
-            <p id="share-options" className="z-50 border border-neutral-500 px-5 text-xs md:text-base">
-              {searchResults.map((result, index) => (
-                <option key={index} value={result.symbol || ""} onClick={() => handleOptionClick(result.symbol || "")}>
-                  {result.symbol}: {result.longName}
-                </option>
-              ))}
-            </p>
+            <div className="min-w-full max-w-full md:max-w-lg cursor-pointer">
+              <p id="share-options" className="z-50 border border-neutral-500 mx-1 text-sm md:text-base truncate">
+                {searchResults.slice(0, 10).map((result, index) => (
+                  <option
+                    key={index}
+                    value={result.symbol || ""}
+                    onClick={() => handleOptionClick(result.symbol || "")}
+                    className=" hover:bg-neutral-300"
+                  >
+                    {result.symbol}: {result.longName}
+                  </option>
+                ))}
+              </p>
+            </div>
           )}
         </div>
       </form>
       {share && (
-        <div className="flex justify-start w-full md:w-4/5 text-sm md:text-base items-center">
+        <div className="flex justify-between  max-w-lg w-full text-sm md:text-base items-center">
           <p className="">
             {share.symbol.toUpperCase()}: {share.longName} - ${share.regularMarketPrice}
           </p>
-          <label className="btn btn-outline btn-xs md:btn-md ms-4">Add</label>
+          <label className="btn btn-outline btn-sm md:btn-md ms-4">Add</label>
         </div>
       )}
     </main>

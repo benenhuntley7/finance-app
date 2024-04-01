@@ -3,7 +3,7 @@
 import { getQuote } from "@/server/api/yahooFinance";
 import { db } from "@/server/db";
 import * as schema from "@/server/db/schema";
-import { eq, like, sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 // Define the type for the getShare function
 export const getShare = async (shareId: string) => {
@@ -18,7 +18,17 @@ export const getShare = async (shareId: string) => {
         .where(eq(schema.shareSearchHistory.symbol, shareId.toUpperCase()));
 
       if (!searchHistoryResult.length) {
-        await db.insert(schema.shareSearchHistory).values({ symbol: shareId.toUpperCase(), longName: result.longName });
+        // if the share has a value and a description then add it to the searchHistory database table.
+        if (
+          result.regularMarketPrice &&
+          result.regularMarketPrice > 0 &&
+          result.longName &&
+          result.longName.length > 0
+        ) {
+          await db
+            .insert(schema.shareSearchHistory)
+            .values({ symbol: shareId.toUpperCase(), longName: result.longName });
+        }
       }
     }
     return result;
