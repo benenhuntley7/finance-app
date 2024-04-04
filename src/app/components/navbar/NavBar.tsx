@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className=" sticky top-0 z-50 bg-white ">
+    <header className=" sticky top-0 z-50 bg-gray-200  ">
       <div className="flex h-16 items-center justify-between px-6 lg:px-14 border-b border-neutral-400">
         <div className="flex items-center">
           <Link href={"/"} className="shrink-0">
@@ -95,7 +95,7 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
   const router = useRouter();
 
   return (
-    <nav className="absolute right-0 top-16 flex h-[calc(100vh-70px)] w-2/5 flex-col z-50 bg-neutral-200 border-x border-b border-neutral-400">
+    <nav className="absolute right-0 top-16 flex h-[calc(100vh-70px)] w-2/5 flex-col z-50 bg-white border-x border-b border-neutral-400">
       <div className="bg-background  flex w-full grow flex-col gap-1 px-4 pb-2 sm:hidden">
         <SignedOut>
           {routes.map((route, index) => (

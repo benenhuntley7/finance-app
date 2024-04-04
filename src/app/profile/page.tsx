@@ -13,7 +13,7 @@ export default async function Profile() {
   const user = await getUser(userId);
 
   return (
-    <main className="flex flex-col items-center justify-between p-10">
+    <main className="bg-gray-200 min-h-screen  flex flex-col items-left  p-10 sm:items-center  lg:w-1/4 ">
       <h1>Profile Page</h1>
       {!user ? (
         <Alert title="Welcome!" body="Complete your profile information below to get started..." type="success" />
