@@ -28,7 +28,7 @@ export default function Form({ user }: any) {
     "appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white";
 
   return (
-    <form className="w-full max-w-lg mt-5" ref={ref} action={async (formData) => updateUser(formData)}>
+    <form className="w-full max-w-md mt-5" ref={ref} action={async (formData) => updateUser(formData)}>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="first-name">
