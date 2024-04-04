@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getShare, getShareList } from "./actions";
 
 interface SharePrice {
@@ -19,32 +19,18 @@ export default function Shares() {
   const [share, setShare] = useState<SharePrice | null>(null);
   const [buttonText, setButtonText] = useState("Search");
   const [searchResults, setSearchResults] = useState<ShareSearchResults[] | null>(null);
+  const [searchString, setSearchString] = useState("");
 
-  const searchShareList = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchStringElement = document.getElementById("share-id") as HTMLInputElement;
-    const searchString = searchStringElement.value;
-
-    if (searchString.length) {
-      const shareList = await getShareList(searchString);
-      setSearchResults(shareList);
-    } else {
-      setSearchResults(null);
-    }
-  };
-
-  const handleOptionClick = async (symbol: string) => {
-    setSearchResults(null);
+  const handleClick = async (symbol: string) => {
     setShare(null);
+    setSearchResults(null);
     setButtonText("Searching...");
+    const result = await getShare(symbol);
 
-    const symbolInput = document.getElementById("share-id") as HTMLInputElement;
-    const symbolWithoutPeriod = symbol.substring(0, symbol.indexOf("."));
-    symbolInput.value = symbolWithoutPeriod;
-    const symbol2 = symbolInput.value + ".AX";
-
-    const result = await getShare(symbol2);
-
-    if (result) setShare(result);
+    if (result) {
+      setShare(result);
+      setSearchString("");
+    }
 
     setButtonText("Search");
   };
@@ -52,24 +38,30 @@ export default function Shares() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setShare(null);
-    setButtonText("Searching...");
-
-    const symbolInput = document.getElementById("share-id") as HTMLInputElement;
-    const symbol = symbolInput.value + ".AX";
-
-    const result = await getShare(symbol);
-
-    if (result) setShare(result);
-
-    setButtonText("Search");
+    handleClick(searchString + ".AX");
   };
 
   const inputClass =
     "appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white";
 
+  // useEffect with 300ms timeout to prevent rapid searches due to typing into input box
+  useEffect(() => {
+    const fetchData = async () => {
+      if (searchString.length) {
+        const shareList = await getShareList(searchString);
+        setSearchResults(shareList);
+      } else {
+        setSearchResults(null);
+      }
+    };
+
+    const debounceTimer = setTimeout(fetchData, 300); // Debounce time in milliseconds
+
+    return () => clearTimeout(debounceTimer);
+  }, [searchString]);
+
   return (
-    <main className="flex flex-col items-center justify-between p-10">
+    <main className="flex flex-col items-center justify-between p-10 relative">
       <h1>Shares</h1>
       <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
         <div className="flex flex-wrap mb-6">
@@ -77,12 +69,15 @@ export default function Shares() {
             <input
               className={inputClass}
               type="text"
-              id="share-id"
-              name="share-id"
+              id="share-search"
+              name="share-search"
+              value={searchString}
               style={{ textTransform: "uppercase" }}
               pattern="[A-Za-z0-9]{1,4}"
               maxLength={4}
-              onChange={searchShareList}
+              onChange={(e) => {
+                setSearchString(e.target.value);
+              }}
             />
           </div>
           <div className="w-1/3">
@@ -91,13 +86,13 @@ export default function Shares() {
             </div>
           </div>
           {searchResults && searchResults.length > 0 && (
-            <div className="min-w-full max-w-full md:max-w-lg cursor-pointer">
-              <p id="share-options" className="z-50 border border-neutral-500 mx-1 text-sm md:text-base truncate">
+            <div className="absolute top-36 max-w-full md:max-w-lg cursor-pointer bg-white z-50">
+              <p id="share-options" className="z-50 border border-neutral-500 text-sm md:text-base truncate">
                 {searchResults.slice(0, 10).map((result, index) => (
                   <option
                     key={index}
                     value={result.symbol || ""}
-                    onClick={() => handleOptionClick(result.symbol || "")}
+                    onClick={() => handleClick(result.symbol || "")}
                     className=" hover:bg-neutral-300"
                   >
                     {result.symbol}: {result.longName}
