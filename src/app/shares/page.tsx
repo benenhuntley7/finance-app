@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { getShare, getShareList } from "./actions";
+import { getShareHistory } from "@/server/api/yahooFinance";
+import yahooFinance from "yahoo-finance2";
+import { NewLineChart, ShareHistoryProps } from "../components/LineChartTest";
 
 interface SharePrice {
   symbol: string;
@@ -20,6 +23,7 @@ export default function Shares() {
   const [buttonText, setButtonText] = useState("Search");
   const [searchResults, setSearchResults] = useState<ShareSearchResults[] | null>(null);
   const [searchString, setSearchString] = useState("");
+  const [shareHistory, setShareHistory] = useState<ShareHistoryProps[] | null>(null);
 
   const handleClick = async (symbol: string) => {
     setShare(null);
@@ -29,6 +33,11 @@ export default function Shares() {
 
     if (result) {
       setShare(result);
+
+      const history = await getShareHistory(symbol, "2021-02-01");
+
+      if (history) setShareHistory(history);
+
       setSearchString("");
     }
 
@@ -104,12 +113,17 @@ export default function Shares() {
         </div>
       </form>
       {share && (
-        <div className="flex justify-between  max-w-lg w-full text-sm md:text-base items-center">
-          <p className="">
-            {share.symbol.toUpperCase()}: {share.longName} - ${share.regularMarketPrice}
-          </p>
-          <label className="btn btn-outline btn-sm md:btn-md ms-4">Add</label>
-        </div>
+        <>
+          <div className="flex justify-between  max-w-lg w-full text-sm md:text-base items-center">
+            <p className="">
+              {share.symbol.toUpperCase()}: {share.longName} - ${share.regularMarketPrice}
+            </p>
+            <label className="btn btn-outline btn-sm md:btn-md ms-4">Add</label>
+          </div>
+          <div className="w-full md:w-1/2 h-48 md:h-72 mt-5">
+            <NewLineChart data={shareHistory || []} />
+          </div>
+        </>
       )}
     </main>
   );

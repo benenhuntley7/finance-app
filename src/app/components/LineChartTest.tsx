@@ -15,48 +15,41 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
+const data2 = [
   {
     name: "Page A",
-    uv: 4000,
+    uv: 6000,
     pv: 2400,
-    amt: 2400,
   },
   {
     name: "Page B",
     uv: 3000,
     pv: 1398,
-    amt: 2210,
   },
   {
     name: "Page C",
     uv: 2000,
     pv: 9800,
-    amt: 2290,
   },
   {
     name: "Page D",
     uv: 2780,
     pv: 3908,
-    amt: 2000,
   },
   {
     name: "Page E",
     uv: 1890,
     pv: 4800,
-    amt: 2181,
   },
   {
     name: "Page F",
     uv: 2390,
     pv: 3800,
-    amt: 2500,
   },
   {
     name: "Page G",
     uv: 3490,
     pv: 4300,
-    amt: 2100,
   },
 ];
 
@@ -64,7 +57,7 @@ export class NewBarChart extends PureComponent {
   render() {
     return (
       <ResponsiveContainer width={350} height={250}>
-        <BarChart width={350} height={250} data={data}>
+        <BarChart width={350} height={250} data={data2}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" fontSize={12} />
           <YAxis fontSize={12} />
@@ -78,18 +71,43 @@ export class NewBarChart extends PureComponent {
   }
 }
 
-export class NewLineChart extends PureComponent {
+export interface ShareHistoryProps {
+  date: string;
+  high: number | null;
+  low: number | null;
+}
+
+export class NewLineChart extends PureComponent<{ data: ShareHistoryProps[] }> {
   render() {
+    const { data } = this.props;
+
+    // Initialize variables to store lowest low and highest high
+    let lowestLow = Infinity;
+    let highestHigh = -Infinity;
+
+    // Iterate through the data to find the lowest low and highest high
+    data.forEach((item) => {
+      if (item.low! < lowestLow) {
+        lowestLow = item.low!;
+      }
+      if (item.high! > highestHigh) {
+        highestHigh = item.high!;
+      }
+    });
+
+    lowestLow = lowestLow - lowestLow * 0.05;
+    highestHigh *= 1.05;
+
     return (
-      <ResponsiveContainer width={350} height={250}>
+      <ResponsiveContainer width="100%" height="100%">
         <LineChart width={350} height={250} data={data}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" fontSize={12} />
-          <YAxis fontSize={12} />
+          <XAxis dataKey="date" fontSize={12} />
+          <YAxis fontSize={12} domain={[lowestLow, highestHigh]} />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="pv" stroke="#000000" activeDot={{ r: 6 }} />
-          <Line type="monotone" dataKey="uv" stroke="#aaaaaa" />
+          <Line type="monotone" dataKey="high" stroke="#000000" activeDot={{ r: 4 }} dot={{ r: 2 }} />
+          <Line type="monotone" dataKey="low" stroke="#aaaaaa" activeDot={{ r: 4 }} dot={{ r: 2 }} />
         </LineChart>
       </ResponsiveContainer>
     );

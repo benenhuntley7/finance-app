@@ -1,3 +1,5 @@
+"use server";
+
 import yahooFinance from "yahoo-finance2";
 
 type QuoteResult = {
@@ -39,18 +41,33 @@ export async function getQuote(symbol: string) {
   }
 }
 
-interface SymbolAndPurchasedAt {
-  symbol: string;
-  purchasedAt: Date; // Adjust the type based on the actual type of purchasedAt
-}
+export async function getShareHistory(symbol: string, purchasedAt: string) {
+  try {
+    const queryOptions = { period1: "2021-02-01" };
 
-export async function getHistory(inputs: SymbolAndPurchasedAt[]) {
-  const results = [];
+    const result = await yahooFinance.chart(symbol, queryOptions);
 
-  for (const { symbol, purchasedAt } of inputs) {
-    const history = await yahooFinance.chart(symbol, { period1: purchasedAt });
-    results.push(history);
+    const totalResults = result.quotes.length;
+    const desiredResultCount = 50;
+    const step = Math.max(1, Math.floor(totalResults / desiredResultCount));
+
+    const formattedData = [];
+    for (let i = 0; i < totalResults; i += step) {
+      const item = result.quotes[i];
+      const date = new Date(item.date);
+      const formattedDate = date.toLocaleString("en-US", { month: "long", day: "numeric", year: "numeric" });
+
+      formattedData.push({
+        date: formattedDate,
+        high: parseFloat(item.high!.toFixed(2)),
+        low: parseFloat(item.low!.toFixed(2)),
+      });
+    }
+
+    return formattedData;
+  } catch (error) {
+    console.error(error);
+    // You might want to handle error cases here, depending on your application requirements
+    throw error;
   }
-
-  return results;
 }
