@@ -95,8 +95,8 @@ export class NewLineChart extends PureComponent<{ data: ShareHistoryProps[] }> {
       }
     });
 
-    lowestLow = lowestLow - lowestLow * 0.05;
-    highestHigh *= 1.05;
+    lowestLow = parseFloat((lowestLow - lowestLow * 0.05).toFixed(2));
+    highestHigh = parseFloat((highestHigh * 1.05).toFixed(2));
 
     return (
       <ResponsiveContainer width="100%" height="100%">
