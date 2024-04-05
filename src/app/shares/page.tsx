@@ -103,7 +103,7 @@ export default function Shares() {
                     onClick={() => handleClick(result.symbol || "")}
                     className=" hover:bg-neutral-300"
                   >
-                    {result.symbol}: {result.longName}
+                    {result.symbol!.split(".")[0].toUpperCase()}: {result.longName}
                   </option>
                 ))}
               </p>
@@ -115,7 +115,7 @@ export default function Shares() {
         <>
           <div className="flex justify-between  max-w-lg w-full text-sm md:text-base items-center">
             <p className="">
-              {share.symbol.toUpperCase()}: {share.longName} - ${share.regularMarketPrice}
+              {share.symbol.split(".")[0].toUpperCase()}: {share.longName} - ${share.regularMarketPrice}
             </p>
             <label className="btn btn-outline btn-sm md:btn-md ms-4">Add</label>
           </div>
