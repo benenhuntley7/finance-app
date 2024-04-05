@@ -34,7 +34,7 @@ export default function Shares() {
     if (result) {
       setShare(result);
 
-      const history = await getShareHistory(symbol, "2021-02-01");
+      const history = await getShareHistory(symbol);
 
       if (history) setShareHistory(history);
 

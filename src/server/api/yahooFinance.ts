@@ -41,9 +41,25 @@ export async function getQuote(symbol: string) {
   }
 }
 
-export async function getShareHistory(symbol: string, purchasedAt: string) {
+export async function getShareHistory(symbol: string, purchasedAt?: string) {
   try {
-    const queryOptions = { period1: "2021-02-01" };
+    const currentDate = new Date();
+
+    let purchasedDate;
+    if (purchasedAt !== undefined) {
+      purchasedDate = new Date(purchasedAt);
+    } else {
+      purchasedDate = currentDate;
+    }
+
+    // Set period1 to one year before purchasedAt date
+    const period1Date = new Date(purchasedDate.getFullYear() - 1, purchasedDate.getMonth(), purchasedDate.getDate());
+    console.log("Period1 Date:", period1Date);
+
+    const formattedPeriod1 = `${period1Date.getFullYear()}-${(period1Date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${period1Date.getDate().toString().padStart(2, "0")}`;
+    const queryOptions = { period1: formattedPeriod1 };
 
     const result = await yahooFinance.chart(symbol, queryOptions);
 
