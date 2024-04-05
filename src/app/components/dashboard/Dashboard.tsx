@@ -7,9 +7,6 @@ function Dashboard() {
         <div>
           <NewBarChart />
         </div>
-        <div>
-          <NewLineChart />
-        </div>
       </div>
     </>
   );
