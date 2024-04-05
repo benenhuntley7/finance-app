@@ -49,7 +49,13 @@ export async function getShareHistory(symbol: string, purchasedAt: string) {
 
     const totalResults = result.quotes.length;
     const desiredResultCount = 50;
-    const step = Math.max(1, Math.floor(totalResults / desiredResultCount));
+    let step;
+
+    if (totalResults <= desiredResultCount) {
+      step = 1;
+    } else {
+      step = Math.floor(totalResults / desiredResultCount);
+    }
 
     const formattedData = [];
     for (let i = 0; i < totalResults; i += step) {
