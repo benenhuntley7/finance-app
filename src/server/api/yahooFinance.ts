@@ -43,53 +43,55 @@ export async function getQuote(symbol: string) {
 
 export async function getShareHistory(symbol: string, purchasedAt?: string) {
   try {
-    const currentDate = new Date();
+    const purchasedDate = calculateStartDate(purchasedAt);
+    const period1 = formatDate(purchasedDate);
 
-    let purchasedDate;
-    if (purchasedAt !== undefined) {
-      purchasedDate = new Date(purchasedAt);
-    } else {
-      purchasedDate = currentDate;
-    }
-
-    // Set period1 to one year before purchasedAt date
-    const period1Date = new Date(purchasedDate.getFullYear() - 1, purchasedDate.getMonth(), purchasedDate.getDate());
-    console.log("Period1 Date:", period1Date);
-
-    const formattedPeriod1 = `${period1Date.getFullYear()}-${(period1Date.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}-${period1Date.getDate().toString().padStart(2, "0")}`;
-    const queryOptions = { period1: formattedPeriod1 };
+    const queryOptions = { period1 };
 
     const result = await yahooFinance.chart(symbol, queryOptions);
 
-    const totalResults = result.quotes.length;
-    const desiredResultCount = 50;
-    let step;
+    const formattedPriceHistory = formatPriceHistory(result.quotes);
 
-    if (totalResults <= desiredResultCount) {
-      step = 1;
-    } else {
-      step = Math.floor(totalResults / desiredResultCount);
-    }
-
-    const formattedData = [];
-    for (let i = 0; i < totalResults; i += step) {
-      const item = result.quotes[i];
-      const date = new Date(item.date);
-      const formattedDate = date.toLocaleString("en-US", { month: "long", day: "numeric", year: "numeric" });
-
-      formattedData.push({
-        date: formattedDate,
-        high: parseFloat(item.high!.toFixed(2)),
-        low: parseFloat(item.low!.toFixed(2)),
-      });
-    }
-
-    return formattedData;
+    return { priceHistory: formattedPriceHistory };
   } catch (error) {
     console.error(error);
-    // You might want to handle error cases here, depending on your application requirements
     throw error;
   }
+}
+
+function calculateStartDate(purchasedAt?: string): Date {
+  const currentDate = new Date();
+  if (purchasedAt) {
+    return new Date(purchasedAt);
+  } else {
+    return new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), currentDate.getDate());
+  }
+}
+
+function formatDate(date: Date): string {
+  return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date
+    .getDate()
+    .toString()
+    .padStart(2, "0")}`;
+}
+
+function formatPriceHistory(quotes: any[]): any[] {
+  const totalResults = quotes.length;
+  const desiredResultCount = 52;
+  const step = totalResults <= desiredResultCount ? 1 : Math.floor(totalResults / desiredResultCount);
+  const formattedPriceHistory = [];
+
+  for (let i = 0; i < totalResults; i += step) {
+    const item = quotes[i];
+    const date = new Date(item.date);
+    const formattedDate = date.toLocaleString("en-US", { month: "long", day: "numeric", year: "numeric" });
+
+    formattedPriceHistory.push({
+      date: formattedDate,
+      high: parseFloat(item.high!.toFixed(2)),
+      low: parseFloat(item.low!.toFixed(2)),
+    });
+  }
+
+  return formattedPriceHistory;
 }

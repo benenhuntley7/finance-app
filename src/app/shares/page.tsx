@@ -33,9 +33,9 @@ export default function Shares() {
     if (result) {
       setShare(result);
 
-      const history = await getShareHistory(symbol);
+      const { priceHistory } = await getShareHistory(symbol);
 
-      if (history) setShareHistory(history);
+      if (history) setShareHistory(priceHistory);
 
       setSearchString("");
     }
