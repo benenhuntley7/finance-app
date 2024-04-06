@@ -74,48 +74,50 @@ export default function Shares() {
   }, [searchString]);
 
   return (
-    <main className="flex flex-col items-center justify-between p-3 relative">
-      <h1 className="text-neutral-800 font-semibold text-lg">Share Search</h1>
-      <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
-        <div className="flex mb-6">
-          <div className="w-2/3">
-            <input
-              className={inputClass}
-              type="text"
-              id="share-search"
-              name="share-search"
-              value={searchString}
-              style={{ textTransform: "uppercase" }}
-              pattern="[A-Za-z0-9]{1,4}"
-              maxLength={4}
-              onChange={(e) => {
-                setSearchString(e.target.value);
-              }}
-            />
-          </div>
-          <div className="w-1/3">
-            <div className="ms-4">
-              <button className="btn btn-outline btn-primary min-w-full">{buttonText}</button>
+    <main className="flex flex-col items-center justify-between relative lg:px-20">
+      <h1 className="text-neutral-800 font-semibold text-lg mt-3">Share Search</h1>
+      <div className=" border-b border-neutral-500 min-w-full flex justify-center mb-5 py-3">
+        <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
+          <div className="flex">
+            <div className="w-2/3">
+              <input
+                className={inputClass}
+                type="text"
+                id="share-search"
+                name="share-search"
+                value={searchString}
+                style={{ textTransform: "uppercase" }}
+                pattern="[A-Za-z0-9]{1,4}"
+                maxLength={4}
+                onChange={(e) => {
+                  setSearchString(e.target.value);
+                }}
+              />
             </div>
-          </div>
-          {searchResults && searchResults.length > 0 && (
-            <div className="absolute top-28  max-w-full w-11/12 md:w-1/2 md:max-w-lg cursor-pointer bg-white z-50">
-              <p id="share-options" className="z-50 border border-neutral-500 text-sm md:text-base truncate pb-5">
-                {searchResults.slice(0, 10).map((result, index) => (
-                  <option
-                    key={index}
-                    value={result.symbol || ""}
-                    onClick={() => handleClick(result.symbol || "")}
-                    className=" hover:bg-neutral-300"
-                  >
-                    {result.symbol!.split(".")[0].toUpperCase()}: {result.longName}
-                  </option>
-                ))}
-              </p>
+            <div className="w-1/3">
+              <div className="ms-4">
+                <button className="btn btn-outline btn-primary min-w-full">{buttonText}</button>
+              </div>
             </div>
-          )}
-        </div>
-      </form>
+            {searchResults && searchResults.length > 0 && (
+              <div className="absolute top-28  max-w-full w-11/12 md:w-1/2 md:max-w-lg cursor-pointer bg-white z-50">
+                <p id="share-options" className="z-50 border border-neutral-500 text-sm md:text-base truncate pb-5">
+                  {searchResults.slice(0, 10).map((result, index) => (
+                    <option
+                      key={index}
+                      value={result.symbol || ""}
+                      onClick={() => handleClick(result.symbol || "")}
+                      className=" hover:bg-neutral-300"
+                    >
+                      {result.symbol!.split(".")[0].toUpperCase()}: {result.longName}
+                    </option>
+                  ))}
+                </p>
+              </div>
+            )}
+          </div>
+        </form>
+      </div>
       {share && (
         <>
           <div className="flex justify-between max-w-lg w-full text-sm md:text-base items-center">
