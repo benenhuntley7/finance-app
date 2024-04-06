@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getShare, getShareList } from "./actions";
-import { getShareHistory } from "@/server/api/yahooFinance";
+import { DividendHistory, getShareHistory } from "@/server/api/yahooFinance";
 import { NewLineChart, ShareHistoryProps } from "../components/LineChartTest";
 
 interface SharePrice {
@@ -23,6 +23,7 @@ export default function Shares() {
   const [searchResults, setSearchResults] = useState<ShareSearchResults[] | null>(null);
   const [searchString, setSearchString] = useState("");
   const [shareHistory, setShareHistory] = useState<ShareHistoryProps[] | null>(null);
+  const [dividendHistory, setDividendHistory] = useState<any>();
 
   const handleClick = async (symbol: string) => {
     setShare(null);
@@ -33,9 +34,12 @@ export default function Shares() {
     if (result) {
       setShare(result);
 
-      const { priceHistory } = await getShareHistory(symbol);
+      const { priceHistory, dividendHistory } = await getShareHistory(symbol);
 
-      if (history) setShareHistory(priceHistory);
+      if (history) {
+        setShareHistory(priceHistory);
+        setDividendHistory(dividendHistory);
+      }
 
       setSearchString("");
     }
@@ -121,6 +125,15 @@ export default function Shares() {
           </div>
           <div className="w-full md:w-1/2 h-48 md:h-72 mt-5">
             <NewLineChart data={shareHistory || []} />
+          </div>
+        </>
+      )}
+      {dividendHistory && (
+        <>
+          <div className="flex justify-between  max-w-lg w-full text-sm md:text-base items-center">
+            {dividendHistory.map((dividend: any) => {
+              <p>{dividend.date}</p>;
+            })}
           </div>
         </>
       )}

@@ -8,6 +8,11 @@ type QuoteResult = {
   regularMarketPrice: number | undefined;
 };
 
+export interface DividendHistory {
+  amount: number | null;
+  date: string | null;
+}
+
 // Get quote for mutliple shares
 export async function getQuotes(symbols: string[]) {
   const results: QuoteResult[] = [];
@@ -41,6 +46,11 @@ export async function getQuote(symbol: string) {
   }
 }
 
+export interface DividendHistory {
+  amount: number | null;
+  date: string | null;
+}
+
 export async function getShareHistory(symbol: string, purchasedAt?: string) {
   try {
     const purchasedDate = calculateStartDate(purchasedAt);
@@ -50,9 +60,17 @@ export async function getShareHistory(symbol: string, purchasedAt?: string) {
 
     const result = await yahooFinance.chart(symbol, queryOptions);
 
-    const formattedPriceHistory = formatPriceHistory(result.quotes);
+    const priceHistory = formatPriceHistory(result.quotes); // priceHistory, reduced to just date, high and low
+    let dividendHistory: DividendHistory[] = [];
 
-    return { priceHistory: formattedPriceHistory };
+    if (result.events?.dividends) {
+      dividendHistory = result.events.dividends.map((dividend: any) => ({
+        amount: typeof dividend.amount === "number" ? parseFloat(dividend.amount.toFixed(2)) : null,
+        date: typeof dividend.date === "string" ? dividend.date : null,
+      }));
+    }
+
+    return { priceHistory, dividendHistory };
   } catch (error) {
     console.error(error);
     throw error;
@@ -75,6 +93,7 @@ function formatDate(date: Date): string {
     .padStart(2, "0")}`;
 }
 
+// takes quote list. returns just the date, high and low price and only returns 52 evenly spaced results
 function formatPriceHistory(quotes: any[]): any[] {
   const totalResults = quotes.length;
   const desiredResultCount = 52;

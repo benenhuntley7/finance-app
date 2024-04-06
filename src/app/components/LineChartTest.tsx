@@ -106,8 +106,8 @@ export class NewLineChart extends PureComponent<{ data: ShareHistoryProps[] }> {
           <YAxis fontSize={12} domain={[lowestLow, highestHigh]} />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="high" stroke="#000000" activeDot={{ r: 4 }} dot={{ r: 2 }} />
-          <Line type="monotone" dataKey="low" stroke="#aaaaaa" activeDot={{ r: 4 }} dot={{ r: 2 }} />
+          <Line type="monotone" dataKey="high" stroke="#000000" activeDot={{ r: 4 }} dot={{ r: 0 }} />
+          <Line type="monotone" dataKey="low" stroke="#aaaaaa" activeDot={{ r: 4 }} dot={{ r: 0 }} />
         </LineChart>
       </ResponsiveContainer>
     );
