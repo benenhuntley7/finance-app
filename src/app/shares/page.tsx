@@ -74,7 +74,7 @@ export default function Shares() {
   }, [searchString]);
 
   return (
-    <main className="flex flex-col items-center justify-between p-10 relative">
+    <main className="flex flex-col items-center justify-between p-3 relative">
       <h1 className="text-neutral-800 font-semibold text-lg">Share Search</h1>
       <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
         <div className="flex mb-6">
@@ -118,7 +118,7 @@ export default function Shares() {
       </form>
       {share && (
         <>
-          <div className="flex justify-between  max-w-lg w-full text-sm md:text-base items-center">
+          <div className="flex justify-between max-w-lg w-full text-sm md:text-base items-center">
             <table className="table">
               <thead>
                 <th>Symbol</th>
@@ -135,7 +135,7 @@ export default function Shares() {
               </tbody>
             </table>
           </div>
-          <div className="w-full md:w-1/2 h-48 md:h-72 mt-5">
+          <div className="w-full lg:w-1/2 h-48 md:h-72 mt-5">
             <NewLineChart data={shareHistory || []} />
           </div>
         </>
