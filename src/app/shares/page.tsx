@@ -99,7 +99,7 @@ export default function Shares() {
             </div>
           </div>
           {searchResults && searchResults.length > 0 && (
-            <div className="absolute top-36 max-w-full md:w-1/2 md:max-w-lg cursor-pointer bg-white z-50">
+            <div className="absolute top-28  max-w-full w-full md:w-1/2 md:max-w-lg cursor-pointer bg-white z-50">
               <p id="share-options" className="z-50 border border-neutral-500 text-sm md:text-base truncate pb-5">
                 {searchResults.slice(0, 10).map((result, index) => (
                   <option
