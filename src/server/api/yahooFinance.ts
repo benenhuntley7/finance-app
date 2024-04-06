@@ -46,11 +46,6 @@ export async function getQuote(symbol: string) {
   }
 }
 
-export interface DividendHistory {
-  amount: number | null;
-  date: string | null;
-}
-
 export async function getShareHistory(symbol: string, purchasedAt?: string) {
   try {
     const purchasedDate = calculateStartDate(purchasedAt);
@@ -61,12 +56,12 @@ export async function getShareHistory(symbol: string, purchasedAt?: string) {
     const result = await yahooFinance.chart(symbol, queryOptions);
 
     const priceHistory = formatPriceHistory(result.quotes); // priceHistory, reduced to just date, high and low
-    let dividendHistory: DividendHistory[] = [];
+    let dividendHistory;
 
     if (result.events?.dividends) {
       dividendHistory = result.events.dividends.map((dividend: any) => ({
-        amount: typeof dividend.amount === "number" ? parseFloat(dividend.amount.toFixed(2)) : null,
-        date: typeof dividend.date === "string" ? dividend.date : null,
+        amount: dividend.amount.toFixed(2),
+        date: dividend.date.toLocaleDateString(),
       }));
     }
 

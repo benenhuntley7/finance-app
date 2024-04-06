@@ -23,11 +23,14 @@ export default function Shares() {
   const [searchResults, setSearchResults] = useState<ShareSearchResults[] | null>(null);
   const [searchString, setSearchString] = useState("");
   const [shareHistory, setShareHistory] = useState<ShareHistoryProps[] | null>(null);
-  const [dividendHistory, setDividendHistory] = useState<any>();
+  const [dividendHistory, setDividendHistory] = useState<DividendHistory[] | null>();
 
   const handleClick = async (symbol: string) => {
     setShare(null);
     setSearchResults(null);
+    setShareHistory(null);
+    setDividendHistory(null);
+
     setButtonText("Searching...");
     const result = await getShare(symbol);
 
@@ -36,10 +39,8 @@ export default function Shares() {
 
       const { priceHistory, dividendHistory } = await getShareHistory(symbol);
 
-      if (history) {
-        setShareHistory(priceHistory);
-        setDividendHistory(dividendHistory);
-      }
+      if (priceHistory) setShareHistory(priceHistory);
+      if (dividendHistory) setDividendHistory(dividendHistory);
 
       setSearchString("");
     }
@@ -74,9 +75,9 @@ export default function Shares() {
 
   return (
     <main className="flex flex-col items-center justify-between p-10 relative">
-      <h1>Shares</h1>
+      <h1 className="text-neutral-800 font-semibold text-lg">Share Search</h1>
       <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
-        <div className="flex flex-wrap mb-6">
+        <div className="flex mb-6">
           <div className="w-2/3">
             <input
               className={inputClass}
@@ -118,22 +119,45 @@ export default function Shares() {
       {share && (
         <>
           <div className="flex justify-between  max-w-lg w-full text-sm md:text-base items-center">
-            <p className="">
-              {share.symbol.split(".")[0].toUpperCase()}: {share.longName} - ${share.regularMarketPrice}
-            </p>
-            <label className="btn btn-outline btn-sm md:btn-md ms-4">Add</label>
+            <table className="table">
+              <thead>
+                <th>Symbol</th>
+                <th>Description</th>
+                <th>Current Price</th>
+              </thead>
+              <tbody>
+                <td>{share.symbol.split(".")[0].toUpperCase()}</td>
+                <td>{share.longName}</td>
+                <td>${share.regularMarketPrice?.toFixed(2)}</td>
+                <td>
+                  <label className="btn btn-outline btn-sm ms-4">Add</label>
+                </td>
+              </tbody>
+            </table>
           </div>
           <div className="w-full md:w-1/2 h-48 md:h-72 mt-5">
             <NewLineChart data={shareHistory || []} />
           </div>
         </>
       )}
-      {dividendHistory && (
+      {dividendHistory && dividendHistory.length > 0 && (
         <>
-          <div className="flex justify-between  max-w-lg w-full text-sm md:text-base items-center">
-            {dividendHistory.map((dividend: any) => {
-              <p>{dividend.date}</p>;
-            })}
+          <div className="flex flex-col max-w-lg w-full text-sm md:text-base items-center mt-5">
+            <p>Dividend History</p>
+            <table className="table">
+              <thead>
+                <th>Date</th>
+                <th>Dividend Amount</th>
+              </thead>
+              <tbody>
+                {dividendHistory.map((d) => (
+                  <tr>
+                    <td>{d.date}</td>
+                    <td>${d.amount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </>
       )}
