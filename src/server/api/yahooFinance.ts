@@ -59,10 +59,12 @@ export async function getShareHistory(symbol: string, purchasedAt?: string) {
     let dividendHistory;
 
     if (result.events?.dividends) {
-      dividendHistory = result.events.dividends.map((dividend: any) => ({
-        amount: dividend.amount.toFixed(2),
-        date: dividend.date.toLocaleDateString(),
-      }));
+      dividendHistory = result.events.dividends
+        .map((dividend: any) => ({
+          amount: dividend.amount.toFixed(2),
+          date: dividend.date.toLocaleDateString(),
+        }))
+        .reverse();
     }
 
     return { priceHistory, dividendHistory };

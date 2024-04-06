@@ -150,8 +150,8 @@ export default function Shares() {
                 <th>Dividend Amount</th>
               </thead>
               <tbody>
-                {dividendHistory.map((d) => (
-                  <tr>
+                {dividendHistory.map((d, index) => (
+                  <tr key={index}>
                     <td>{d.date}</td>
                     <td>${d.amount}</td>
                   </tr>
