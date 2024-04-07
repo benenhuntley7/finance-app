@@ -100,69 +100,97 @@ export default function Shares() {
               </div>
             </div>
             {searchResults && searchResults.length > 0 && (
-              <div className="absolute top-28  max-w-full w-11/12 md:w-1/2 md:max-w-lg cursor-pointer bg-white z-50">
-                <p id="share-options" className="z-50 border border-neutral-500 text-sm md:text-base truncate pb-5">
-                  {searchResults.slice(0, 10).map((result, index) => (
-                    <option
-                      key={index}
-                      value={result.symbol || ""}
-                      onClick={() => handleClick(result.symbol || "")}
-                      className=" hover:bg-neutral-300"
-                    >
-                      {result.symbol!.split(".")[0].toUpperCase()}: {result.longName}
-                    </option>
-                  ))}
-                </p>
-              </div>
+              <SearchResults searchResults={searchResults} handleClick={handleClick} />
             )}
           </div>
         </form>
       </div>
-      {share && (
-        <>
-          <div className="flex justify-between max-w-lg w-full text-sm md:text-base items-center">
-            <table className="table">
-              <thead>
-                <th>Symbol</th>
-                <th>Description</th>
-                <th>Current Price</th>
-              </thead>
-              <tbody>
-                <td>{share.symbol.split(".")[0].toUpperCase()}</td>
-                <td>{share.longName}</td>
-                <td>${share.regularMarketPrice?.toFixed(2)}</td>
-                <td>
-                  <label className="btn btn-outline btn-sm ms-4">Add</label>
-                </td>
-              </tbody>
-            </table>
-          </div>
-          <div className="w-full lg:w-1/2 h-48 md:h-72 mt-5">
-            <NewLineChart data={shareHistory || []} />
-          </div>
-        </>
-      )}
-      {dividendHistory && dividendHistory.length > 0 && (
-        <>
-          <div className="flex flex-col max-w-lg w-full text-sm md:text-base items-center mt-5">
-            <p>Dividend History</p>
-            <table className="table">
-              <thead>
-                <th>Date</th>
-                <th>Dividend Amount</th>
-              </thead>
-              <tbody>
-                {dividendHistory.map((d, index) => (
-                  <tr key={index}>
-                    <td>{d.date}</td>
-                    <td>${d.amount}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
+      {share && <ShareResultInfo share={share} shareHistory={shareHistory} />}
+      {dividendHistory && dividendHistory.length > 0 && <DividendHistoryTable dividendHistory={dividendHistory} />}
     </main>
   );
 }
+
+interface SearchResultsProps {
+  searchResults: ShareSearchResults[];
+  handleClick: (symbol: string) => void; // Add handleClick prop
+}
+
+const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, handleClick }) => {
+  return (
+    <div className="absolute top-28  max-w-full w-11/12 md:w-1/2 md:max-w-lg cursor-pointer bg-white z-50">
+      <p id="share-options" className="z-50 border border-neutral-500 text-sm md:text-base truncate pb-5">
+        {searchResults.slice(0, 10).map((result, index) => (
+          <option
+            key={index}
+            value={result.symbol || ""}
+            onClick={() => handleClick(result.symbol || "")}
+            className=" hover:bg-neutral-300"
+          >
+            {result.symbol!.split(".")[0].toUpperCase()}: {result.longName}
+          </option>
+        ))}
+      </p>
+    </div>
+  );
+};
+
+interface ShareResultInfoProps {
+  share: SharePrice;
+  shareHistory: ShareHistoryProps[] | null;
+}
+
+const ShareResultInfo: React.FC<ShareResultInfoProps> = ({ share, shareHistory }) => {
+  return (
+    <>
+      <div className="flex justify-between max-w-lg w-full text-sm md:text-base items-center">
+        <table className="table">
+          <thead>
+            <th>Symbol</th>
+            <th>Description</th>
+            <th>Current Price</th>
+          </thead>
+          <tbody>
+            <td>{share.symbol.split(".")[0].toUpperCase()}</td>
+            <td>{share.longName}</td>
+            <td>${share.regularMarketPrice?.toFixed(2)}</td>
+            <td>
+              <label className="btn btn-outline btn-sm ms-4">Add</label>
+            </td>
+          </tbody>
+        </table>
+      </div>
+      <div className="w-full lg:w-1/2 h-48 md:h-72 mt-5">
+        <NewLineChart data={shareHistory || []} />
+      </div>
+    </>
+  );
+};
+
+interface DividendHistoryProps {
+  dividendHistory: DividendHistory[];
+}
+
+const DividendHistoryTable: React.FC<DividendHistoryProps> = ({ dividendHistory }) => {
+  return (
+    <>
+      <div className="flex flex-col max-w-lg w-full text-sm md:text-base items-center mt-5">
+        <p>Dividend History</p>
+        <table className="table">
+          <thead>
+            <th>Date</th>
+            <th>Dividend Amount</th>
+          </thead>
+          <tbody>
+            {dividendHistory.map((d, index) => (
+              <tr key={index}>
+                <td>{d.date}</td>
+                <td>${d.amount}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+};

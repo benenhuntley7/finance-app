@@ -9,7 +9,6 @@ export default async function Home() {
   const { userId } = auth(); // get userId from Clerk
   const user = userId ? await getUser(userId) : null; // get user info from supabase using userId
 
-  console.log(user);
   return (
     <main className="flex flex-col items-center justify-between p-10">
       {userId && !user && (
