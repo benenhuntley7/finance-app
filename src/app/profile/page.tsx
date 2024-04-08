@@ -1,3 +1,4 @@
+import './style.css'
 import { getUser } from "@/server/api/user";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
@@ -13,8 +14,8 @@ export default async function Profile() {
   const user = await getUser(userId);
 
   return (
-    <main className="bg-gray-200 min-h-screen  flex flex-col items-left  p-10 sm:items-center  lg:w-1/4 ">
-      <h1>Profile Page</h1>
+    <main id="formPage" className="min-h-screen flex flex-col items-left sm:items-center lg:w-1/4 p-14">
+      <h1 className="text-slate-300 italic font-light tracking-widest my-6">Update Information: </h1>
       {!user ? (
         <Alert title="Welcome!" body="Complete your profile information below to get started..." type="success" />
       ) : (

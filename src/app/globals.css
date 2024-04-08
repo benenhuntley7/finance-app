@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+ :root {
+  --primary-color: #1E1E1E;
+  /* --submitBtn-color: #; */
+ }
 .cl-rootBox,
 .cl-signIn-root,
 .cl-internal-phfxlr,

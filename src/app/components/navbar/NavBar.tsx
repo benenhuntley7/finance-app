@@ -1,5 +1,6 @@
 // components/navbar/Navbar.tsx
 "use client";
+import "./style.css";
 import Link from "next/link";
 import React, { useState } from "react";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
@@ -28,11 +29,11 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header className=" sticky top-0 z-50 bg-gray-200  ">
-      <div className="flex h-16 items-center justify-between px-6 lg:px-14 border-b border-neutral-400">
+    <header id="navHeader" className="sticky top-0 z-50">
+      <div className="flex h-16 items-center justify-between px-6 sm:border-b border-neutral-400 lg:px-14">
         <div className="flex items-center">
           <Link href={"/"} className="shrink-0">
-            <h1 className="text-accent-foreground text-2xl font-bold">financeApp</h1>
+            <h1 className="text-slate-300 text-2xl font-bold">financeApp</h1>
           </Link>
           <div className="bg-background hidden w-full justify-end gap-1 px-4 py-2 sm:flex">
             <SignedIn>
@@ -40,7 +41,7 @@ const Navbar: React.FC = () => {
                 <Link
                   key={index}
                   href={route.href}
-                  className={`hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
+                  className={`text-slate-300 hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
                 >
                   {route.title}
                 </Link>
@@ -51,7 +52,7 @@ const Navbar: React.FC = () => {
                 <Link
                   key={index}
                   href={route.href}
-                  className={`hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
+                  className={`text-slate-300 hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
                 >
                   {route.title}
                 </Link>
@@ -65,7 +66,7 @@ const Navbar: React.FC = () => {
             <Link
               href="#"
               onClick={() => signOut(() => router.push("/"))}
-              className={`hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
+              className={`text-slate-300 hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
             >
               Sign Out
             </Link>
@@ -82,7 +83,7 @@ const Navbar: React.FC = () => {
 
         {menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
 
-        <button onClick={toggleMenu} className="sm:hidden pe-4">
+        <button onClick={toggleMenu} className="sm:hidden pe-4 text-slate-300">
           {menuOpen ? <p className="h-7 w-7">Close </p> : <p className="h-7 w-7">Menu</p>}
         </button>
       </div>

@@ -1,0 +1,8 @@
+#formPage {
+    background-color: var(--primary-color);
+}
+@media screen and (max-width: 678px ) {
+    #formPage {
+        padding: 1.5rem;
+    }
+}
