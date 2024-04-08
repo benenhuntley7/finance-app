@@ -14,13 +14,13 @@ export const user = pgTable("user", {
   income_frequency: integer("income_frequency"),
 });
 
-export const shareSymbol = pgTable("share_symbols", {
+export const shareSymbol = pgTable("share_symbol", {
   row_id: serial("row_id").primaryKey(),
   symbol: text("symbol").unique(),
   longName: text("long_name"),
 });
 
-export const SharePurchase = pgTable("share_purchases", {
+export const SharePurchase = pgTable("share_purchase", {
   row_id: serial("row_id").primaryKey(),
   user_id: text("user_id").references(() => user.id),
   symbol: text("symbol").references(() => shareSymbol.symbol),

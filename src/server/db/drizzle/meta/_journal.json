@@ -22,6 +22,20 @@
       "when": 1711868181833,
       "tag": "0002_wide_onslaught",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1712568822196,
+      "tag": "0003_melted_grey_gargoyle",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1712569071132,
+      "tag": "0004_hesitant_hellfire_club",
+      "breakpoints": true
     }
   ]
 }
