@@ -1,4 +1,4 @@
-import { serial, text, timestamp, pgTable, integer } from "drizzle-orm/pg-core";
+import { serial, text, timestamp, pgTable, integer, real } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   row_id: serial("row_id").primaryKey(),
@@ -14,8 +14,17 @@ export const user = pgTable("user", {
   income_frequency: integer("income_frequency"),
 });
 
-export const shareSearchHistory = pgTable("share_search_history", {
+export const shareSymbol = pgTable("share_symbols", {
   row_id: serial("row_id").primaryKey(),
   symbol: text("symbol").unique(),
   longName: text("long_name"),
+});
+
+export const SharePurchase = pgTable("share_purchases", {
+  row_id: serial("row_id").primaryKey(),
+  user_id: text("user_id").references(() => user.id),
+  symbol: text("symbol").references(() => shareSymbol.symbol),
+  purchaseDate: timestamp("purchased_at"),
+  share_price: real("share_price"),
+  brokerage: real("brokerage"),
 });

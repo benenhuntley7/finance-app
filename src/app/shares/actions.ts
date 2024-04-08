@@ -14,8 +14,8 @@ export const getShare = async (shareId: string) => {
     if (result) {
       const searchHistoryResult = await db
         .select()
-        .from(schema.shareSearchHistory)
-        .where(eq(schema.shareSearchHistory.symbol, shareId.toUpperCase()));
+        .from(schema.shareSymbol)
+        .where(eq(schema.shareSymbol.symbol, shareId.toUpperCase()));
 
       if (!searchHistoryResult.length) {
         // if the share has a value and a description then add it to the searchHistory database table.
@@ -25,9 +25,7 @@ export const getShare = async (shareId: string) => {
           result.longName &&
           result.longName.length > 0
         ) {
-          await db
-            .insert(schema.shareSearchHistory)
-            .values({ symbol: shareId.toUpperCase(), longName: result.longName });
+          await db.insert(schema.shareSymbol).values({ symbol: shareId.toUpperCase(), longName: result.longName });
         }
       }
     }
@@ -42,7 +40,7 @@ export const getShareList = async (searchString: string) => {
   try {
     const result = await db
       .select()
-      .from(schema.shareSearchHistory)
+      .from(schema.shareSymbol)
       .where(sql`symbol LIKE ${searchString2}`);
     return result;
   } catch (error) {

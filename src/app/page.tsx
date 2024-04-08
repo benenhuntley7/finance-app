@@ -1,7 +1,7 @@
 import { SignedIn, SignedOut, auth } from "@clerk/nextjs";
 import Dashboard from "./components/dashboard/Dashboard";
 import Card from "./components/ui/card/Card";
-import { getUser, getUsers } from "@/server/api/user";
+import { getUser } from "@/server/api/user";
 import Link from "next/link";
 import Alert from "./components/ui/alert/Alert";
 
