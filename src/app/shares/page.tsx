@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { getShare, getShareList } from "./actions";
 import { DividendHistory, getShareHistory } from "@/server/api/yahooFinance";
 import { NewLineChart, ShareHistoryProps } from "../components/LineChartTest";
+import { getPurchases } from "@/server/api/sharePurchase";
+import AddShareForm from "./form";
 
 interface SharePrice {
   symbol: string;
@@ -24,6 +26,8 @@ export default function Shares() {
   const [searchString, setSearchString] = useState("");
   const [shareHistory, setShareHistory] = useState<ShareHistoryProps[] | null>(null);
   const [dividendHistory, setDividendHistory] = useState<DividendHistory[] | null>();
+
+  //const userPurchases = getPurchases(); // get user purchase history
 
   const handleClick = async (symbol: string) => {
     setShare(null);
@@ -141,6 +145,12 @@ interface ShareResultInfoProps {
 }
 
 const ShareResultInfo: React.FC<ShareResultInfoProps> = ({ share, shareHistory }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <>
       <div className="flex justify-between max-w-lg w-full text-sm md:text-base items-center">
@@ -155,11 +165,18 @@ const ShareResultInfo: React.FC<ShareResultInfoProps> = ({ share, shareHistory }
             <td>{share.longName}</td>
             <td>${share.regularMarketPrice?.toFixed(2)}</td>
             <td>
-              <label className="btn btn-outline btn-sm ms-4">Add</label>
+              <label className="btn btn-outline btn-sm ms-4" onClick={toggleModal}>
+                Add
+              </label>
             </td>
           </tbody>
         </table>
       </div>
+
+      {/* Render the modal conditionally based on the state */}
+      {isModalOpen && (
+        <AddShareForm toggleModal={toggleModal} currentPrice={share.regularMarketPrice || 0} symbol={share.symbol} />
+      )}
       <div className="w-full lg:w-1/2 h-48 md:h-72 mt-5">
         <NewLineChart data={shareHistory || []} />
       </div>
