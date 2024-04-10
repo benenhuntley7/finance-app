@@ -20,11 +20,12 @@ export const shareSymbol = pgTable("share_symbol", {
   longName: text("long_name"),
 });
 
-export const SharePurchase = pgTable("share_purchase", {
+export const sharePurchase = pgTable("share_purchase", {
   row_id: serial("row_id").primaryKey(),
   user_id: text("user_id").references(() => user.id),
   symbol: text("symbol").references(() => shareSymbol.symbol),
-  purchaseDate: timestamp("purchased_at"),
-  share_price: real("share_price"),
+  purchase_date: timestamp("purchased_at"),
+  purchase_price: real("purchase_price"),
   brokerage: real("brokerage"),
+  qty: integer("qty"),
 });

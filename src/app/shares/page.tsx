@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getShare, getShareList } from "./actions";
+import { getShare, getShareList, getSharePurchases } from "./actions";
 import { DividendHistory, getShareHistory } from "@/server/api/yahooFinance";
 import { NewLineChart, ShareHistoryProps } from "../components/LineChartTest";
-import { getPurchases } from "@/server/api/sharePurchase";
 import AddShareForm from "./form";
+import SharePurchases from "./SharePurchases";
 
 interface SharePrice {
   symbol: string;
@@ -26,8 +26,6 @@ export default function Shares() {
   const [searchString, setSearchString] = useState("");
   const [shareHistory, setShareHistory] = useState<ShareHistoryProps[] | null>(null);
   const [dividendHistory, setDividendHistory] = useState<DividendHistory[] | null>();
-
-  //const userPurchases = getPurchases(); // get user purchase history
 
   const handleClick = async (symbol: string) => {
     setShare(null);
@@ -109,10 +107,18 @@ export default function Shares() {
           </div>
         </form>
       </div>
-      {buttonText == "Searching..." && <div className="loading loading-spinner"></div>}
-      {share && <ShareResultInfo share={share} shareHistory={shareHistory} />}
-      {share && dividendHistory && dividendHistory.length > 0 && (
-        <DividendHistoryTable dividendHistory={dividendHistory} />
+      <div className="w-1/2">
+        <SharePurchases />
+      </div>
+      {buttonText === "Searching..." ? (
+        <div className="loading loading-spinner"></div>
+      ) : (
+        <>
+          {share && <ShareResultInfo share={share} shareHistory={shareHistory} />}
+          {share && dividendHistory && dividendHistory.length > 0 && (
+            <DividendHistoryTable dividendHistory={dividendHistory} />
+          )}
+        </>
       )}
     </main>
   );

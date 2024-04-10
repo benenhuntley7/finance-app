@@ -15,7 +15,7 @@ export default function AddShareForm({ toggleModal, symbol, currentPrice }: Form
 
   return (
     <form className="w-full flex justify-center mt-5" action={async (formData) => addPurchase(formData)}>
-      <input type="hidden" value={symbol} />
+      <input type="hidden" name="symbol" value={symbol} />
       <div className="flex flex-wrap w-1/2 my-5 justify-between">
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label
