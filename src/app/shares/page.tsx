@@ -34,8 +34,8 @@ export default function Shares() {
     setSearchResults(null);
     setShareHistory(null);
     setDividendHistory(null);
-
     setButtonText("Searching...");
+
     const result = await getShare(symbol);
 
     if (result) {
@@ -109,8 +109,11 @@ export default function Shares() {
           </div>
         </form>
       </div>
+      {buttonText == "Searching..." && <div className="loading loading-spinner"></div>}
       {share && <ShareResultInfo share={share} shareHistory={shareHistory} />}
-      {dividendHistory && dividendHistory.length > 0 && <DividendHistoryTable dividendHistory={dividendHistory} />}
+      {share && dividendHistory && dividendHistory.length > 0 && (
+        <DividendHistoryTable dividendHistory={dividendHistory} />
+      )}
     </main>
   );
 }
