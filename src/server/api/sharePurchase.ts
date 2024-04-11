@@ -7,7 +7,7 @@ export const getPurchases = async (userId: string) => {
   try {
     const purchases = db
       .select()
-      .from(schema.SharePurchase)
+      .from(schema.sharePurchase)
       .where(sql`user_id=${userId}`);
 
     return purchases;
