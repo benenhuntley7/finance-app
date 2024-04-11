@@ -95,7 +95,7 @@ export const getSharePurchases = async () => {
       .from(schema.sharePurchase)
       .where(sql`user_id = ${user_id}`);
 
-    const symbols = result.map((data) => data.symbol).filter((symbol) => symbol !== null); // Filter out null values
+    const symbols = result.map((data) => data.symbol).filter((symbol) => symbol !== null && true); // Filter out null values
 
     if (symbols && symbols.length > 0) {
       const currentPrices = await getQuotes(symbols);
