@@ -13,6 +13,12 @@ export interface DividendHistory {
   date: string | null;
 }
 
+export interface ShareHistory {
+  date: string;
+  high: number | null;
+  low: number | null;
+}
+
 // Get quote for mutliple shares
 export async function getQuotes(symbols: string[]) {
   const results: QuoteResult[] = [];
@@ -46,7 +52,7 @@ export async function getQuote(symbol: string) {
   }
 }
 
-export async function getShareHistory(symbol: string, purchasedAt?: string) {
+export async function getShareHistory(symbol: string, purchasedAt?: Date, cull = true) {
   try {
     const purchasedDate = calculateStartDate(purchasedAt);
     const period1 = formatDate(purchasedDate);
@@ -55,7 +61,8 @@ export async function getShareHistory(symbol: string, purchasedAt?: string) {
 
     const result = await yahooFinance.chart(symbol, queryOptions);
 
-    const priceHistory = formatPriceHistory(result.quotes); // priceHistory, reduced to just date, high and low
+    const priceHistory = formatPriceHistory(result.quotes, cull); // return desired data and cull to 52 results if cull=true
+
     let dividendHistory;
 
     if (result.events?.dividends) {
@@ -74,7 +81,7 @@ export async function getShareHistory(symbol: string, purchasedAt?: string) {
   }
 }
 
-function calculateStartDate(purchasedAt?: string): Date {
+function calculateStartDate(purchasedAt?: Date) {
   const currentDate = new Date();
   if (purchasedAt) {
     return new Date(purchasedAt);
@@ -90,12 +97,11 @@ function formatDate(date: Date): string {
     .padStart(2, "0")}`;
 }
 
-// takes quote list. returns just the date, high and low price and only returns 52 evenly spaced results
-function formatPriceHistory(quotes: any[]): any[] {
-  const totalResults = quotes.length;
-  const desiredResultCount = 52;
-  const step = totalResults <= desiredResultCount ? 1 : Math.floor(totalResults / desiredResultCount);
+function formatPriceHistory(quotes: any[], cull: boolean): any[] {
   const formattedPriceHistory = [];
+  const totalResults = quotes.length;
+  const desiredResultCount = cull ? 52 : totalResults;
+  const step = totalResults <= desiredResultCount ? 1 : Math.floor(totalResults / desiredResultCount);
 
   for (let i = 0; i < totalResults; i += step) {
     const item = quotes[i];

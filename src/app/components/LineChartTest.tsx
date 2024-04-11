@@ -1,4 +1,5 @@
 "use client";
+import { ShareHistory } from "@/server/api/yahooFinance";
 import { PureComponent } from "react";
 import {
   BarChart,
@@ -71,13 +72,7 @@ export class NewBarChart extends PureComponent {
   }
 }
 
-export interface ShareHistoryProps {
-  date: string;
-  high: number | null;
-  low: number | null;
-}
-
-export class NewLineChart extends PureComponent<{ data: ShareHistoryProps[] }> {
+export class NewLineChart extends PureComponent<{ data: ShareHistory[] }> {
   render() {
     const { data } = this.props;
 

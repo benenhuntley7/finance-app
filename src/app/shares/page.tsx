@@ -3,9 +3,15 @@
 import { useState, useEffect } from "react";
 import { getShare, getShareList, getSharePurchases } from "./actions";
 import { DividendHistory, getShareHistory } from "@/server/api/yahooFinance";
-import { NewLineChart, ShareHistoryProps } from "../components/LineChartTest";
+import { NewLineChart } from "../components/LineChartTest";
 import AddShareForm from "./form";
 import SharePurchases from "./SharePurchases";
+
+export interface ShareHistoryProps {
+  date: string;
+  high: number | null;
+  low: number | null;
+}
 
 interface SharePrice {
   symbol: string;
@@ -159,7 +165,6 @@ const ShareResultInfo: React.FC<ShareResultInfoProps> = ({ share, shareHistory }
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
-
   return (
     <>
       <div className="flex justify-between max-w-lg w-full text-sm md:text-base items-center">
