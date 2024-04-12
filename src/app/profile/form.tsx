@@ -3,7 +3,6 @@
 import React, { useRef } from "react";
 import { updateUser } from "./actions";
 import Button from "./button";
-import { validateCurrency } from "../functions/currency";
 
 export default function Form({ user }: any) {
   const ref = useRef<HTMLFormElement>(null);
@@ -112,7 +111,7 @@ export default function Form({ user }: any) {
             name="income"
             type="text" // Change type to text to handle formatting
             inputMode="numeric" // Add inputMode for numeric keyboard on mobile devices
-            defaultValue={user?.income ? "$" + user.income.toLocaleString() : ""} // Include "$" symbol
+            defaultValue={user?.income ? user.income.toLocaleString() : ""}
             onChange={validateCurrency}
           />
         </div>
@@ -154,3 +153,26 @@ export default function Form({ user }: any) {
     </form>
   );
 }
+
+export const validateCurrency = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const value = event.target.value;
+  // Remove non-numeric characters except periods
+  const numericValue = value.replace(/[^0-9.]/g, "");
+
+  // Split the value into integer and fractional parts
+  const [integerPart, fractionalPart] = numericValue.split(".");
+
+  // Add commas to integer part
+  const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  // Ensure there's at most two digits in the fractional part
+  const formattedFractionalPart = fractionalPart ? fractionalPart.slice(0, 2) : "";
+
+  // Combine integer and fractional parts with a period
+  const formattedValue = formattedFractionalPart
+    ? `${formattedIntegerPart}.${formattedFractionalPart}`
+    : formattedIntegerPart;
+
+  // Set the formatted value back to the input field
+  event.target.value = formattedValue;
+};
