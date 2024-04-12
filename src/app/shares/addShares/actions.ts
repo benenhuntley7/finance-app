@@ -6,7 +6,6 @@ import * as schema from "@/server/db/schema";
 import { auth } from "@clerk/nextjs";
 import { eq, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
-import yahooFinance from "yahoo-finance2";
 
 // Define the type for the getShare function
 export const getShare = async (shareId: string) => {
@@ -60,7 +59,7 @@ export const addPurchase = async (formData: FormData) => {
   const purchase_date = new Date(formData.get("purchase-date") as string);
   const purchase_price = parseFloat(formData.get("purchase-price") as string);
   const brokerage = parseFloat(formData.get("brokerage") as string);
-  const symbol = formData.get("symbol") as string;
+  const symbol = (formData.get("symbol") as string).toUpperCase();
   const qty = parseInt(formData.get("quantity") as string);
 
   try {
@@ -68,7 +67,7 @@ export const addPurchase = async (formData: FormData) => {
   } catch (err) {
     console.error(err);
   }
-  redirect("/shares2");
+  redirect("/shares");
 };
 
 export interface SharePurchase {

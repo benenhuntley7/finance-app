@@ -1,211 +1,218 @@
-"use client";
+"use server";
 
-import { useState, useEffect } from "react";
-import { getShare, getShareList, getSharePurchases } from "./actions";
-import { DividendHistory, getShareHistory } from "@/server/api/yahooFinance";
-import { NewLineChart } from "../components/LineChartTest";
-import AddShareForm from "./form";
-import SharePurchases from "./SharePurchases";
+import { getSharePurchases, SharePurchase } from "./addShares/actions";
+import { getShareHistory } from "@/server/api/yahooFinance";
+import SharePortfolioChart, { ShareHistoryProps } from "./chart";
+import Link from "next/link";
 
-export interface ShareHistoryProps {
-  date: string;
-  high: number | null;
-  low: number | null;
-}
+export default async function page() {
+  const sharePurchases = await getSharePurchases();
 
-interface SharePrice {
-  symbol: string;
-  longName: string | undefined;
-  regularMarketPrice: number | undefined;
-}
-
-interface ShareSearchResults {
-  symbol: string | null;
-  row_id: number | null;
-  longName: string | null;
-}
-
-export default function Shares() {
-  const [share, setShare] = useState<SharePrice | null>(null);
-  const [buttonText, setButtonText] = useState("Search");
-  const [searchResults, setSearchResults] = useState<ShareSearchResults[] | null>(null);
-  const [searchString, setSearchString] = useState("");
-  const [shareHistory, setShareHistory] = useState<ShareHistoryProps[] | null>(null);
-  const [dividendHistory, setDividendHistory] = useState<DividendHistory[] | null>();
-
-  const handleClick = async (symbol: string) => {
-    setShare(null);
-    setSearchResults(null);
-    setShareHistory(null);
-    setDividendHistory(null);
-    setButtonText("Searching...");
-
-    const result = await getShare(symbol);
-
-    if (result) {
-      setShare(result);
-
-      const { priceHistory, dividendHistory } = await getShareHistory(symbol);
-
-      if (priceHistory) setShareHistory(priceHistory);
-      if (dividendHistory) setDividendHistory(dividendHistory);
-
-      setSearchString("");
-    }
-
-    setButtonText("Search");
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    handleClick(searchString + ".AX");
-  };
-
-  const inputClass =
-    "appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white";
-
-  // useEffect with 300ms timeout to prevent rapid searches due to typing into input box
-  useEffect(() => {
-    const fetchData = async () => {
-      if (searchString.length) {
-        const shareList = await getShareList(searchString);
-        setSearchResults(shareList);
-      } else {
-        setSearchResults(null);
-      }
-    };
-
-    const debounceTimer = setTimeout(fetchData, 300); // Debounce time in milliseconds
-
-    return () => clearTimeout(debounceTimer);
-  }, [searchString]);
+  const combinedShares = sharePurchases ? combineShares(sharePurchases) : null;
+  const chartData = sharePurchases ? await calculateChartData(sharePurchases) : null;
 
   return (
-    <main className="flex flex-col items-center justify-between relative lg:px-20">
-      <h1 className="text-neutral-800 font-semibold text-lg mt-3">Share Search</h1>
-      <div className=" border-b border-neutral-500 min-w-full flex justify-center mb-5 py-3">
-        <form className="w-full max-w-lg mt-5" onSubmit={handleSubmit}>
-          <div className="flex">
-            <div className="w-2/3">
-              <input
-                className={inputClass}
-                type="text"
-                id="share-search"
-                name="share-search"
-                value={searchString}
-                style={{ textTransform: "uppercase" }}
-                pattern="[A-Za-z0-9]{1,4}"
-                maxLength={4}
-                onChange={(e) => {
-                  setSearchString(e.target.value);
-                }}
-              />
-            </div>
-            <div className="w-1/3">
-              <div className="ms-4">
-                <button className="btn btn-outline btn-primary min-w-full">{buttonText}</button>
-              </div>
-            </div>
-            {searchResults && searchResults.length > 0 && (
-              <SearchResults searchResults={searchResults} handleClick={handleClick} />
-            )}
-          </div>
-        </form>
-      </div>
-      {buttonText === "Searching..." ? (
-        <div className="loading loading-spinner"></div>
-      ) : (
+    <main className="flex flex-col items-center justify-between relative px-2 lg:px-20">
+      {combinedShares && chartData ? (
         <>
-          {share && <ShareResultInfo share={share} shareHistory={shareHistory} />}
-          {share && dividendHistory && dividendHistory.length > 0 && (
-            <DividendHistoryTable dividendHistory={dividendHistory} />
-          )}
+          <div>
+            <Link href="/shares/addShares" className="btn btn-outline">
+              Add Holding
+            </Link>
+          </div>
+          <div className="w-1/2w-full lg:w-1/2 h-48 md:h-72 mt-5">
+            <SharePortfolioChart data={chartData} />
+          </div>
+          <ShareTable sharePurchases={combinedShares} />
         </>
+      ) : (
+        <div className="loading loading-spinner"></div>
       )}
     </main>
   );
 }
 
-interface SearchResultsProps {
-  searchResults: ShareSearchResults[];
-  handleClick: (symbol: string) => void; // Add handleClick prop
-}
-
-const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, handleClick }) => {
+const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[] }) => {
   return (
-    <div className="absolute top-28  max-w-full w-11/12 md:w-1/2 md:max-w-lg cursor-pointer bg-white z-50">
-      <p id="share-options" className="z-50 border border-neutral-500 text-sm md:text-base truncate pb-5">
-        {searchResults.slice(0, 10).map((result, index) => (
-          <option
-            key={index}
-            value={result.symbol || ""}
-            onClick={() => handleClick(result.symbol || "")}
-            className=" hover:bg-neutral-300"
-          >
-            {result.symbol!.split(".")[0].toUpperCase()}: {result.longName}
-          </option>
-        ))}
-      </p>
+    <div className="flex w-3/5 mt-4">
+      <table className="table table-zebra table-sm">
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Qty</th>
+            <th>Purchase Price</th>
+            <th>Current Price</th>
+            <th>Current Value</th>
+            <th>Brokerage</th>
+            <th>Return</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sharePurchases.map((purchase, index) => (
+            <tr key={index}>
+              <td>{purchase.symbol && purchase.symbol.split(".")[0].toUpperCase()}</td>
+              <td>{purchase.qty}</td>
+              <td>${purchase.purchase_price}</td>
+              <td>${purchase.current_price}</td>
+              <td>${(purchase.current_price! * purchase.qty!).toFixed(2)}</td>
+              <td>${purchase.brokerage.toFixed(2)}</td>
+              <td>
+                $
+                {(
+                  purchase.current_price! * purchase.qty! +
+                  purchase.brokerage! -
+                  (purchase.purchase_price! * purchase.qty! - purchase.brokerage!)
+                ).toFixed(2)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot className="border-t border-black border-3">
+          <tr>
+            <td>Total</td>
+            <td colSpan={3}></td>
+            <td>
+              $
+              {sharePurchases
+                .reduce((total, purchase) => total + purchase.current_price! * purchase.qty! + purchase.brokerage!, 0)
+                .toFixed(2)}
+            </td>
+            <td>${sharePurchases.reduce((total, purchase) => total + purchase.brokerage!, 0).toFixed(2)}</td>
+            <td>
+              $
+              {sharePurchases
+                .reduce(
+                  (total, purchase) =>
+                    total +
+                    purchase.current_price! * purchase.qty! +
+                    purchase.brokerage! -
+                    (purchase.purchase_price! * purchase.qty! + purchase.brokerage!),
+                  0
+                )
+                .toFixed(2)}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   );
 };
 
-interface ShareResultInfoProps {
-  share: SharePrice;
-  shareHistory: ShareHistoryProps[] | null;
+async function calculateChartData(data: SharePurchase[]) {
+  let chartData = [];
+
+  const symbols = data
+    .map((data) => ({
+      symbol: data.symbol,
+      purchase_date: data.purchase_date,
+      current_price: data.current_price,
+      qty: data.qty,
+    }))
+    .filter(
+      (item) => item.symbol !== null && item.purchase_date !== null && item.qty !== null && item.current_price !== null
+    );
+
+  // for each purchase, get the share history from the purchase date.
+  for (const symbol of symbols) {
+    if (symbol.symbol !== null && symbol.purchase_date !== null) {
+      const data = await getShareHistory(symbol.symbol, symbol.purchase_date, false);
+
+      // for each entry in price history, multiply the share price by the qty held in the purchase
+      data.priceHistory.forEach((entry) => {
+        entry.high *= symbol.qty!;
+        entry.low *= symbol.qty!;
+      });
+
+      chartData.push(data);
+    }
+  }
+  return calculateDailyTotal(chartData);
 }
 
-const ShareResultInfo: React.FC<ShareResultInfoProps> = ({ share, shareHistory }) => {
-  return (
-    <>
-      <div className="flex justify-between max-w-lg w-full text-sm md:text-base items-center">
-        <table className="table">
-          <thead>
-            <th>Symbol</th>
-            <th>Description</th>
-            <th>Current Price</th>
-          </thead>
-          <tbody>
-            <td>{share.symbol.split(".")[0].toUpperCase()}</td>
-            <td>{share.longName}</td>
-            <td>${share.regularMarketPrice?.toFixed(2)}</td>
-          </tbody>
-        </table>
-      </div>
-      <AddShareForm currentPrice={share.regularMarketPrice || 0} symbol={share.symbol} />
+function calculateDailyTotal(chartData: ChartDataEntry[]) {
+  const totalDividendsByDate = new Map<string, number>();
 
-      <div className="w-full lg:w-1/2 h-48 md:h-72 mt-5">
-        <NewLineChart data={shareHistory || []} />
-      </div>
-    </>
+  chartData.forEach((entry) => {
+    if (entry.priceHistory) {
+      entry.priceHistory.forEach((price) => {
+        const date = price.date;
+        const amount = price.high;
+        if (date && amount) {
+          if (!totalDividendsByDate.has(date)) {
+            totalDividendsByDate.set(date, 0);
+          }
+          totalDividendsByDate.set(date, totalDividendsByDate.get(date) + amount);
+        }
+      });
+    }
+  });
+
+  // Get the sorted array of dates
+  const sortedDates = Array.from(totalDividendsByDate.keys()).sort(
+    (a, b) => new Date(a).getTime() - new Date(b).getTime()
   );
-};
 
-interface DividendHistoryProps {
-  dividendHistory: DividendHistory[];
+  // Format the data into an array of ShareHistoryProps objects
+  const formattedData: ShareHistoryProps[] = [];
+  sortedDates.forEach((date) => {
+    formattedData.push({ date: date, value: parseFloat(totalDividendsByDate.get(date)!.toFixed(2)) });
+  });
+
+  return formattedData;
 }
 
-const DividendHistoryTable: React.FC<DividendHistoryProps> = ({ dividendHistory }) => {
-  return (
-    <>
-      <div className="flex flex-col max-w-lg w-full text-sm md:text-base items-center mt-5">
-        <p>Dividend History</p>
-        <table className="table">
-          <thead>
-            <th>Date</th>
-            <th>Dividend Amount</th>
-          </thead>
-          <tbody>
-            {dividendHistory.map((d, index) => (
-              <tr key={index}>
-                <td>{d.date}</td>
-                <td>${d.amount}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
-  );
-};
+interface ChartDataEntry {
+  priceHistory: any[];
+  dividendHistory:
+    | {
+        amount: any;
+        date: any;
+      }[]
+    | undefined;
+}
+
+interface TableDataEntry {
+  symbol: string;
+  brokerage: number;
+  qty: number;
+  purchase_price: number;
+  current_price: number;
+}
+
+function combineShares(data: SharePurchase[]) {
+  const combinedDataMap = new Map();
+
+  // Group data by symbol
+  data.forEach((entry) => {
+    const { symbol, brokerage, qty, purchase_price, current_price } = entry;
+    if (!combinedDataMap.has(symbol)) {
+      combinedDataMap.set(symbol, {
+        brokerage: 0,
+        qty: 0,
+        purchase_price: 0,
+        current_price,
+      });
+    }
+    const existingData = combinedDataMap.get(symbol);
+    combinedDataMap.set(symbol, {
+      brokerage: existingData.brokerage + brokerage,
+      qty: existingData.qty + qty,
+      purchase_price: parseFloat((existingData.purchase_price + purchase_price! * qty!).toFixed(2)),
+      current_price: existingData.current_price,
+    });
+  });
+
+  // Format the combined data into an array
+  const combinedData: TableDataEntry[] = [];
+  combinedDataMap.forEach((values, symbol) => {
+    const { brokerage, qty, purchase_price, current_price } = values;
+    combinedData.push({
+      symbol,
+      brokerage,
+      qty,
+      purchase_price: parseFloat((purchase_price / qty).toFixed(2)), // Calculate average purchase price
+      current_price,
+    });
+  });
+  return combinedData;
+}

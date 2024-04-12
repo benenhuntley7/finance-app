@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { validateCurrency } from "../functions/currency";
+import { validateCurrency } from "../../functions/currency";
 import { addPurchase } from "./actions";
 import Button from "./button";
 
