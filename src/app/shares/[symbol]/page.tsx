@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { symbol: string } }) {
 
   return (
     <main className="flex flex-col items-center justify-between relative px-2 lg:px-20">
-      <div className="flex flex-col w-1/2 justify-center">
+      <div className="flex flex-col w-full md:w-1/2 justify-center overflow-x-scroll">
         {currentData ? (
           <>
             <h1 className="flex w-full font-bold my-5 justify-center">
