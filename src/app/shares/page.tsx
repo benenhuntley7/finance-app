@@ -15,7 +15,7 @@ export default async function page() {
     <main className="flex flex-col items-center justify-between relative px-2 lg:px-20">
       {combinedShares && chartData ? (
         <>
-          <div>
+          <div className="mt-3">
             <Link href="/shares/addShares" className="btn btn-outline">
               Add Holding
             </Link>
@@ -36,7 +36,7 @@ const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[] }) =>
   return (
     <div className="flex w-3/5 mt-4">
       <table className="table table-zebra table-sm">
-        <thead>
+        <thead className="border-b border-black border-3">
           <tr>
             <th>Symbol</th>
             <th>Qty</th>
@@ -50,7 +50,11 @@ const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[] }) =>
         <tbody>
           {sharePurchases.map((purchase, index) => (
             <tr key={index}>
-              <td>{purchase.symbol && purchase.symbol.split(".")[0].toUpperCase()}</td>
+              <td>
+                <Link className="font-bold underline" href={`/shares/${purchase.symbol.replace(".", "-")}`}>
+                  {purchase.symbol && purchase.symbol.split(".")[0].toUpperCase()}
+                </Link>
+              </td>
               <td>{purchase.qty}</td>
               <td>${purchase.purchase_price}</td>
               <td>${purchase.current_price}</td>
