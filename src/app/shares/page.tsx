@@ -113,9 +113,6 @@ export default function Shares() {
           </div>
         </form>
       </div>
-      <div className="w-1/2">
-        <SharePurchases />
-      </div>
       {buttonText === "Searching..." ? (
         <div className="loading loading-spinner"></div>
       ) : (
@@ -160,11 +157,6 @@ interface ShareResultInfoProps {
 }
 
 const ShareResultInfo: React.FC<ShareResultInfoProps> = ({ share, shareHistory }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
   return (
     <>
       <div className="flex justify-between max-w-lg w-full text-sm md:text-base items-center">
@@ -178,19 +170,11 @@ const ShareResultInfo: React.FC<ShareResultInfoProps> = ({ share, shareHistory }
             <td>{share.symbol.split(".")[0].toUpperCase()}</td>
             <td>{share.longName}</td>
             <td>${share.regularMarketPrice?.toFixed(2)}</td>
-            <td>
-              <label className="btn btn-outline btn-sm ms-4" onClick={toggleModal}>
-                Add
-              </label>
-            </td>
           </tbody>
         </table>
       </div>
+      <AddShareForm currentPrice={share.regularMarketPrice || 0} symbol={share.symbol} />
 
-      {/* Render the modal conditionally based on the state */}
-      {isModalOpen && (
-        <AddShareForm toggleModal={toggleModal} currentPrice={share.regularMarketPrice || 0} symbol={share.symbol} />
-      )}
       <div className="w-full lg:w-1/2 h-48 md:h-72 mt-5">
         <NewLineChart data={shareHistory || []} />
       </div>

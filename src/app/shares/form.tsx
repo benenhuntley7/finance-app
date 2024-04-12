@@ -1,17 +1,36 @@
 "use client";
 
+import { useState } from "react";
 import { validateCurrency } from "../functions/currency";
 import { addPurchase } from "./actions";
 
 interface FormProps {
   symbol: string;
   currentPrice: number;
-  toggleModal: () => void; // Add handleClick prop
 }
 
-export default function AddShareForm({ toggleModal, symbol, currentPrice }: FormProps) {
+export default function AddShareForm({ symbol, currentPrice }: FormProps) {
   const inputClass =
     "appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white";
+
+  const [quantity, setQuantity] = useState(1);
+  const [purchasePrice, setPurchasePrice] = useState(currentPrice.toString());
+  const [brokerage, setBrokerage] = useState("10");
+
+  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value);
+    setQuantity(isNaN(value) ? 0 : value);
+  };
+
+  const handlePurchasePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = validateCurrency(event.target.value);
+    setPurchasePrice(value);
+  };
+
+  const handleBrokerageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = validateCurrency(event.target.value);
+    setBrokerage(value);
+  };
 
   return (
     <form className="w-full flex justify-center mt-5" action={async (formData) => addPurchase(formData)}>
@@ -24,7 +43,14 @@ export default function AddShareForm({ toggleModal, symbol, currentPrice }: Form
           >
             Purchase Date
           </label>
-          <input className={inputClass} id="purchase-date" name="purchase-date" type="date" required />
+          <input
+            className={inputClass}
+            id="purchase-date"
+            name="purchase-date"
+            type="date"
+            max={new Date().toISOString().split("T")[0]}
+            required
+          />
         </div>
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label
@@ -38,8 +64,30 @@ export default function AddShareForm({ toggleModal, symbol, currentPrice }: Form
             id="purchase-price"
             name="purchase-price"
             type="text"
-            defaultValue={currentPrice}
-            onChange={validateCurrency}
+            value={purchasePrice}
+            onChange={handlePurchasePriceChange}
+            required
+          />
+        </div>
+        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2">Total</label>
+          <input
+            className={inputClass}
+            value={(parseFloat(purchasePrice) * quantity + parseFloat(brokerage)).toFixed(2)}
+            disabled
+          />
+        </div>
+        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="quantity">
+            Quantity
+          </label>
+          <input
+            className={inputClass}
+            id="quantity"
+            name="quantity"
+            type="number"
+            value={quantity}
+            onChange={handleQuantityChange}
             required
           />
         </div>
@@ -52,16 +100,19 @@ export default function AddShareForm({ toggleModal, symbol, currentPrice }: Form
             id="brokerage"
             name="brokerage"
             type="text"
-            defaultValue="$10"
-            onChange={validateCurrency}
+            value={brokerage}
+            onChange={handleBrokerageChange}
             required
           />
         </div>
-        <div className="px-3 mb-6 md:mb-0 w-full align-top flex">
-          <button className="btn btn-primary btn-outline w-1/3 md:w-1/4 me-3">Add Purchase</button>
-          <label className="btn btn-outline bg-neutral-200 me-5 w-1/3 md:w-1/4" onClick={toggleModal}>
-            Close
+        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <label
+            className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2 invisible"
+            htmlFor="quantity"
+          >
+            -
           </label>
+          <button className="btn btn-primary btn-outline w-full">Add Purchase</button>
         </div>
       </div>
     </form>

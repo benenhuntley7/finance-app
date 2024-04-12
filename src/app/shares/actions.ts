@@ -58,15 +58,17 @@ export const addPurchase = async (formData: FormData) => {
   if (!user_id) redirect("/login");
 
   const purchase_date = new Date(formData.get("purchase-date") as string);
-  const purchase_price = parseFloat((formData.get("purchase-price") as string).replace(/[$,]/g, "")); // Remove non-numeric characters (dollar sign and commas) from income string)
-  const brokerage = parseFloat((formData.get("brokerage") as string).replace(/[$,]/g, "")); // Remove non-numeric characters (dollar sign and commas) from income string
+  const purchase_price = parseFloat(formData.get("purchase-price") as string);
+  const brokerage = parseFloat(formData.get("brokerage") as string);
   const symbol = formData.get("symbol") as string;
+  const qty = parseInt(formData.get("quantity") as string);
 
   try {
-    await db.insert(schema.sharePurchase).values({ user_id, symbol, brokerage, purchase_price, purchase_date });
+    await db.insert(schema.sharePurchase).values({ user_id, symbol, brokerage, purchase_price, purchase_date, qty });
   } catch (err) {
     console.error(err);
   }
+  redirect("/shares2");
 };
 
 export interface SharePurchase {
