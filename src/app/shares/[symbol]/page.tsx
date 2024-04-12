@@ -79,8 +79,8 @@ export default async function Page({ params }: { params: { symbol: string } }) {
             )}
           </>
         ) : (
-          <div className="flex w-full justify-center text-center mt-5">
-            This company doesn't appear to exist.
+          <div className="flex w-full justify-center text-center mt-4">
+            This company does not exist.
             <Button />
           </div>
         )}
