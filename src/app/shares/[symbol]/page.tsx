@@ -62,10 +62,9 @@ export default async function Page({ params }: { params: { symbol: string } }) {
                       <td>${holdings.reduce((total, purchase) => total + purchase.qty!, 0)}</td>
                       <td>
                         $
-                        {holdings.reduce(
-                          (total, purchase) => total + currentData!.regularMarketPrice! * purchase.qty!,
-                          0
-                        )}
+                        {holdings
+                          .reduce((total, purchase) => total + currentData!.regularMarketPrice! * purchase.qty!, 0)
+                          .toFixed(2)}
                       </td>
                     </tr>
                   </tfoot>
