@@ -6,6 +6,7 @@ import { getSharePurchases, SharePurchase } from "./actions";
 export default function SharePurchases() {
   const [sharePurchases, setSharePurchases] = useState<SharePurchase[] | null>();
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const fetchSharePurchases = async () => {
       setLoading(true);

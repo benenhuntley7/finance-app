@@ -7,10 +7,14 @@ export default function Button() {
 
   return (
     <button className="btn btn-primary btn-outline w-full">
-      {pending
-        ? "Saving Changes...  " // Removed unnecessary parenthesis
-        : "Save Changes "}
-      <span className="loading loading-spinner"></span>
+      {pending ? (
+        <>
+          Saving Changes...
+          <span className="loading loading-spinner"></span>
+        </>
+      ) : (
+        "Save Changes"
+      )}
     </button>
   );
 }

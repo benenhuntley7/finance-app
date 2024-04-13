@@ -24,10 +24,6 @@ export const updateUser = async (formData: FormData) => {
   const income = parseFloat((formData.get("income") as string).replace(/[$,]/g, "")); // Remove non-numeric characters (dollar sign and commas) from income string
   const income_frequency = parseInt(formData.get("income-frequency") as string);
 
-  console.log(income_frequency);
-  console.log(formData.get("income-frequency"));
-  console.log(formData);
-
   try {
     if (user) {
       await db
