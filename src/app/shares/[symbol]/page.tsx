@@ -6,8 +6,8 @@ import * as schema from "../../../server/db/schema";
 import { auth } from "@clerk/nextjs";
 import { getShare } from "../addShares/actions";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import Button from "./button";
+import Image from "next/image";
 
 export default async function Page({ params }: { params: { symbol: string } }) {
   const { userId } = auth();
@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: { symbol: string } }) {
 
   return (
     <main className="flex flex-col items-center justify-between relative px-2 lg:px-20">
-      <div className="flex flex-col w-full md:w-1/2 justify-center">
+      <div className="flex flex-col w-full md:w-2/3 justify-center">
         {currentData ? (
           <>
             <h1 className="flex w-full font-bold my-5 justify-center">
@@ -51,6 +51,12 @@ export default async function Page({ params }: { params: { symbol: string } }) {
                         <td>${holding.brokerage?.toFixed(2)}</td>
                         <td>{holding.qty}</td>
                         <td>${(currentData!.regularMarketPrice! * holding.qty!).toFixed(2)}</td>
+                        <td>
+                          <div className="flex gap-2">
+                            <Image alt="recycle bin" width="18" height="18" src="/icons/recycle-bin.png" />
+                            <Image alt="recycle bin" width="18" height="18" src="/icons/edit.png" />
+                          </div>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -81,8 +87,7 @@ export default async function Page({ params }: { params: { symbol: string } }) {
           </>
         ) : (
           <div className="flex w-full justify-center text-center mt-4">
-            This company does not exist.
-            <Button />
+            This company does not exist. <Button />
           </div>
         )}
       </div>
