@@ -5,6 +5,7 @@ import SharePortfolioChart from "./chart";
 import { calculateChartData, combineShares } from "./functions";
 import { ShareTable } from "./components/ShareTable";
 import Link from "next/link";
+import { formatCurrency } from "../functions/currency";
 
 export default async function page() {
   const sharePurchases = await getSharePurchases();
@@ -19,18 +20,18 @@ export default async function page() {
           <>
             <div className="flex mt-3 align-center items-center w-full justify-between">
               <p>
-                Current Portfolio Value: $
-                {combinedShares.reduce((total, share) => total + share.current_price! * share.qty, 0).toFixed(2)}
+                Current Portfolio Value:
+                {formatCurrency(combinedShares.reduce((total, share) => total + share.current_price! * share.qty, 0))}
               </p>
 
               <Link href="/shares/addShares" className="btn btn-outline">
                 Add Holding
               </Link>
             </div>
-            <div className="w-full h-48 md:h-72 mt-5">
+            <div className="w-full h-36 md:h-60 mt-5">
               <SharePortfolioChart data={chartData} />
             </div>
-            {<ShareTable sharePurchases={combinedShares} />}
+            <div className="overflow-x-scroll md:overflow-auto">{<ShareTable sharePurchases={combinedShares} />}</div>
           </>
         ) : null}
       </div>

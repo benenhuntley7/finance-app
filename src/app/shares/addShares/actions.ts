@@ -72,6 +72,7 @@ export const addPurchase = async (formData: FormData) => {
 
 export interface SharePurchase {
   symbol: string | null;
+  long_name: string | null | undefined;
   purchase_date: Date | null;
   purchase_price: number | null;
   current_price: number | null | undefined;
@@ -106,10 +107,11 @@ export const getSharePurchases = async () => {
         const currentPrice = currentPrices.find((priceData) => priceData.symbol === data.symbol);
         return {
           ...data,
+          long_name: currentPrice ? currentPrice.longName : null,
           current_price: currentPrice ? currentPrice.regularMarketPrice : null, // Assuming getQuotes returns an object with a 'regularMarketPrice' property
         };
       });
-
+      console.log(sharePurchasesWithPrices);
       return sharePurchasesWithPrices;
     }
   } catch (err) {

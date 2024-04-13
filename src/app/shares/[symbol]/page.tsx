@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: { symbol: string } }) {
               {currentData.symbol} - {currentData.longName}
             </h1>
             {holdings && holdings.length ? (
-              <div className="  overflow-x-scroll md:overflow-auto">
+              <div className="overflow-x-scroll md:overflow-auto">
                 <table className="table table-zebra table-sm">
                   <thead className="border-b border-black border-3">
                     <tr>

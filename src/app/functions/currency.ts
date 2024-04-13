@@ -16,7 +16,13 @@ export const validateCurrency = (value: string) => {
   }
 };
 
-export function formatCurrency(amount: number | null, currency = "$", locale = "en-US", decimalPlaces = 2) {
-  const roundedAmount = amount ? amount.toFixed(decimalPlaces) : 0;
-  return `${currency}${Number(roundedAmount).toLocaleString(locale)}`;
+export function formatCurrency(amount: number | null | undefined, currency = "$", locale = "en-US", decimalPlaces = 2) {
+  if (amount == null) return ""; // Handle null or undefined amounts
+  const roundedAmount = amount.toFixed(decimalPlaces);
+  const roundedNumber = parseFloat(roundedAmount); // Convert back to number to remove trailing zeros
+  const formattedNumber = roundedNumber.toLocaleString(locale, {
+    minimumFractionDigits: decimalPlaces,
+    maximumFractionDigits: decimalPlaces,
+  });
+  return `${currency}${formattedNumber}`;
 }

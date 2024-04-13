@@ -14,6 +14,7 @@ interface ChartDataEntry {
 
 export interface TableDataEntry {
   symbol: string;
+  long_name: string;
   brokerage: number;
   qty: number;
   purchase_price: number;
@@ -88,7 +89,6 @@ export function combineShares(purchases: SharePurchase[]): TableDataEntry[] {
 
   for (const purchase of purchases) {
     if (!purchase.symbol) continue;
-
     let totalInfo = totalsArray.find((item) => item.symbol === purchase.symbol);
 
     if (!totalInfo) {
@@ -98,6 +98,7 @@ export function combineShares(purchases: SharePurchase[]): TableDataEntry[] {
         qty: 0,
         purchase_price: purchase.purchase_price || 0,
         current_price: purchase.current_price || 0, // Use provided current price or default to 0
+        long_name: purchase.long_name || "",
       };
       totalsArray.push(totalInfo);
     }

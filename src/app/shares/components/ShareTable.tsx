@@ -5,7 +5,7 @@ import { formatCurrency } from "@/app/functions/currency";
 export const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[] }) => {
   return (
     <div className="flex w-full mt-4">
-      <table className="table table-zebra table-sm">
+      <table className="table table-zebra table-xs">
         <thead className="border-b border-black border-3">
           <tr>
             <th>Symbol</th>
@@ -21,13 +21,17 @@ export const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[
           {sharePurchases.map((purchase, index) => (
             <tr key={index}>
               <td>
-                <Link className="font-bold underline" href={`/shares/${purchase.symbol.replace(".", "-")}`}>
+                <Link
+                  className="font-bold underline text-blue-800"
+                  href={`/shares/${purchase.symbol.replace(".", "-")}`}
+                >
                   {purchase.symbol && purchase.symbol.split(".")[0].toUpperCase()}
-                </Link>
+                </Link>{" "}
+                {purchase.long_name}
               </td>
               <td>{purchase.qty}</td>
               <td>{formatCurrency(purchase.purchase_price)}</td>
-              <td>{purchase.current_price}</td>
+              <td>{formatCurrency(purchase.current_price)}</td>
               <td>{formatCurrency(purchase.current_price! * purchase.qty!)}</td>
               <td>{formatCurrency(purchase.brokerage)}</td>
               <td>
