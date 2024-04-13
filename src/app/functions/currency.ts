@@ -1,5 +1,3 @@
-import { ChangeEvent } from "react";
-
 // Function to validate currency input
 export const validateCurrency = (value: string) => {
   // Get the input value
@@ -17,3 +15,8 @@ export const validateCurrency = (value: string) => {
     return "";
   }
 };
+
+export function formatCurrency(amount: number | null, currency = "$", locale = "en-US", decimalPlaces = 2) {
+  const roundedAmount = amount ? amount.toFixed(decimalPlaces) : 0;
+  return `${currency}${Number(roundedAmount).toLocaleString(locale)}`;
+}

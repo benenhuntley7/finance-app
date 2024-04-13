@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { TableDataEntry } from "../functions";
+import { formatCurrency } from "@/app/functions/currency";
 
 export const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[] }) => {
   return (
-    <div className="flex w-3/5 mt-4">
+    <div className="flex w-full mt-4">
       <table className="table table-zebra table-sm">
         <thead className="border-b border-black border-3">
           <tr>
@@ -25,17 +26,16 @@ export const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[
                 </Link>
               </td>
               <td>{purchase.qty}</td>
-              <td>${purchase.purchase_price}</td>
-              <td>${purchase.current_price}</td>
-              <td>${(purchase.current_price! * purchase.qty!).toFixed(2)}</td>
-              <td>${purchase.brokerage.toFixed(2)}</td>
+              <td>{formatCurrency(purchase.purchase_price)}</td>
+              <td>{purchase.current_price}</td>
+              <td>{formatCurrency(purchase.current_price! * purchase.qty!)}</td>
+              <td>{formatCurrency(purchase.brokerage)}</td>
               <td>
-                $
-                {(
+                {formatCurrency(
                   purchase.current_price! * purchase.qty! +
-                  purchase.brokerage! -
-                  (purchase.purchase_price! * purchase.qty! - purchase.brokerage!)
-                ).toFixed(2)}
+                    purchase.brokerage! -
+                    (purchase.purchase_price! * purchase.qty! - purchase.brokerage!)
+                )}
               </td>
             </tr>
           ))}
@@ -45,16 +45,17 @@ export const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[
             <td>Total</td>
             <td colSpan={3}></td>
             <td>
-              $
-              {sharePurchases
-                .reduce((total, purchase) => total + purchase.current_price! * purchase.qty! + purchase.brokerage!, 0)
-                .toFixed(2)}
+              {formatCurrency(
+                sharePurchases.reduce(
+                  (total, purchase) => total + purchase.current_price! * purchase.qty! + purchase.brokerage!,
+                  0
+                )
+              )}
             </td>
-            <td>${sharePurchases.reduce((total, purchase) => total + purchase.brokerage!, 0).toFixed(2)}</td>
+            <td>{formatCurrency(sharePurchases.reduce((total, purchase) => total + purchase.brokerage!, 0))}</td>
             <td>
-              $
-              {sharePurchases
-                .reduce(
+              {formatCurrency(
+                sharePurchases.reduce(
                   (total, purchase) =>
                     total +
                     purchase.current_price! * purchase.qty! +
@@ -62,7 +63,7 @@ export const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[
                     (purchase.purchase_price! * purchase.qty! + purchase.brokerage!),
                   0
                 )
-                .toFixed(2)}
+              )}
             </td>
           </tr>
         </tfoot>

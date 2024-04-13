@@ -8,6 +8,7 @@ import { getShare } from "../addShares/actions";
 import Link from "next/link";
 import Button from "./button";
 import Image from "next/image";
+import { formatCurrency } from "@/app/functions/currency";
 
 export default async function Page({ params }: { params: { symbol: string } }) {
   const { userId } = auth();
@@ -47,10 +48,10 @@ export default async function Page({ params }: { params: { symbol: string } }) {
                       <tr key={index}>
                         {/* Render data in table cells */}
                         <td>{holding.purchase_date?.toLocaleDateString()}</td>
-                        <td>${holding.purchase_price}</td>
-                        <td>${holding.brokerage?.toFixed(2)}</td>
+                        <td>{formatCurrency(holding.purchase_price)}</td>
+                        <td>{formatCurrency(holding.brokerage)}</td>
                         <td>{holding.qty}</td>
-                        <td>${(currentData!.regularMarketPrice! * holding.qty!).toFixed(2)}</td>
+                        <td>{formatCurrency(currentData!.regularMarketPrice! * holding.qty!)}</td>
                         <td>
                           <div className="flex gap-2">
                             <Image alt="recycle bin" width="18" height="18" src="/icons/recycle-bin.png" />
@@ -64,13 +65,15 @@ export default async function Page({ params }: { params: { symbol: string } }) {
                     <tr>
                       <td>Total</td>
                       <td></td>
-                      <td>${holdings.reduce((total, purchase) => total + purchase.brokerage!, 0).toFixed(2)}</td>
+                      <td>{formatCurrency(holdings.reduce((total, purchase) => total + purchase.brokerage!, 0))}</td>
                       <td>{holdings.reduce((total, purchase) => total + purchase.qty!, 0)}</td>
                       <td>
-                        $
-                        {holdings
-                          .reduce((total, purchase) => total + currentData!.regularMarketPrice! * purchase.qty!, 0)
-                          .toFixed(2)}
+                        {formatCurrency(
+                          holdings.reduce(
+                            (total, purchase) => total + currentData!.regularMarketPrice! * purchase.qty!,
+                            0
+                          )
+                        )}
                       </td>
                     </tr>
                   </tfoot>
