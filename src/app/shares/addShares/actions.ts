@@ -111,7 +111,6 @@ export const getSharePurchases = async () => {
           current_price: currentPrice ? currentPrice.regularMarketPrice : null, // Assuming getQuotes returns an object with a 'regularMarketPrice' property
         };
       });
-      console.log(sharePurchasesWithPrices);
       return sharePurchasesWithPrices;
     }
   } catch (err) {

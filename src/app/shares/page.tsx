@@ -14,27 +14,27 @@ export default async function page() {
   const chartData = sharePurchases ? await calculateChartData(sharePurchases) : null;
 
   return (
-    <main className="flex flex-col items-center px-2 lg:px-20">
-      <div className="flex flex-col w-full md:w-2/3 justify-center items-center">
-        {combinedShares && chartData ? (
-          <>
-            <div className="flex mt-3 align-center items-center w-full justify-between">
+    <main className="flex flex-col items-center justify-between relative px-2 lg:px-20">
+      {combinedShares && chartData ? (
+        <div className="flex flex-col w-2/3">
+          <div className="flex mt-3 align-center items-center w-full justify-between">
+            <div className="flex flex-col text-center">
               <p>
-                Current Portfolio Value:
                 {formatCurrency(combinedShares.reduce((total, share) => total + share.current_price! * share.qty, 0))}
               </p>
+              <p className="text-xs">CURRENT PORTFOLIO VALUE</p>
+            </div>
 
-              <Link href="/shares/addShares" className="btn btn-outline">
-                Add Holding
-              </Link>
-            </div>
-            <div className="w-full h-36 md:h-60 mt-5">
-              <SharePortfolioChart data={chartData} />
-            </div>
-            <div className="overflow-x-scroll md:overflow-auto">{<ShareTable sharePurchases={combinedShares} />}</div>
-          </>
-        ) : null}
-      </div>
+            <Link href="/shares/addShares" className="btn btn-outline btn-sm">
+              Add Holding
+            </Link>
+          </div>
+          <div className="w-full h-36 md:h-60 mt-5">
+            <SharePortfolioChart data={chartData} />
+          </div>
+          <div className="overflow-x-scroll md:overflow-auto">{<ShareTable sharePurchases={combinedShares} />}</div>
+        </div>
+      ) : null}
     </main>
   );
 }

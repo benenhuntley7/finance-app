@@ -1,3 +1,5 @@
+"use client";
+
 import { useFormStatus } from "react-dom";
 
 export default function Button() {
@@ -5,14 +7,10 @@ export default function Button() {
 
   return (
     <button className="btn btn-primary btn-outline w-full">
-      {pending ? (
-        <>
-          Adding Purchase...
-          <span className="loading loading-spinner"></span>
-        </>
-      ) : (
-        "Add Purchase"
-      )}
+      {pending
+        ? "Saving Changes...  " // Removed unnecessary parenthesis
+        : "Save Changes "}
+      <span className="loading loading-spinner"></span>
     </button>
   );
 }

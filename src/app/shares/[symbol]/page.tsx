@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/server/db";
-import { eq, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import * as schema from "../../../server/db/schema";
 import { auth } from "@clerk/nextjs";
 import { getShare } from "../addShares/actions";
@@ -55,7 +55,9 @@ export default async function Page({ params }: { params: { symbol: string } }) {
                         <td>
                           <div className="flex gap-2">
                             <Image alt="recycle bin" width="18" height="18" src="/icons/recycle-bin.png" />
-                            <Image alt="recycle bin" width="18" height="18" src="/icons/edit.png" />
+                            <Link href={`/shares/edit/${holding.row_id}`}>
+                              <Image alt="recycle bin" width="18" height="18" src="/icons/edit.png" />
+                            </Link>
                           </div>
                         </td>
                       </tr>
@@ -64,7 +66,12 @@ export default async function Page({ params }: { params: { symbol: string } }) {
                   <tfoot className="border-t border-black border-3">
                     <tr>
                       <td>Total</td>
-                      <td></td>
+                      <td>
+                        {formatCurrency(
+                          holdings.reduce((total, purchase) => total + purchase.qty! * purchase.purchase_price!, 0) /
+                            holdings.reduce((total, purchase) => total + purchase.qty!, 0)
+                        )}
+                      </td>
                       <td>{formatCurrency(holdings.reduce((total, purchase) => total + purchase.brokerage!, 0))}</td>
                       <td>{holdings.reduce((total, purchase) => total + purchase.qty!, 0)}</td>
                       <td>
