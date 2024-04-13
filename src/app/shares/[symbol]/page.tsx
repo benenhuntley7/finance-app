@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { symbol: string } }) {
   const holdings = await db
     .select()
     .from(schema.sharePurchase)
-    .where(sql`symbol = ${searchSymbol} AND user_id = ${userId}`);
+    .where(sql`symbol = ${searchSymbol} AND user_id = ${userId} ORDER BY purchased_at DESC`);
 
   return (
     <main className="flex flex-col items-center justify-between relative px-2 lg:px-20">
