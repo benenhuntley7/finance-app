@@ -54,7 +54,9 @@ export default async function Page({ params }: { params: { symbol: string } }) {
                         <td>{formatCurrency(currentData!.regularMarketPrice! * holding.qty!)}</td>
                         <td>
                           <div className="flex gap-2">
-                            <Image alt="recycle bin" width="18" height="18" src="/icons/recycle-bin.png" />
+                            <Link href="#">
+                              <Image alt="recycle bin" width="18" height="18" src="/icons/recycle-bin.png" />
+                            </Link>
                             <Link href={`/shares/edit/${holding.row_id}`}>
                               <Image alt="recycle bin" width="18" height="18" src="/icons/edit.png" />
                             </Link>
