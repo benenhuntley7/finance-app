@@ -55,10 +55,10 @@ export default async function Page({ params }: { params: { symbol: string } }) {
                         <td>
                           <div className="flex gap-2">
                             <Link href="#">
-                              <Image alt="recycle bin" width="18" height="18" src="/icons/recycle-bin.png" />
+                              <Image alt="recycle bin" width="20" height="20" src="/icons/recycle-bin.png" />
                             </Link>
                             <Link href={`/shares/edit/${holding.row_id}`}>
-                              <Image alt="recycle bin" width="18" height="18" src="/icons/edit.png" />
+                              <Image alt="recycle bin" width="20" height="20" src="/icons/edit.png" />
                             </Link>
                           </div>
                         </td>
