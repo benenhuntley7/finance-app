@@ -21,12 +21,9 @@ export const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[
           {sharePurchases.map((purchase, index) => (
             <tr key={index}>
               <td>
-                <Link
-                  className="font-bold underline text-blue-800"
-                  href={`/shares/${purchase.symbol.replace(".", "-")}`}
-                >
+                <a className="font-bold underline text-blue-800" href={`/shares/${purchase.symbol.replace(".", "-")}`}>
                   {purchase.symbol && purchase.symbol.split(".")[0].toUpperCase()}
-                </Link>{" "}
+                </a>{" "}
                 {purchase.long_name}
               </td>
               <td>{purchase.qty}</td>

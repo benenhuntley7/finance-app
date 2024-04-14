@@ -16,7 +16,7 @@ export default async function page() {
   return (
     <main className="flex flex-col items-center justify-between relative px-2 lg:px-20">
       {combinedShares && chartData ? (
-        <div className="flex flex-col w-2/3">
+        <div className="flex flex-col w-full md:w-2/3">
           <div className="flex mt-3 align-center items-center w-full justify-between">
             <div className="flex flex-col text-center">
               <p>
