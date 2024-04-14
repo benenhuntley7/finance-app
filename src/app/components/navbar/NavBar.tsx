@@ -38,13 +38,13 @@ const Navbar: React.FC = () => {
           <div className="bg-background hidden w-full justify-end gap-1 px-4 py-2 sm:flex">
             <SignedIn>
               {signedInRoutes.map((route, index) => (
-                <Link
+                <a
                   key={index}
                   href={route.href}
                   className={`text-slate-300 hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
                 >
                   {route.title}
-                </Link>
+                </a>
               ))}
             </SignedIn>
             <SignedOut>
