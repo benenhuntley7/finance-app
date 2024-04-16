@@ -19,14 +19,21 @@ export interface ShareHistory {
   low: number | null;
 }
 
-// Get quote for mutliple shares
+// Get quote for multiple shares
 export async function getQuotes(symbols: string[]) {
+  // Remove duplicates from symbols array
+  const uniqueSymbols = symbols.filter((value, index, self) => {
+    return self.indexOf(value) === index;
+  });
+
   const results: QuoteResult[] = [];
+  console.log(uniqueSymbols);
 
   try {
-    for (const symbol of symbols) {
+    for (const symbol of uniqueSymbols) {
+      console.log(symbol);
       const quote = await yahooFinance.quote(symbol);
-
+      console.log(quote);
       results.push({
         symbol,
         longName: quote.longName,

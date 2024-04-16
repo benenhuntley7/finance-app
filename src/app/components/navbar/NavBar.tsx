@@ -13,9 +13,11 @@ const routes: { title: string; href: string }[] = [
 ];
 
 const signedInRoutes: { title: string; href: string }[] = [
-  { title: "Dashboard", href: "#dashboard" },
   { title: "Profile", href: "/profile" },
   { title: "Shares", href: "/shares" },
+  { title: "Assets", href: "/assets" },
+  { title: "Expenses", href: "/expenses" },
+  { title: "Income", href: "/income" },
 ];
 
 const Navbar: React.FC = () => {

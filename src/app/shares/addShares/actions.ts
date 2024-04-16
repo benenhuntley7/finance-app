@@ -100,6 +100,7 @@ export const getSharePurchases = async () => {
     const symbols = result.map((data) => data.symbol).filter((symbol): symbol is string => symbol !== null); // Filter out null values
 
     if (symbols && symbols.length > 0) {
+      //console.log(symbols);
       const currentPrices = await getQuotes(symbols);
 
       // Merge current prices with shareData

@@ -5,7 +5,7 @@ export default function Page() {
   const router = useRouter();
 
   return (
-    <button type="button" onClick={() => router.back()}>
+    <button className="underline" type="button" onClick={() => router.back()}>
       Click here to go back
     </button>
   );
