@@ -32,11 +32,7 @@ export const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[
               <td>{formatCurrency(purchase.current_price! * purchase.qty!)}</td>
               <td>{formatCurrency(purchase.brokerage)}</td>
               <td>
-                {formatCurrency(
-                  purchase.current_price! * purchase.qty! +
-                    purchase.brokerage! -
-                    (purchase.purchase_price! * purchase.qty! - purchase.brokerage!)
-                )}
+                {formatCurrency(purchase.current_price! * purchase.qty! - purchase.purchase_price! * purchase.qty!)}
               </td>
             </tr>
           ))}
@@ -47,10 +43,7 @@ export const ShareTable = ({ sharePurchases }: { sharePurchases: TableDataEntry[
             <td colSpan={3}></td>
             <td>
               {formatCurrency(
-                sharePurchases.reduce(
-                  (total, purchase) => total + purchase.current_price! * purchase.qty! + purchase.brokerage!,
-                  0
-                )
+                sharePurchases.reduce((total, purchase) => total + purchase.current_price! * purchase.qty!, 0)
               )}
             </td>
             <td>{formatCurrency(sharePurchases.reduce((total, purchase) => total + purchase.brokerage!, 0))}</td>
