@@ -32,12 +32,12 @@ const Navbar: React.FC = () => {
 
   return (
     <header id="navHeader" className="sticky top-0 z-50">
-      <div className="flex h-16 items-center justify-between px-6 sm:border-b border-neutral-400 lg:px-14">
+      <div className="flex h-16 items-center justify-between px-6  lg:px-14">
         <div className="flex items-center">
           <Link href={"/"} className="shrink-0">
             <h1 className="text-slate-300 text-2xl font-bold">financeApp</h1>
           </Link>
-          <div className="bg-background hidden w-full justify-end gap-1 px-4 py-2 sm:flex">
+          <div  className="bg-background hidden w-full justify-end gap-1 px-4 py-2 sm:flex">
             <SignedIn>
               {signedInRoutes.map((route, index) => (
                 <a
@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
           <SignedOut>
             <Link
               href="/sign-in"
-              className={`hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
+              className={` text-slate-300 hover:text-white-300 text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
             >
               Sign In
             </Link>
