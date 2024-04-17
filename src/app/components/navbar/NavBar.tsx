@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { useClerk } from "@clerk/clerk-react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const routes: { title: string; href: string }[] = [
   { title: "Features", href: "#features" },
@@ -22,20 +22,29 @@ const signedInRoutes: { title: string; href: string }[] = [
 
 const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const pathName = usePathname();
   const { signOut } = useClerk();
   const router = useRouter();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+  const currentNavStyle = () => {
+    
+    const baseClass = "sticky top-0 z-50 border-b border-neutral-500";
+    const conditionalClass =
+      pathName === "/" ? "bg-transparent" : "bg-[#1E1E1E]";
+    const combinedClass = `${baseClass} ${conditionalClass}`;
+
+    return combinedClass;
+  };
 
   return (
-    <header id="navHeader" className="sticky top-0 z-50">
+    <header id="navHeader" className={currentNavStyle()}>
       <div className="flex h-16 items-center justify-between px-6  lg:px-14">
         <div className="flex items-center">
           <Link href={"/"} className="shrink-0">
-            <h1 className="text-slate-300 text-2xl font-bold">financeApp</h1>
+            <h1 className="text-slate-300 text-xl   font-semibold font-sans">Finance Advisor</h1>
           </Link>
           <div  className="bg-background hidden w-full justify-end gap-1 px-4 py-2 sm:flex">
             <SignedIn>
@@ -67,7 +76,7 @@ const Navbar: React.FC = () => {
           <SignedIn>
             <Link
               href="#"
-              onClick={() => signOut(() => router.push("/"))}
+              onClick={() => signOut(() => router.push("/dashboard"))}
               className={`text-slate-300 hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
             >
               Sign Out
@@ -85,7 +94,7 @@ const Navbar: React.FC = () => {
 
         {menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
 
-        <button onClick={toggleMenu} className="sm:hidden pe-4 text-slate-300">
+        <button onClick={toggleMenu} className="sm:hidden pe-4 font-semibold text-slate-300">
           {menuOpen ? <p className="h-7 w-7">Close </p> : <p className="h-7 w-7">Menu</p>}
         </button>
       </div>
@@ -98,15 +107,15 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
   const router = useRouter();
 
   return (
-    <nav className="absolute right-0 top-16 flex h-[calc(100vh-70px)] w-2/5 flex-col z-50 bg-white border-x border-b border-neutral-400">
-      <div className="bg-background  flex w-full grow flex-col gap-1 px-4 pb-2 sm:hidden">
+    <nav className="absolute right-0 top-16 flex h-[calc(100vh-70px)] w-2/5 flex-col z-50 bg-white border-x border-b border-slate-400">
+      <div className="bg-background flex  w-full grow flex-col gap-1 px-4 pb-2 sm:hidden">
         <SignedOut>
           {routes.map((route, index) => (
             <Link
               key={index}
               href={route.href}
               onClick={toggleMenu}
-              className={`hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center text-sm transition-colors sm:w-auto`}
+              className={`hover:text-accent-foreground text-muted-foreground  inline-flex h-10 w-full items-center text-sm transition-colors sm:w-auto`}
             >
               {route.title}
             </Link>
