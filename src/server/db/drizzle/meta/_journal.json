@@ -36,6 +36,27 @@
       "when": 1712569071132,
       "tag": "0004_hesitant_hellfire_club",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1713262744755,
+      "tag": "0005_tranquil_forgotten_one",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1713262831428,
+      "tag": "0006_tricky_white_queen",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1713263133615,
+      "tag": "0007_plain_scarlet_spider",
+      "breakpoints": true
     }
   ]
 }

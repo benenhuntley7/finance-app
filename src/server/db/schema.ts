@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import { serial, text, timestamp, pgTable, integer, real } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -28,4 +29,20 @@ export const sharePurchase = pgTable("share_purchase", {
   purchase_price: real("purchase_price"),
   brokerage: real("brokerage"),
   qty: integer("qty"),
+});
+
+export const assets = pgTable("assets", {
+  id: serial("id").primaryKey(),
+  user_id: text("user_id").references(() => user.id),
+  category: text("category"),
+  name: text("name"),
+});
+
+export const assetValuesHistory = pgTable("asset_values_history", {
+  id: serial("id").primaryKey(),
+  asset_id: integer("asset_id")
+    .notNull()
+    .references(() => assets.id),
+  value: real("value"),
+  updated_at: timestamp("updated_at").default(sql`now()`),
 });

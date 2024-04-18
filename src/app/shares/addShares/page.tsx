@@ -5,7 +5,6 @@ import { getShare, getShareList, getSharePurchases } from "./actions";
 import { DividendHistory, getShareHistory } from "@/server/api/yahooFinance";
 import { NewLineChart } from "../../components/LineChartTest";
 import AddShareForm from "./form";
-import SharePurchases from "./SharePurchases";
 
 export interface ShareHistoryProps {
   date: string;

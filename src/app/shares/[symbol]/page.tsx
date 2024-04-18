@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: { symbol: string } }) {
                         <td>{formatCurrency(holding.brokerage)}</td>
                         <td>{holding.qty}</td>
                         <td>{formatCurrency(currentData!.regularMarketPrice! * holding.qty!)}</td>
-                        <td className="flex justify-end w-20 min-w-20">
+                        <td className="flex justify-end min-w-20">
                           <div className="flex gap-3">
                             <Link href="#">
                               <Image alt="recycle bin" width="20" height="20" src="/icons/recycle-bin.png" />
