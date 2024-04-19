@@ -1,15 +1,16 @@
 import { SignedIn, SignedOut, auth } from "@clerk/nextjs";
-import Dashboard from "./components/dashboard/Dashboard";
-// import Card from "./components/ui/card/Card";
 import Landing from "./landing/page";
 import { getUser } from "@/server/api/user";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import Alert from "./components/ui/alert/Alert";
 
 export default async function Home() {
   const { userId } = auth(); // get userId from Clerk
   const user = userId ? await getUser(userId) : null; // get user info from supabase using userId
-
+ if(userId) {
+  redirect("/dashboard");
+ }
   return (
     <main className="flex flex-col items-center justify-between ">
       {userId && !user && (
@@ -29,9 +30,9 @@ export default async function Home() {
           />
         </div>
       )}
-      <SignedIn>
+      {/* <SignedIn>
         <Dashboard />
-      </SignedIn>
+      </SignedIn> */}
       <SignedOut>   
           <Landing />       
       </SignedOut>
