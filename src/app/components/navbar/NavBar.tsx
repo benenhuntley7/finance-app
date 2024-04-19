@@ -13,7 +13,6 @@ const routes: { title: string; href: string }[] = [
 ];
 
 const signedInRoutes: { title: string; href: string }[] = [
-  { title: "Dashboard", href: "/dashboard"},
   { title: "Profile", href: "/profile" },
   { title: "Shares", href: "/shares" },
   { title: "Assets", href: "/assets" },
@@ -31,10 +30,8 @@ const Navbar: React.FC = () => {
     setMenuOpen(!menuOpen);
   };
   const currentNavStyle = () => {
-    
     const baseClass = "sticky top-0 z-50 border-b border-neutral-500";
-    const conditionalClass =
-      pathName === "/" ? "bg-transparent" : "bg-[#1E1E1E]";
+    const conditionalClass = pathName === "/" ? "bg-transparent" : "bg-[#1E1E1E]";
     const combinedClass = `${baseClass} ${conditionalClass}`;
 
     return combinedClass;
@@ -47,7 +44,7 @@ const Navbar: React.FC = () => {
           <Link href={"/"} className="shrink-0">
             <h1 className="text-slate-300 text-xl   font-semibold font-sans">Finance Advisor</h1>
           </Link>
-          <div  className="bg-background hidden w-full justify-end gap-1 px-4 py-2 sm:flex">
+          <div className="bg-background hidden w-full justify-end gap-1 px-4 py-2 sm:flex">
             <SignedIn>
               {signedInRoutes.map((route, index) => (
                 <a
@@ -82,7 +79,7 @@ const Navbar: React.FC = () => {
             >
               Sign Out
             </Link> */}
-            <UserButton afterSignOutUrl="/"/>
+            <UserButton afterSignOutUrl="/" />
           </SignedIn>
           <SignedOut>
             <Link

@@ -24,7 +24,7 @@ export default async function Assets() {
         </div>
         <Form />
         {latestAssetValues && latestAssetValues.length > 0 && (
-          <div className="overflow-x-scroll w-full">
+          <div className="overflow-x-scroll md:overflow-auto w-full">
             <AssetTable assets={latestAssetValues} />
           </div>
         )}

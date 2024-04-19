@@ -27,13 +27,11 @@ export async function getQuotes(symbols: string[]) {
   });
 
   const results: QuoteResult[] = [];
-  console.log(uniqueSymbols);
 
   try {
     for (const symbol of uniqueSymbols) {
-      console.log(symbol);
       const quote = await yahooFinance.quote(symbol);
-      console.log(quote);
+
       results.push({
         symbol,
         longName: quote.longName,
