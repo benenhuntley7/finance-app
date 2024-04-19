@@ -30,7 +30,7 @@ export default async function Assets() {
 
 const AssetTable = async ({ assets }: { assets: AssetOutput[] }) => {
   return (
-    <table className="table table-zebra">
+    <table className="table table-zebra table-sm md:table-md">
       <thead>
         <tr>
           <td></td>
