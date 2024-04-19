@@ -22,7 +22,11 @@ export default async function Assets() {
           <p className="text-xs">CURRENT ASSET VALUE</p>
         </div>
         <Form />
-        {latestAssetValues && latestAssetValues.length > 0 && <AssetTable assets={latestAssetValues} />}
+        {latestAssetValues && latestAssetValues.length > 0 && (
+          <div className="overflow-x-scroll md:overflow-auto">
+            <AssetTable assets={latestAssetValues} />
+          </div>
+        )}
       </div>
     </main>
   );

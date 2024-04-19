@@ -190,7 +190,7 @@ const DividendHistoryTable: React.FC<DividendHistoryProps> = ({ dividendHistory 
     <>
       <div className="flex flex-col max-w-lg w-full text-sm md:text-base items-center mt-5">
         <p>Dividend History</p>
-        <table className="table">
+        <table className="table table-zebra">
           <thead>
             <th>Date</th>
             <th>Dividend Amount</th>
