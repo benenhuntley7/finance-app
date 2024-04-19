@@ -17,6 +17,7 @@ export default async function page() {
     <main className="flex flex-col items-center justify-between relative px-2 lg:px-20">
       {combinedShares && chartData ? (
         <div className="flex flex-col w-full md:w-2/3">
+          <h1 className="flex font-bold my-5 w-full justify-center">Shares</h1>
           <div className="flex mt-3 align-center items-center w-full justify-between">
             <div className="flex flex-col text-center">
               <p>
@@ -29,9 +30,11 @@ export default async function page() {
               Add Holding
             </Link>
           </div>
-          <div className="w-full h-36 md:h-60 mt-5">
-            <SharePortfolioChart data={chartData} />
-          </div>
+          {chartData.length > 0 && (
+            <div className="w-full h-36 md:h-60 mt-5">
+              <SharePortfolioChart data={chartData} />
+            </div>
+          )}
           <div className="overflow-x-scroll md:overflow-auto">{<ShareTable sharePurchases={combinedShares} />}</div>
         </div>
       ) : null}

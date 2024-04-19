@@ -1,12 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 import { formatCurrency } from "../functions/currency";
 import { getAssets } from "./actions";
 import Form from "./form";
 import { AssetOutput, capitaliseWords, getMostRecentAssetEntries, getTotalAssetValue } from "./functions";
-import Image from "next/image";
 
 export default async function Assets() {
-  // Await the result of getAssets()
   const assets = await getAssets();
 
   // Now that assets is resolved, you can pass it to findMostRecentAssetEntries
@@ -14,16 +13,18 @@ export default async function Assets() {
   const totalAssets = latestAssetValues ? getTotalAssetValue(latestAssetValues) : null;
 
   return (
-    <main className="flex flex-col items-center justify-between relative px-2 lg:px-20">
-      <div className="flex flex-col w-full items-center md:w-2/3">
-        <h1 className="flex font-bold my-5">Assets</h1>
-        <div className="flex flex-col text-center">
-          <p>{formatCurrency(totalAssets).trim().slice(0, -3)}</p>
-          <p className="text-xs">CURRENT ASSET VALUE</p>
+    <main className="flex flex-col items-center px-2 lg:px-20">
+      <div className="flex flex-col w-full md:w-2/3">
+        <h1 className="flex font-bold my-5 w-full justify-center">Assets</h1>
+        <div className="flex w-full justify-left">
+          <div className="flex flex-col text-center">
+            <p>{formatCurrency(totalAssets).trim().slice(0, -3)}</p>
+            <p className="text-xs">CURRENT ASSET VALUE</p>
+          </div>
         </div>
         <Form />
         {latestAssetValues && latestAssetValues.length > 0 && (
-          <div className="overflow-x-scroll md:overflow-auto">
+          <div className="overflow-x-scroll w-full">
             <AssetTable assets={latestAssetValues} />
           </div>
         )}
