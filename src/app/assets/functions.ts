@@ -33,7 +33,7 @@ export const getMostRecentAssetEntries = (data: Asset[]): AssetOutput[] => {
       !recentEntries[assetId] ||
       (updatedAt &&
         recentEntries[assetId].updated_at &&
-        new Date(updatedAt) > new Date(recentEntries[assetId].updated_at))
+        new Date(updatedAt) > new Date(recentEntries[assetId].updated_at!))
     ) {
       recentEntries[assetId] = {
         id: entry.assets.id,
