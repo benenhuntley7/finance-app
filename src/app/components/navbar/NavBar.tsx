@@ -3,7 +3,7 @@
 import "./style.css";
 import Link from "next/link";
 import React, { useState } from "react";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useClerk } from "@clerk/clerk-react";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -13,6 +13,7 @@ const routes: { title: string; href: string }[] = [
 ];
 
 const signedInRoutes: { title: string; href: string }[] = [
+  { title: "Dashboard", href: "/dashboard"},
   { title: "Profile", href: "/profile" },
   { title: "Shares", href: "/shares" },
   { title: "Assets", href: "/assets" },
@@ -74,13 +75,14 @@ const Navbar: React.FC = () => {
 
         <div className="hidden items-center gap-2 sm:flex">
           <SignedIn>
-            <Link
+            {/* <Link
               href="#"
               onClick={() => signOut(() => router.push("/dashboard"))}
               className={`text-slate-300 hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
             >
               Sign Out
-            </Link>
+            </Link> */}
+            <UserButton afterSignOutUrl="/"/>
           </SignedIn>
           <SignedOut>
             <Link
