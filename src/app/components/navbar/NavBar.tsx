@@ -23,8 +23,8 @@ const signedInRoutes: { title: string; href: string }[] = [
 const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathName = usePathname();
-  const { signOut } = useClerk();
-  const router = useRouter();
+  //const { signOut } = useClerk();
+  //const router = useRouter();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);

@@ -1,6 +1,6 @@
 "use server";
 
-import { getSharePurchases } from "./addShares/actions";
+import { getSharePurchases } from "./actions";
 import SharePortfolioChart from "./chart";
 import { calculateChartData, combineShares } from "./functions";
 import { ShareTable } from "./components/ShareTable";

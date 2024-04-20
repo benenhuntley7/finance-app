@@ -4,7 +4,7 @@ import { db } from "@/server/db";
 import { sql } from "drizzle-orm";
 import * as schema from "../../../server/db/schema";
 import { auth } from "@clerk/nextjs";
-import { getShare } from "../addShares/actions";
+import { getShare } from "../actions";
 import Link from "next/link";
 import Button from "./button";
 import Image from "next/image";

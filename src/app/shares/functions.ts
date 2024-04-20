@@ -1,4 +1,4 @@
-import { SharePurchase } from "./addShares/actions";
+import { SharePurchase } from "./actions";
 import { getShareHistory } from "@/server/api/yahooFinance";
 import { ShareHistoryProps } from "./chart";
 

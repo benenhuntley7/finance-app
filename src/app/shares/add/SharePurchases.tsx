@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getSharePurchases, SharePurchase } from "./actions";
+import { getSharePurchases, SharePurchase } from "../actions";
 
 export default function SharePurchases() {
   const [sharePurchases, setSharePurchases] = useState<SharePurchase[] | null>();

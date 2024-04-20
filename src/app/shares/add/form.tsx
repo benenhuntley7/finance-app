@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { validateCurrency } from "../../functions/currency";
-import { addPurchase } from "./actions";
+import { addPurchase } from "../actions";
 import Button from "./button";
 
 interface FormProps {
