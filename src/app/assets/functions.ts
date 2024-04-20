@@ -54,7 +54,7 @@ export const getTotalAssetValue = (data: AssetOutput[]): number => {
 };
 
 export const capitaliseWords = (sentence: string | null) => {
-  if (!sentence) return null;
+  if (!sentence) return "";
 
   return sentence
     .split(" ")

@@ -44,6 +44,28 @@ export const addAsset = async (formData: FormData) => {
   }
 };
 
+export const updateAsset = async (formData: FormData) => {
+  const { userId: user_id } = auth();
+
+  if (!user_id) {
+    redirect("/login");
+  }
+
+  const category = formData.get("category") as string;
+  const name = formData.get("name") as string;
+  const value = parseInt(formData.get("value") as string);
+  const asset_id = parseInt(formData.get("id") as string);
+
+  try {
+    await db.insert(schema.assetValuesHistory).values({ asset_id, value });
+    await db.update(schema.assets).set({ category, name }).where(eq(schema.assets.id, asset_id));
+
+    revalidatePath("/assets");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getAssets = async () => {
   const { userId: user_id } = auth();
   if (!user_id) {
