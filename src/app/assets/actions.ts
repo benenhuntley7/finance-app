@@ -17,8 +17,6 @@ export const addAsset = async (formData: FormData) => {
   }
   const user = await getUser(user_id);
 
-  // Validate input here....
-
   const category = formData.get("category") as string;
   const name = formData.get("name") as string;
   const value = parseInt(formData.get("value") as string);
@@ -61,7 +59,8 @@ export const getAssets = async () => {
         .leftJoin(schema.assetValuesHistory, eq(schema.assets.id, schema.assetValuesHistory.asset_id))
         .where(
           sql`${schema.assets.id} = ${schema.assetValuesHistory.asset_id} AND ${schema.assets.user_id} = ${user.id}`
-        );
+        )
+        .orderBy(schema.assetValuesHistory.updated_at);
       return result as Asset[];
     }
   } catch (err) {
@@ -86,9 +85,25 @@ export const getAsset = async (id: string) => {
           sql`${schema.assets.id} = ${schema.assetValuesHistory.asset_id} AND ${schema.assets.user_id} = ${
             user.id
           } AND ${schema.assets.id} = ${parseInt(id, 10)}`
-        );
-      console.log(result[0]);
-      return result[0] as Asset;
+        )
+        .orderBy(schema.assetValuesHistory.updated_at);
+
+      // Extracting asset information
+      const { user_id, ...assetInfo } = result[0].assets;
+
+      // Extracting value history objects
+      const valueHistory = result.map((item) => ({
+        value: item.asset_values_history!.value,
+        updated_at: item.asset_values_history!.updated_at,
+      }));
+
+      // Constructing the final object
+      const finalObject = {
+        ...assetInfo,
+        value_history: valueHistory,
+      };
+
+      return finalObject;
     }
   } catch (err) {
     console.error(err);

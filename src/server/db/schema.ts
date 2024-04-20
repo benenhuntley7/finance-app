@@ -17,24 +17,24 @@ export const user = pgTable("user", {
 
 export const shareSymbol = pgTable("share_symbol", {
   row_id: serial("row_id").primaryKey(),
-  symbol: text("symbol").unique(),
-  longName: text("long_name"),
+  symbol: text("symbol").unique().notNull(),
+  longName: text("long_name").notNull(),
 });
 
 export const sharePurchase = pgTable("share_purchase", {
   row_id: serial("row_id").primaryKey(),
   user_id: text("user_id").references(() => user.id),
   symbol: text("symbol").references(() => shareSymbol.symbol),
-  purchase_date: timestamp("purchased_at"),
-  purchase_price: real("purchase_price"),
-  brokerage: real("brokerage"),
-  qty: integer("qty"),
+  purchase_date: timestamp("purchased_at").notNull(),
+  purchase_price: real("purchase_price").notNull(),
+  brokerage: real("brokerage").notNull(),
+  qty: integer("qty").notNull(),
 });
 
 export const assets = pgTable("assets", {
   id: serial("id").primaryKey(),
   user_id: text("user_id").references(() => user.id),
-  category: text("category"),
+  category: text("category").notNull(),
   name: text("name"),
 });
 

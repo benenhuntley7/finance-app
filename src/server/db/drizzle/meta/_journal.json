@@ -57,6 +57,13 @@
       "when": 1713263133615,
       "tag": "0007_plain_scarlet_spider",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1713579633192,
+      "tag": "0008_overrated_alice",
+      "breakpoints": true
     }
   ]
 }
