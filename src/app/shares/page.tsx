@@ -26,7 +26,7 @@ export default async function page() {
               <p className="text-xs">CURRENT PORTFOLIO VALUE</p>
             </div>
 
-            <Link href="/shares/addShares" className="btn btn-outline btn-sm">
+            <Link href="/shares/add" className="btn btn-outline btn-sm">
               Add Holding
             </Link>
           </div>

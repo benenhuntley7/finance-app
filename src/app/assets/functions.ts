@@ -53,7 +53,9 @@ export const getTotalAssetValue = (data: AssetOutput[]): number => {
   return data.reduce((total, asset) => total + (asset.value ? asset.value : 0), 0);
 };
 
-export const capitaliseWords = (sentence: string) => {
+export const capitaliseWords = (sentence: string | null) => {
+  if (!sentence) return null;
+
   return sentence
     .split(" ")
     .map((word) => {

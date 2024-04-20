@@ -68,3 +68,29 @@ export const getAssets = async () => {
     console.error(err);
   }
 };
+
+export const getAsset = async (id: string) => {
+  const { userId: user_id } = auth();
+  if (!user_id) {
+    redirect("/login");
+  }
+  const user = await getUser(user_id);
+
+  try {
+    if (user) {
+      const result = await db
+        .select()
+        .from(schema.assets)
+        .leftJoin(schema.assetValuesHistory, eq(schema.assets.id, schema.assetValuesHistory.asset_id))
+        .where(
+          sql`${schema.assets.id} = ${schema.assetValuesHistory.asset_id} AND ${schema.assets.user_id} = ${
+            user.id
+          } AND ${schema.assets.id} = ${parseInt(id, 10)}`
+        );
+      console.log(result[0]);
+      return result[0] as Asset;
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};

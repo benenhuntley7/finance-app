@@ -6,7 +6,7 @@
   left: 0;
 }
 .hero--container {
-  background: url("../assets/hero2.jpg") no-repeat center;
+  background: url("/hero2.jpg") no-repeat center;
   background-size: cover;
   background-color: rgba(210, 112, 42, 0.478);
   background-blend-mode: multiply;

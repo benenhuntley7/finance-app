@@ -61,11 +61,8 @@ const AssetTable = async ({ assets }: { assets: AssetOutput[] }) => {
             <td>{formatCurrency(asset.value)}</td>
             <td className="flex justify-end text-right min-w-20">
               <div className="flex gap-3">
-                <Link href="#">
-                  <Image alt="recycle bin" width="22" height="20" src="/icons/recycle-bin.png" />
-                </Link>
-                <Link href="#">
-                  <Image alt="recycle bin" width="20" height="20" src="/icons/edit.png" />
+                <Link href={`/assets/${asset.id}`}>
+                  <Image alt="edit" width="20" height="20" src="/icons/edit.png" />
                 </Link>
               </div>
             </td>

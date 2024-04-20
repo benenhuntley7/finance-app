@@ -1,4 +1,3 @@
-import React, { CSSProperties } from "react";
 import "./style.css";
 
 export default function Landing() {
@@ -17,9 +16,8 @@ export default function Landing() {
 
           <div className="w-5/6 mt-6 italic text-xs text-left tracking-widest lg:w-5/6 flex align-left font-mono font-light">
             <p className="">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac
-              nisi eget ligula viverra facilisis. Ut non ipsum lacinia,
-              sollicitudin lorem non, euismod justo.{" "}
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac nisi eget ligula viverra facilisis. Ut non
+              ipsum lacinia, sollicitudin lorem non, euismod justo.{" "}
             </p>
           </div>
         </div>
