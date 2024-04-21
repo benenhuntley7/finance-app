@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
   };
   const currentNavStyle = () => {
     const baseClass = "sticky top-0 z-50 border-b border-neutral-500";
-    const conditionalClass = pathName === "/" ? "bg-transparent" : "bg-[#1E1E1E]";
+    const conditionalClass = pathName === "/" ? "bg-transparent" : "bg-[#343F3E]";
     const combinedClass = `${baseClass} ${conditionalClass}`;
 
     return combinedClass;
@@ -93,7 +93,7 @@ const Navbar: React.FC = () => {
 
         {menuOpen && <MobileMenu toggleMenu={toggleMenu} />}
 
-        <button onClick={toggleMenu} className="sm:hidden pe-4 font-semibold text-slate-300">
+        <button onClick={toggleMenu} className="sm:hidden pe-4 font-semibold text-slate-300  leading-7">
           {menuOpen ? <p className="h-7 w-7">Close </p> : <p className="h-7 w-7">Menu</p>}
         </button>
       </div>

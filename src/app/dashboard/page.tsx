@@ -1,4 +1,4 @@
-import { NewBarChart } from "../components/LineChartTest";
+import { NewBarChart } from "../components/charts/LineChartTest";
 
 function Dashboard() {
   return (

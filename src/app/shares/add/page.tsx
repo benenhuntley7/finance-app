@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { getShare, getShareList, getSharePurchases } from "../actions";
 import { DividendHistory, getShareHistory } from "@/server/api/yahooFinance";
-import { NewLineChart } from "../../components/LineChartTest";
+import { NewLineChart } from "../../components/charts/LineChartTest";
 import AddShareForm from "./form";
 
 export interface ShareHistoryProps {
