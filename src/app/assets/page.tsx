@@ -1,3 +1,4 @@
+import "./style.css"
 import Link from "next/link";
 import Image from "next/image";
 import { formatCurrency } from "../functions/currency";
@@ -13,13 +14,13 @@ export default async function Assets() {
   const totalAssets = latestAssetValues ? getTotalAssetValue(latestAssetValues) : null;
 
   return (
-    <main className="flex flex-col items-center px-2 lg:px-20">
+    <main className="main-container w-full bg-primary flex flex-col items-center px-6 lg:px-20">
       <div className="flex flex-col w-full md:w-2/3">
-        <h1 className="flex font-bold my-5 w-full justify-center">Assets</h1>
+        <h1 className="flex text-slate-300 font-bold my-5 w-full justify-center">Assets</h1>
         <div className="flex w-full justify-left">
           <div className="flex flex-col text-center">
-            <p>{formatCurrency(totalAssets).trim().slice(0, -3)}</p>
-            <p className="text-xs">CURRENT ASSET VALUE</p>
+            <p className="text-slate-300">{formatCurrency(totalAssets).trim().slice(0, -3)}</p>
+            <p className="text-xs text-slate-300">CURRENT ASSET VALUE</p>
           </div>
         </div>
         <Form />

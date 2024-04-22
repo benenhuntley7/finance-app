@@ -8,7 +8,7 @@
 .hero--container {
   background: url("/hero2.jpg") no-repeat center;
   background-size: cover;
-  background-color: rgba(210, 112, 42, 0.478);
+  background-color: rgba(220, 237, 255, 0.554);
   background-blend-mode: multiply;
 }
 .fade-in-text {
@@ -27,7 +27,7 @@
 @media screen and (max-width: 455px) {
   .hero--container {
     background-size: 800px 800px;
-    background-color: rgba(210, 112, 42, 0.478);
+    background-color: rgba(128, 138, 149, 0.554);
     background-blend-mode: multiply;
     background-position-x: 15%;
     background-position-y: 10%;
