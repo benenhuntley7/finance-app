@@ -1,4 +1,4 @@
-import "./style.css"
+import "./style.css";
 import Link from "next/link";
 import Image from "next/image";
 import { formatCurrency } from "../functions/currency";
@@ -39,7 +39,7 @@ const AssetTable = async ({ assets }: { assets: AssetOutput[] }) => {
     <table className="table table-zebra table-sm md:table-md">
       <thead>
         <tr>
-          <td></td>
+          <td className="hidden md:block"></td>
           <td>Category</td>
           <td>Asset Name</td>
           <td>Asset Value</td>

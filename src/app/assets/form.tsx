@@ -47,7 +47,7 @@ export default function Form({ asset }: { asset?: Asset }) {
           <input className={inputClass} id="value" name="value" type="number" min={0} defaultValue={asset_value} />
         </div>
         <div className="w-full mx-3">
-          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2">-</label>
+          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2 invisible">-</label>
           <Button update={asset ? true : false} />
         </div>
       </div>
