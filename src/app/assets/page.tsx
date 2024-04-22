@@ -48,7 +48,7 @@ const AssetTable = async ({ assets }: { assets: AssetOutput[] }) => {
       <tbody>
         {assets.map((asset, index) => (
           <tr key={index}>
-            <td className="w-16">
+            <td className="w-16 hidden md:block">
               <Image
                 alt="property-type"
                 width="25"
