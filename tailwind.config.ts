@@ -12,6 +12,13 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      colors: {
+        primary: "#343f3e",
+        secondary: "#505A5B",
+        accent: "#94B0DA",
+        secondaryAccent: "#8F91A2",
+        background: "#DCEDFF",
+      },
     },
   },
   plugins: [require("daisyui")],

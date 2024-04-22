@@ -2,7 +2,7 @@
     background-color: var(--primary-color);
 }
 .min-h-custom {
-    min-height: calc(100vh - 4rem);
+    min-height: calc(100vh - 65px);
   }
 @media screen and (max-width: 678px ) {
     #formPage {
