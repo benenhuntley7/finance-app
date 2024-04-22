@@ -59,7 +59,7 @@ const AssetTable = async ({ assets }: { assets: AssetOutput[] }) => {
             </td>
             <td>{capitaliseWords(asset.category as string)}</td>
             <td>{capitaliseWords(asset.name as string)}</td>
-            <td>{formatCurrency(asset.value)}</td>
+            <td>{formatCurrency(asset.value).trim().slice(0, -3)}</td>
             <td className="flex justify-end text-right min-w-20">
               <div className="flex gap-3">
                 <Link href={`/assets/${asset.id}`}>

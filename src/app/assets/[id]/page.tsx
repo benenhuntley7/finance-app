@@ -57,7 +57,7 @@ const HistoryTable = ({ asset }: { asset: Asset }) => {
         {asset.value_history.map((entry, index) => (
           <tr key={index}>
             <td>{entry.updated_at?.toDateString()}</td>
-            <td>{formatCurrency(entry.value)}</td>
+            <td>{formatCurrency(entry.value).trim().slice(0, -3)}</td>
             <td className="flex justify-end text-right min-w-20">
               <div className="flex gap-3">
                 <Link href={`#`}>
@@ -81,6 +81,6 @@ export type Asset = {
   name: string | null;
   value_history: {
     value: number | null;
-    updated_at: Date | null; // Assuming this is a string representing a timestamp
+    updated_at: Date | null;
   }[];
 };
