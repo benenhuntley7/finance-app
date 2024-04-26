@@ -64,6 +64,27 @@
       "when": 1713579633192,
       "tag": "0008_overrated_alice",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1714105559506,
+      "tag": "0009_colossal_nocturne",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1714106048442,
+      "tag": "0010_normal_surge",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1714106123375,
+      "tag": "0011_furry_cannonball",
+      "breakpoints": true
     }
   ]
 }

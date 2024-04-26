@@ -38,13 +38,28 @@ export default function Form({ asset }: { asset?: Asset }) {
           <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="name">
             Name
           </label>
-          <input className={inputClass} id="name" name="name" type="text" defaultValue={capitaliseWords(asset_name)} />
+          <input
+            className={inputClass}
+            id="name"
+            name="name"
+            type="text"
+            defaultValue={capitaliseWords(asset_name)}
+            required
+          />
         </div>
         <div className="w-full md:w-1/3 px-3">
           <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="value">
             Value
           </label>
-          <input className={inputClass} id="value" name="value" type="number" min={0} defaultValue={asset_value} />
+          <input
+            className={inputClass}
+            id="value"
+            name="value"
+            type="number"
+            min={0}
+            defaultValue={asset_value}
+            required
+          />
         </div>
         <div className="w-full mx-3">
           <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2 invisible">-</label>

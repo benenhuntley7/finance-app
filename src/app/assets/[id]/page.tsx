@@ -6,6 +6,7 @@ import { capitaliseWords } from "../functions";
 import { formatCurrency } from "@/app/functions/currency";
 import Form from "../form";
 import HistoryTable from "./components/HistoryTable";
+import AssetValueChart from "./components/LineChart";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id }: { id: string } = params;
@@ -19,15 +20,15 @@ export default async function Page({ params }: { params: { id: string } }) {
         {asset ? (
           <>
             <h1 className="flex w-full font-bold my-5 justify-center">
-              {capitaliseWords(asset.name)} - {formatCurrency(asset.value_history[0].value)}
+              {capitaliseWords(asset.name)} - {formatCurrency(asset.value_history[0].value).slice(0, -3)}
             </h1>
             <Form asset={asset} />
             <div className="flex w-full justify-between">
-              <div className="flex w-1/2">
+              <div className="w-1/2 me-3">
                 <HistoryTable asset={asset} />
               </div>
-              <div className="flex w-1/2 justify-center items-center">
-                <span>graph goes here</span>
+              <div className="flex w-1/2 justify-center items-center mt-5 h-48">
+                <AssetValueChart data={asset.value_history} />
               </div>
             </div>
           </>

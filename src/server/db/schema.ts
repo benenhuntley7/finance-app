@@ -36,6 +36,7 @@ export const assets = pgTable("assets", {
   user_id: text("user_id").references(() => user.id),
   category: text("category").notNull(),
   name: text("name"),
+  created_at: timestamp("created_at").default(sql`now()`),
 });
 
 export const assetValuesHistory = pgTable("asset_values_history", {
@@ -44,6 +45,6 @@ export const assetValuesHistory = pgTable("asset_values_history", {
   asset_id: integer("asset_id")
     .notNull()
     .references(() => assets.id),
-  value: real("value"),
+  value: integer("value"),
   updated_at: timestamp("updated_at").default(sql`now()`),
 });

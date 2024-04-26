@@ -32,9 +32,7 @@ export const addAsset = async (formData: FormData) => {
           .where(sql`user_id = ${user_id} ORDER BY created_at DESC LIMIT 1`)
       )[0];
 
-      await db.insert(schema.assetValuesHistory).values({ asset_id: result.id, value });
-
-      console.log(result);
+      await db.insert(schema.assetValuesHistory).values({ asset_id: result.id, value, user_id });
     } else {
     }
 
@@ -109,6 +107,8 @@ export const getAsset = async (id: string) => {
           } AND ${schema.assets.id} = ${parseInt(id, 10)}`
         )
         .orderBy(schema.assetValuesHistory.updated_at);
+
+      if (result.length === 0) return;
 
       // Extracting asset information
       const { user_id, ...assetInfo } = result[0].assets;
