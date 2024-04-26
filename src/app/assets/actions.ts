@@ -57,7 +57,7 @@ export const updateAsset = async (formData: FormData) => {
   const asset_id = parseInt(formData.get("id") as string);
 
   try {
-    await db.insert(schema.assetValuesHistory).values({ asset_id, value });
+    await db.insert(schema.assetValuesHistory).values({ asset_id, value, user_id });
     await db.update(schema.assets).set({ category, name }).where(eq(schema.assets.id, asset_id));
 
     revalidatePath("/assets");
@@ -115,6 +115,7 @@ export const getAsset = async (id: string) => {
 
       // Extracting value history objects
       const valueHistory = result.map((item) => ({
+        id: item.asset_values_history!.id,
         value: item.asset_values_history!.value,
         updated_at: item.asset_values_history!.updated_at,
       }));
@@ -127,6 +128,18 @@ export const getAsset = async (id: string) => {
 
       return finalObject;
     }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const deleteEntry = async (id: number) => {
+  const { userId: user_id } = auth();
+  try {
+    await db
+      .delete(schema.assetValuesHistory)
+      .where(sql`${schema.assetValuesHistory.id} = ${id} AND ${schema.assetValuesHistory.user_id} = ${user_id}`);
+    revalidatePath("/assets");
   } catch (err) {
     console.error(err);
   }

@@ -4,9 +4,8 @@ import Button from "./button";
 import { getAsset } from "../actions";
 import { capitaliseWords } from "../functions";
 import { formatCurrency } from "@/app/functions/currency";
-import Link from "next/link";
-import Image from "next/image";
 import Form from "../form";
+import HistoryTable from "./components/HistoryTable";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id }: { id: string } = params;
@@ -43,35 +42,20 @@ export default async function Page({ params }: { params: { id: string } }) {
   );
 }
 
-const HistoryTable = ({ asset }: { asset: Asset }) => {
+const DeleteModal = () => {
   return (
-    <table className="table table-zebra table-sm md:table-md">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Value</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {asset.value_history.map((entry, index) => (
-          <tr key={index}>
-            <td>{entry.updated_at?.toDateString()}</td>
-            <td>{formatCurrency(entry.value).trim().slice(0, -3)}</td>
-            <td className="flex justify-end text-right min-w-20">
-              <div className="flex gap-3">
-                <Link href={`#`}>
-                  <Image alt="edit" width="20" height="20" src="/icons/edit.png" />
-                </Link>
-                <Link href={`#`}>
-                  <Image alt="delete" width="20" height="20" src="/icons/recycle-bin.png" />
-                </Link>
-              </div>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <dialog id="my_modal_1" className="modal">
+      <div className="modal-box">
+        <h3 className="font-bold text-lg">Hello!</h3>
+        <p className="py-4">Press ESC key or click the button below to close</p>
+        <div className="modal-action">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
   );
 };
 
@@ -80,6 +64,7 @@ export type Asset = {
   category: string;
   name: string | null;
   value_history: {
+    id: number;
     value: number | null;
     updated_at: Date | null;
   }[];

@@ -40,6 +40,7 @@ export const assets = pgTable("assets", {
 
 export const assetValuesHistory = pgTable("asset_values_history", {
   id: serial("id").primaryKey(),
+  user_id: text("user_id").references(() => user.id),
   asset_id: integer("asset_id")
     .notNull()
     .references(() => assets.id),
