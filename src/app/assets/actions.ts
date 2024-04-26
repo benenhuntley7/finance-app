@@ -135,11 +135,25 @@ export const getAsset = async (id: string) => {
 
 export const deleteEntry = async (id: number) => {
   const { userId: user_id } = auth();
+
   try {
     await db
       .delete(schema.assetValuesHistory)
       .where(sql`${schema.assetValuesHistory.id} = ${id} AND ${schema.assetValuesHistory.user_id} = ${user_id}`);
     revalidatePath("/assets");
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const updateEntry = async (id: number, value: number, updated_at: string) => {
+  const { userId: user_id } = auth();
+  await db
+    .update(schema.assetValuesHistory)
+    .set({ value, updated_at: new Date(updated_at) })
+    .where(sql`${schema.assetValuesHistory.id} = ${id} AND ${schema.assetValuesHistory.user_id} = ${user_id}`);
+  revalidatePath("/assets");
+  try {
   } catch (err) {
     console.error(err);
   }
