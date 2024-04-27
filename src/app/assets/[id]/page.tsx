@@ -24,12 +24,14 @@ export default async function Page({ params }: { params: { id: string } }) {
             </h1>
             <Form asset={asset} />
             <div className="flex w-full justify-center">
-              <div className="flex flex-wrap">
-                <div className="w-full md:w-1/2">
+              <div className="flex w-full flex-wrap">
+                {asset.value_history.length > 1 && (
+                  <div className="w-full md:w-1/2 justify-center items-center mt-5 h-48">
+                    <AssetValueChart data={asset.value_history} />
+                  </div>
+                )}
+                <div className={`w-full ${asset.value_history.length > 1 && "md:w-1/2"}`}>
                   <HistoryTable asset={asset} />
-                </div>
-                <div className="w-full md:w-1/2 justify-center items-center mt-5 h-48">
-                  <AssetValueChart data={asset.value_history} />
                 </div>
               </div>
             </div>
