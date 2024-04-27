@@ -23,12 +23,14 @@ export default async function Page({ params }: { params: { id: string } }) {
               {capitaliseWords(asset.name)} - {formatCurrency(asset.value_history[0].value).slice(0, -3)}
             </h1>
             <Form asset={asset} />
-            <div className="flex w-full justify-between">
-              <div className="w-1/2 me-3">
-                <HistoryTable asset={asset} />
-              </div>
-              <div className="flex w-1/2 justify-center items-center mt-5 h-48">
-                <AssetValueChart data={asset.value_history} />
+            <div className="flex w-full justify-center">
+              <div className="flex flex-wrap">
+                <div className="w-full md:w-1/2">
+                  <HistoryTable asset={asset} />
+                </div>
+                <div className="w-full md:w-1/2 justify-center items-center mt-5 h-48">
+                  <AssetValueChart data={asset.value_history} />
+                </div>
               </div>
             </div>
           </>
