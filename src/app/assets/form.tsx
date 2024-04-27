@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { Asset } from "./[id]/page";
 import { addAsset, updateAsset } from "./actions";
 import Button from "./button";
@@ -21,10 +22,20 @@ export default function Form({ asset }: { asset?: Asset }) {
   const asset_name = asset?.name ? asset.name : "";
   const asset_id = asset?.id ? asset.id : "";
 
+  const ref = useRef<HTMLFormElement>(null);
+
   return (
     <form
       className="w-full mt-5"
-      action={asset ? async (formData) => updateAsset(formData) : async (formData) => addAsset(formData)}
+      ref={ref}
+      action={
+        asset
+          ? async (formData) => updateAsset(formData)
+          : async (formData) => {
+              addAsset(formData);
+              ref.current?.reset();
+            }
+      }
     >
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">

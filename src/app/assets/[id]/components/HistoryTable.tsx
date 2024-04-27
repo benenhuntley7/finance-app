@@ -5,7 +5,7 @@ import { Asset } from "../page";
 import Image from "next/image";
 import Link from "next/link";
 import { deleteEntry, updateEntry } from "../../actions";
-import Dialog from "@/app/components/ui/Dialog";
+import Dialog from "@/app/components/ui/dialog/Dialog";
 import { useState, useRef } from "react";
 
 const inputClass =
