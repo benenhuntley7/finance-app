@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, auth } from "@clerk/nextjs";
+import { SignedOut, auth } from "@clerk/nextjs";
 import Landing from "./components/landing/page";
 import { getUser } from "@/server/api/user";
 import { redirect } from "next/navigation";
@@ -30,9 +30,6 @@ export default async function Home() {
           />
         </div>
       )}
-      {/* <SignedIn>
-        <Dashboard />
-      </SignedIn> */}
       <SignedOut>
         <Landing />
       </SignedOut>

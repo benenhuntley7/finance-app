@@ -38,8 +38,9 @@ export default function Form({ asset }: { asset?: Asset }) {
       }
     >
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <div className="w-full md:w-1/3 px-3 md:mb-0">
           <input type="hidden" value={asset_id} id="id" name="id" />
+          <input type="hidden" value={asset_value} id="original_value" name="original_value" />
           <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="category">
             Asset Type
           </label>

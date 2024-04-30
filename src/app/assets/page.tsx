@@ -14,7 +14,7 @@ export default async function Assets() {
   const totalAssets = latestAssetValues ? getTotalAssetValue(latestAssetValues) : null;
 
   return (
-    <main className="main-container w-full bg-primary flex flex-col items-center px-6 lg:px-20">
+    <main className="main-container w-full bg-gray-500 flex flex-col items-center px-6 lg:px-20">
       <div className="flex flex-col w-full md:w-2/3">
         <h1 className="flex text-slate-300 font-bold my-5 w-full justify-center">Assets</h1>
         <div className="flex w-full justify-left">
@@ -60,7 +60,7 @@ const AssetTable = async ({ assets }: { assets: AssetOutput[] }) => {
             <td>{capitaliseWords(asset.category as string)}</td>
             <td>{capitaliseWords(asset.name as string)}</td>
             <td>{formatCurrency(asset.value).trim().slice(0, -3)}</td>
-            <td className="flex justify-end text-right min-w-20">
+            <td className="justify-end text-right min-w-full">
               <div className="flex gap-3">
                 <Link href={`/assets/${asset.id}`}>
                   <Image alt="edit" width="20" height="20" src="/icons/edit.png" />

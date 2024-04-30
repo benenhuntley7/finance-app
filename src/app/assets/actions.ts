@@ -52,10 +52,11 @@ export const updateAsset = async (formData: FormData) => {
   const category = formData.get("category") as string;
   const name = formData.get("name") as string;
   const value = parseInt(formData.get("value") as string);
+  const original_value = parseInt(formData.get("original_value") as string);
   const asset_id = parseInt(formData.get("id") as string);
 
   try {
-    await db.insert(schema.assetValuesHistory).values({ asset_id, value, user_id });
+    if (value !== original_value) await db.insert(schema.assetValuesHistory).values({ asset_id, value, user_id });
     await db.update(schema.assets).set({ category, name }).where(eq(schema.assets.id, asset_id));
 
     revalidatePath("/assets");
