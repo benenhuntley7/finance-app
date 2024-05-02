@@ -107,7 +107,7 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
 
   return (
     <nav className="absolute right-0 top-16 flex h-[calc(100vh-70px)] w-2/5 flex-col z-50 border-x border-b border-neutral-500">
-      <div className="bg-primary bg-opacity-95 text-white flex  w-full grow flex-col gap-1 px-4 pb-2 sm:hidden">
+      <div className="bg-primary bg-opacity-90 text-white flex  w-full grow flex-col gap-1 px-4 pb-2 sm:hidden">
         <SignedOut>
           {routes.map((route, index) => (
             <Link
@@ -152,7 +152,7 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
           </div>
         </SignedIn>
       </div>
-      <div className="bg-primary bg-opacity-80 mobile-nav w-full sm:hidden" />
+      <div className="bg-primary bg-opacity-90 mobile-nav w-full sm:hidden" />
     </nav>
   );
 };
