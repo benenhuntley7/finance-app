@@ -23,7 +23,7 @@ export const fetchData = async () => {
 
 
 export const formatValues = (num: number) => {
-  const numStr = num.toString();
-  const trimmedStr = numStr.replace(/(?:\.0+|(\.\d+?)0+)$/, "$1");;
-  return parseFloat(trimmedStr);
-}
+  const computedNum = Math.log10(num);
+  
+  return computedNum.toFixed(4);
+};

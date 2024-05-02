@@ -10,6 +10,10 @@ import {
   PolarRadiusAxis,
   Radar,
   Legend,
+  Tooltip,
+  RadialBar,
+  Customized,
+  RadialBarChart,
 } from "recharts";
 import { formatValues } from "./functions";
 
@@ -49,11 +53,10 @@ export default class AssetChart extends PureComponent<{ data: Asset[] }> {
           value: formatValues(item.asset_values_history?.value || 0),
         });
       }
-      
+      console.log(result);
       return result;
-      
     }, []);
-    
+
     return (
       <ResponsiveContainer width={"100%"} height={400}>
         <RadarChart
@@ -66,15 +69,14 @@ export default class AssetChart extends PureComponent<{ data: Asset[] }> {
 
           <PolarAngleAxis dataKey={"category"} />
 
-          <PolarRadiusAxis angle={30} domain={[0, 150]} />
+          {/* <PolarRadiusAxis angle={10} domain={[0, 10]} allowDataOverflow /> */}
           <Radar
-            name="Mike"
             dataKey="value"
-            stroke="#8884d8"
-            fill="#8884d8"
+            stroke="#8f91a2"
+            fill="#8f91a2"
             fillOpacity={0.6}
           />
-          <Legend />
+          {/* <Legend /> */}
         </RadarChart>
       </ResponsiveContainer>
     );
