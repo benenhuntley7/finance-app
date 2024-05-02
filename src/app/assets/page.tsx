@@ -9,8 +9,9 @@ import { AssetOutput, capitaliseWords, getMostRecentAssetEntries, getTotalAssetV
 export default async function Assets() {
   const assets = await getAssets();
 
-  // Now that assets is resolved, you can pass it to findMostRecentAssetEntries
+  // Now that assets is resolved, pass it to getMostRecentAssetEntries
   const latestAssetValues = assets ? getMostRecentAssetEntries(assets!) : null;
+  // Now total each asset value to get the total value of the users assets
   const totalAssets = latestAssetValues ? getTotalAssetValue(latestAssetValues) : null;
 
   return (
