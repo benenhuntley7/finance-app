@@ -9,74 +9,26 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
   Radar,
-  Legend,
-  Tooltip,
-  RadialBar,
-  Customized,
-  RadialBarChart,
 } from "recharts";
-import { formatValues } from "./functions";
-
-export interface Asset {
-  assets: {
-    id: number;
-    name: string | null;
-    user_id: string | null;
-    category: string | null;
-  };
-  asset_values_history?: {
-    id: number;
-    updated_at: string | null;
-    asset_id: number;
-    value: number | null;
-  };
-}
+import { category } from "./functions";
 
 // format data so that only one category is displayed on the chart
-export default class AssetChart extends PureComponent<{ data: Asset[] }> {
+export default class AssetChart extends PureComponent<{ data: category[] }> {
   render() {
     const { data } = this.props;
 
-    const formattedData = (data as any[]).reduce((result, item) => {
-      const existingCategoryIndex = result.findIndex(
-        (entry: any) => entry.category === item.assets.category
-      );
-
-      if (existingCategoryIndex !== -1) {
-        // Category already exists, add the value to its accumulated value
-        result[existingCategoryIndex].value +=
-          item.asset_values_history?.value || 0;
-      } else {
-        // New category, add it to the result
-        result.push({
-          category: item.assets.category,
-          value: formatValues(item.asset_values_history?.value || 0),
-        });
-      }
-      console.log(result);
-      return result;
-    }, []);
-
     return (
       <ResponsiveContainer width={"100%"} height={400}>
-        <RadarChart
-          outerRadius={90}
-          width={730}
-          height={250}
-          data={formattedData}
-        >
+        <RadarChart outerRadius={100} width={350} height={350} data={data}>
           <PolarGrid />
-
-          <PolarAngleAxis dataKey={"category"} />
-
-          {/* <PolarRadiusAxis angle={10} domain={[0, 10]} allowDataOverflow /> */}
+          <PolarRadiusAxis  domain={[0, 15]} />
+          <PolarAngleAxis hide dataKey={"category"} />
           <Radar
             dataKey="value"
-            stroke="#8f91a2"
-            fill="#8f91a2"
-            fillOpacity={0.6}
+            stroke="#1b625c"
+            fill="#1b625c"
+            fillOpacity={0.4}
           />
-          {/* <Legend /> */}
         </RadarChart>
       </ResponsiveContainer>
     );

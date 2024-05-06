@@ -1,19 +1,20 @@
 "use client";
-import { NewBarChart } from "../components/charts/LineChartTest";
-import { NewPieChart } from "../components/charts/pieCharts";
 import AssetChart from "./chart";
 import { useState, useEffect } from "react";
-import { getAsset } from "./actions";
 import { fetchData } from "./functions";
+import { formattedData } from "./functions";
+import { category } from "./functions";
 
 export default function Dashboard() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<category[]>([]);
+
   useEffect(() => {
     const fetchAndSetData = async () => {
       try {
         const data = await fetchData();
         if (data !== undefined) {
-          setData(data);
+          const formatted = formattedData(data)
+          setData(formatted);
         }
       } catch (error) {
         console.log(error);
@@ -22,11 +23,14 @@ export default function Dashboard() {
     fetchAndSetData();
   }, []);
 
+  
   return (
     <>
       <div className="w-full">
         <div className="flex align-center justify-center">
-          <AssetChart data={data} />
+          <div className="w-full flex align-center justify-center lg:w-1/4">
+            <AssetChart data={data} />
+          </div>
         </div>
       </div>
     </>

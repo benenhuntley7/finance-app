@@ -6,7 +6,7 @@ import { getUser } from "@/server/api/user";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { eq, sql } from "drizzle-orm";
-import Asset from "./chart";
+import { Asset } from "./functions";
 
 export const getAsset = async () => {
   const { userId: user_id } = auth();
@@ -30,7 +30,7 @@ export const getAsset = async () => {
         )
         .orderBy(schema.assets.category);
 
-      return result;
+      return result as Asset[];
     }
   } catch (error) {
     console.error(error);
