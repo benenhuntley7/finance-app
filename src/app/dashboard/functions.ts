@@ -1,6 +1,7 @@
 import { getAsset } from "./actions";
+import { AssetOutput } from "../assets/functions";
 
-export interface category {
+export interface Category {
   category: string | null;
   value: number;
 };
@@ -24,7 +25,7 @@ export const fetchData = async () => {
   try {
     const result = await getAsset();
     if (result !== undefined) {
-      
+      console.log(result);
       return result
     } else if (!result) {
       console.log("no result");
@@ -35,31 +36,33 @@ export const fetchData = async () => {
   }
 };
 
-export const formattedData =  (data: Asset[]): category[] => {
- const formatted =  data.reduce((result: category[], item) => {
+export const getCategoryTotalValue = (assetOutputs: AssetOutput[]): Category[] => {
+  const categoryTotals: { [category: string]: number } = {};
 
-    const existingCategoryIndex = result.findIndex(
-      (entry: category) => entry.category === item.assets.category || ""
-    );
-  
-    if (existingCategoryIndex !== -1) {
-      // Category already exists, add the value to its accumulated value
-      // format value as value by index is found
-      result[existingCategoryIndex].value +=
-        formatValues(item.asset_values_history?.value || 0);
-    } else {
-      // New category, add it to the result
-      result.push({
-        category: item.assets.category || null,
-        value: formatValues(item.asset_values_history?.value || 0),
-        
-      });
+  assetOutputs.forEach((assetOutput) => {
+    const category = assetOutput.category;
+    const value = assetOutput.value;
+
+    if (category && value !== null) {
+      if (!categoryTotals[category]) {
+        categoryTotals[category] = value;
+      } else {
+        categoryTotals[category] += value;
+      }
     }
-    return result;
-  }, []);
+  });
 
-  return formatted
-}
+  const categoryArray: Category[] = [];
+
+  for (const category in categoryTotals) {
+    categoryArray.push({
+      category: category,
+      value: formatValues(categoryTotals[category]),
+    });
+  }
+
+  return categoryArray;
+};
 
 // Compress Values for Chart Presentation
 export const formatValues = (num: number): number => {

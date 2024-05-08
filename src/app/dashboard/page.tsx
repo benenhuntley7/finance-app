@@ -1,35 +1,31 @@
-"use client";
+// "use client";
 import AssetChart from "./chart";
-import { useState, useEffect } from "react";
-import { fetchData } from "./functions";
-import { formattedData } from "./functions";
-import { category } from "./functions";
+import Loading from "../loading"
+import { getAsset } from "./actions";
+import { getMostRecentAssetEntries, getTotalAssetValue } from "../assets/functions";
+import { getCategoryTotalValue } from "./functions"
 
-export default function Dashboard() {
-  const [data, setData] = useState<category[]>([]);
+export default async function Dashboard() {
+  const data = await getAsset();
 
-  useEffect(() => {
-    const fetchAndSetData = async () => {
-      try {
-        const data = await fetchData();
-        if (data !== undefined) {
-          const formatted = formattedData(data)
-          setData(formatted);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchAndSetData();
-  }, []);
+  const latestAssetValues = data ? getMostRecentAssetEntries(data!) : null;
 
-  
+  const categoryTotals = latestAssetValues ? getCategoryTotalValue(latestAssetValues) : null;
+
+  const totalAssets = latestAssetValues ? getTotalAssetValue(latestAssetValues) : null;
+
+
   return (
     <>
       <div className="w-full">
+        <div>{totalAssets}</div>
         <div className="flex align-center justify-center">
           <div className="w-full flex align-center justify-center lg:w-1/4">
-            <AssetChart data={data} />
+            {latestAssetValues && categoryTotals ? (
+              <AssetChart data={categoryTotals} />
+            ) : (
+              <Loading />
+            )}
           </div>
         </div>
       </div>

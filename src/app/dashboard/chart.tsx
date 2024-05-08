@@ -10,10 +10,11 @@ import {
   PolarRadiusAxis,
   Radar,
 } from "recharts";
-import { category } from "./functions";
+import { Category } from "./functions";
+import { AssetOutput } from "../assets/functions";
 
 // format data so that only one category is displayed on the chart
-export default class AssetChart extends PureComponent<{ data: category[] }> {
+export default class AssetChart extends PureComponent<{ data: Category[] }> {
   render() {
     const { data } = this.props;
 
@@ -21,7 +22,7 @@ export default class AssetChart extends PureComponent<{ data: category[] }> {
       <ResponsiveContainer width={"100%"} height={400}>
         <RadarChart outerRadius={100} width={350} height={350} data={data}>
           <PolarGrid />
-          <PolarRadiusAxis  domain={[0, 15]} />
+          {/* <PolarRadiusAxis  domain={[0, 20]} /> */}
           <PolarAngleAxis hide dataKey={"category"} />
           <Radar
             dataKey="value"
