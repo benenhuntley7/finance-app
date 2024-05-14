@@ -1,5 +1,6 @@
 import { getAsset } from "./actions";
 import { AssetOutput } from "../assets/functions";
+import { formatCurrency } from "../functions/currency";
 
 export interface Category {
   category: string | null;

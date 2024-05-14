@@ -1,14 +1,16 @@
 "use client";
 import React from "react";
 import { PureComponent } from "react";
-// import { PureComponent } from "react";
 import {
   ResponsiveContainer,
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
+  PieChart,
+  Pie,
   Radar,
+  Legend
 } from "recharts";
 import { Category } from "./functions";
 import { AssetOutput } from "../assets/functions";
@@ -19,10 +21,9 @@ export default class AssetChart extends PureComponent<{ data: Category[] }> {
     const { data } = this.props;
 
     return (
-      <ResponsiveContainer width={"100%"} height={400}>
-        <RadarChart outerRadius={100} width={350} height={350} data={data}>
+      <ResponsiveContainer width={400} height={400}>
+        {/* <RadarChart outerRadius={100} width={350} height={350} data={data}>
           <PolarGrid />
-          {/* <PolarRadiusAxis  domain={[0, 20]} /> */}
           <PolarAngleAxis hide dataKey={"category"} />
           <Radar
             dataKey="value"
@@ -30,7 +31,30 @@ export default class AssetChart extends PureComponent<{ data: Category[] }> {
             fill="#1b625c"
             fillOpacity={0.4}
           />
-        </RadarChart>
+        </RadarChart> */}
+        <PieChart width={400} height={400}>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius={50}
+            fill="#8884d8"
+          />
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={80}
+            fill="#82ca9d"
+            
+          />
+        
+        </PieChart>
       </ResponsiveContainer>
     );
   }

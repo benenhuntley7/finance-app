@@ -28,26 +28,30 @@ export default async function Dashboard() {
   return (
     <>
       <main className="main-container w-full flex flex-col">
-        <div className="flex flex-col align-center justify-start p-2 m-4 border border-solid rounded-md border-black bg-slate-400 bg-opacity-60">
-          <h1 className="font-bold text-sm">Net Worth Value:</h1>
-          <p className="text-2xl text-green-400">
+        <div className="main-content relative flex flex-col align-center justify-start p-4 m-4 border border-solid rounded-md">
+          <h1 className="block uppercase tracking-wide text-slate-300 text-sm font-bold ">
+            Net Worth Value:
+          </h1>
+          <p className="text-2xl text-green-400 mb-2">
             {formatCurrency(totalAssets)}
           </p>
           <div className="">
-            <h2 className="font-bold text-sm mt-4">Details</h2>
+            <h2 className="block uppercase tracking-wide text-slate-300 text-sm font-bold mt-2">
+              Details:
+            </h2>
             <ul>
               {latestAssetValues && categoryRawData ? (
                 categoryRawData.map((item, index) => (
-                  <li className="mb-4" key={index}>
+                  <li className="flex items-center" key={index}>
                     {" "}
-                    <span className="text-sm">
+                    <span className="tracking-wide text-slate-300 text-xs font-bold ">
                       {item.category
                         ? item.category?.charAt(0).toUpperCase() +
                           item.category?.slice(1)
                         : null}
                       :
                     </span>
-                    <span className="text-green-400 ml-2">
+                    <span className="text-green-400 text-lg ml-4">
                       {formatCurrency(item.value)}
                     </span>
                   </li>
@@ -57,9 +61,6 @@ export default async function Dashboard() {
               )}
             </ul>
           </div>
-        </div>
-
-        <div className="w-full">
           <div className="flex align-center justify-center">
             <div className="w-full flex align-center justify-center lg:w-1/4">
               {latestAssetValues && categoryComputedTotals ? (

@@ -1,3 +1,6 @@
-.main-container {
-    background-color: var(--primary-color)
+/* .main-container {
+    background-color: var(--primary-color);
+} */
+.main-content {
+    background-color:var(--primary-color);
 }
