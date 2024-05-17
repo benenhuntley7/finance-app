@@ -37,6 +37,7 @@ export const fetchData = async () => {
   }
 };
 
+
 export const getCategoryTotalValue = (assetOutputs: AssetOutput[]): Category[] => {
   const categoryTotals: { [category: string]: number } = {};
 

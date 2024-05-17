@@ -1,11 +1,14 @@
 // "use client";
-import './style.css'
+import "./style.css";
 import AssetChart from "./chart";
-import Loading from "../loading"
+import Loading from "../loading";
 import { getAsset } from "./actions";
-import { getMostRecentAssetEntries, getTotalAssetValue } from "../assets/functions";
+import {
+  getMostRecentAssetEntries,
+  getTotalAssetValue,
+} from "../assets/functions";
 import { formatCurrency } from "../functions/currency";
-import { getCategoryTotalValue, getCategoryTotalRawValue } from "./functions"
+import { getCategoryTotalValue, getCategoryTotalRawValue } from "./functions";
 
 export default async function Dashboard() {
   const data = await getAsset();
@@ -24,19 +27,22 @@ export default async function Dashboard() {
     ? getTotalAssetValue(latestAssetValues)
     : null;
 
-
   return (
     <>
-      <main className="main-container w-full flex flex-col">
-        <div className="main-content relative flex flex-col align-center justify-start p-4 m-4 border border-solid rounded-md">
-          <h1 className="block uppercase tracking-wide text-slate-300 text-sm font-bold ">
-            Net Worth Value:
-          </h1>
-          <p className="text-2xl text-green-400 mb-2">
-            {formatCurrency(totalAssets)}
-          </p>
-          <div className="">
-            <h2 className="block uppercase tracking-wide text-slate-300 text-sm font-bold mt-2">
+      <main className="main-container w-full h-screen flex flex-col bg-primary">
+        <div className="relative flex flex-col items-center justify-center  mx-4 mt-4 mb-2  lg:justify-center">
+          <div className="w-full bg-black bg-opacity-45 border border-solid p-2 rounded-md  flex items-center lg:w-1/2">
+            <h1 className="block uppercase tracking-wide text-slate-400 text-xs font-bold  ">
+              Net Worth Value:
+            </h1>
+            <p className="text-2xl text-green-400 ml-auto">
+              {formatCurrency(totalAssets)}
+            </p>
+          </div>
+        </div>
+        <div className="relative flex flex-col items-center justify-center  mx-4 mt-4 mb-2  lg:justify-center">
+          <div className="w-full bg-black bg-opacity-45 border border-solid p-2 rounded-md  flex flex-col mx-auto lg:w-1/2">
+            <h2 className="block uppercase tracking-wide text-slate-400 text-sm font-bold mt-2 mb-2 ">
               Details:
             </h2>
             <ul>
@@ -51,7 +57,7 @@ export default async function Dashboard() {
                         : null}
                       :
                     </span>
-                    <span className="text-green-400 text-lg ml-4">
+                    <span className="text-green-400 text-lg ml-auto">
                       {formatCurrency(item.value)}
                     </span>
                   </li>
@@ -61,14 +67,14 @@ export default async function Dashboard() {
               )}
             </ul>
           </div>
-          <div className="flex align-center justify-center">
-            <div className="w-full flex align-center justify-center lg:w-1/4">
-              {latestAssetValues && categoryComputedTotals ? (
-                <AssetChart data={categoryComputedTotals} />
-              ) : (
-                <Loading />
-              )}
-            </div>
+        </div>
+        <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2  lg:justify-center">
+          <div className="w-full bg-black bg-opacity-45  p-2 rounded-md  flex items-center lg:w-1/2">
+            {latestAssetValues && categoryComputedTotals ? (
+              <AssetChart data={categoryComputedTotals} />
+            ) : (
+              <Loading />
+            )}
           </div>
         </div>
       </main>

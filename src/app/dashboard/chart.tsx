@@ -10,7 +10,19 @@ import {
   PieChart,
   Pie,
   Radar,
-  Legend
+  Legend,
+  XAxis,
+  YAxis,
+  ReferenceArea,
+  ReferenceDot,
+  ReferenceLine,
+  Brush,
+  CartesianGrid,
+  Tooltip,
+  Bar,
+  Customized,
+  BarChart
+
 } from "recharts";
 import { Category } from "./functions";
 import { AssetOutput } from "../assets/functions";
@@ -21,7 +33,7 @@ export default class AssetChart extends PureComponent<{ data: Category[] }> {
     const { data } = this.props;
 
     return (
-      <ResponsiveContainer width={400} height={400}>
+      <ResponsiveContainer width={"100%"} height={250}>
         {/* <RadarChart outerRadius={100} width={350} height={350} data={data}>
           <PolarGrid />
           <PolarAngleAxis hide dataKey={"category"} />
@@ -32,7 +44,7 @@ export default class AssetChart extends PureComponent<{ data: Category[] }> {
             fillOpacity={0.4}
           />
         </RadarChart> */}
-        <PieChart width={400} height={400}>
+        {/* <PieChart width={100} height={100}>
           <Pie
             data={data}
             dataKey="value"
@@ -54,7 +66,16 @@ export default class AssetChart extends PureComponent<{ data: Category[] }> {
             
           />
         
-        </PieChart>
+        </PieChart> */}
+        <BarChart width={350} height={250} data={data}>
+        {/* <CartesianGrid strokeDasharray="3 3" fill="#ccc" /> */}
+          <XAxis dataKey="category" />
+          {/* <YAxis /> */}
+          <Tooltip />
+          {/* <Legend /> */}
+          <Bar dataKey="value" fill="#94B0DA" />
+          {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
+        </BarChart>
       </ResponsiveContainer>
     );
   }
