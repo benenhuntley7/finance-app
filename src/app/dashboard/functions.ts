@@ -1,8 +1,26 @@
 import { getAsset } from "./actions";
 import { AssetOutput } from "../assets/functions";
-import { Category } from "./types";
 import { formatCurrency } from "../functions/currency";
 
+export interface Category {
+  category: string | null;
+  value: number;
+};
+
+export interface Asset {
+  assets: {
+    id: number;
+    name: string | null;
+    user_id: string | null;
+    category: string | null;
+  };
+  asset_values_history?: {
+    id: number;
+    updated_at: string | null;
+    asset_id: number;
+    value: number | null;
+  };
+}
 // Unused function in its current state
 export const fetchData = async () => {
   try {
