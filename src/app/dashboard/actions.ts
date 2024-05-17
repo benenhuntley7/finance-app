@@ -6,7 +6,7 @@ import { getUser } from "@/server/api/user";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { eq, sql } from "drizzle-orm";
-import { Asset } from "./functions";
+import { Asset } from "../assets/functions";
 
 export const getAsset = async () => {
   const { userId: user_id } = auth();
