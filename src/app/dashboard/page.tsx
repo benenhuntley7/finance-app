@@ -31,7 +31,7 @@ export default async function Dashboard() {
     <>
       <main className="main-container w-full h-screen flex flex-col bg-primary">
         <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2   lg:justify-center">
-          <div className="w-full bg-custom-radial p-2 rounded-md  flex items-center lg:w-1/2">
+          <div className="w-full custom-radial p-2 rounded-md  flex items-center lg:w-1/2">
             <h1 className="block uppercase tracking-wide text-slate-400 text-xs font-bold  ">
               Net Worth:
             </h1>
@@ -41,7 +41,7 @@ export default async function Dashboard() {
           </div>
         </div>
         <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2   lg:justify-center">
-          <div className="w-full bg-custom-radial p-2 rounded-md  flex flex-col mx-auto lg:w-1/2">
+          <div className="w-full custom-radial p-2 rounded-md  flex flex-col mx-auto lg:w-1/2">
             <h2 className="block border-b uppercase tracking-wide text-slate-400 text-sm font-bold mt-2 mb-2 ">
               Details
             </h2>
@@ -69,7 +69,7 @@ export default async function Dashboard() {
           </div>
         </div>
         <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2   lg:justify-center">
-          <div className="w-full bg-custom-radial  p-2 rounded-md  flex items-center lg:w-1/2">
+          <div className="w-full custom-radial  p-2 rounded-md  flex items-center lg:w-1/2">
             {latestAssetValues && categoryComputedTotals ? (
               <AssetChart data={categoryComputedTotals} />
             ) : (
