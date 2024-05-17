@@ -1,27 +1,9 @@
 import { getAsset } from "./actions";
 import { AssetOutput } from "../assets/functions";
+import { Category } from "./types";
 import { formatCurrency } from "../functions/currency";
 
-export interface Category {
-  category: string | null;
-  value: number;
-};
-
-export interface Asset {
-  assets: {
-    id: number;
-    name: string | null;
-    user_id: string | null;
-    category: string | null;
-  };
-  asset_values_history?: {
-    id: number;
-    updated_at: string | null;
-    asset_id: number;
-    value: number | null;
-  };
-}
-
+// Unused function in its current state
 export const fetchData = async () => {
   try {
     const result = await getAsset();
@@ -37,7 +19,7 @@ export const fetchData = async () => {
   }
 };
 
-
+// Formatted Category values
 export const getCategoryTotalValue = (assetOutputs: AssetOutput[]): Category[] => {
   const categoryTotals: { [category: string]: number } = {};
 
@@ -65,7 +47,7 @@ export const getCategoryTotalValue = (assetOutputs: AssetOutput[]): Category[] =
 
   return categoryArray;
 };
-
+// Raw Category values 
 export const getCategoryTotalRawValue = (assetOutputs: AssetOutput[]): Category[] => {
   const categoryTotals: { [category: string]: number } = {};
 
@@ -93,7 +75,6 @@ export const getCategoryTotalRawValue = (assetOutputs: AssetOutput[]): Category[
 
   return categoryArray;
 };
-
 // Compress Values for Chart Presentation
 export const formatValues = (num: number): number => {
  return Math.log10(num);  

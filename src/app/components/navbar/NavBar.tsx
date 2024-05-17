@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
           <Link href={"/"} className="shrink-0">
             <h1 className="text-slate-300 text-xl   font-semibold font-sans">Finance Advisor</h1>
           </Link>
-          <div className="bg-primary hidden w-full justify-end gap-1 px-4 py-2 sm:flex">
+          <div className="hidden w-full justify-end gap-1 px-4 py-2 sm:flex">
             <SignedIn>
               {signedInRoutes.map((route, index) => (
                 <a

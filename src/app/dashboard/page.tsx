@@ -30,20 +30,20 @@ export default async function Dashboard() {
   return (
     <>
       <main className="main-container w-full h-screen flex flex-col bg-primary">
-        <div className="relative flex flex-col items-center justify-center  mx-4 mt-4 mb-2  lg:justify-center">
-          <div className="w-full bg-black bg-opacity-45 border border-solid p-2 rounded-md  flex items-center lg:w-1/2">
+        <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2   lg:justify-center">
+          <div className="w-full bg-custom-radial p-2 rounded-md  flex items-center lg:w-1/2">
             <h1 className="block uppercase tracking-wide text-slate-400 text-xs font-bold  ">
-              Net Worth Value:
+              Net Worth:
             </h1>
             <p className="text-2xl text-green-400 ml-auto">
               {formatCurrency(totalAssets)}
             </p>
           </div>
         </div>
-        <div className="relative flex flex-col items-center justify-center  mx-4 mt-4 mb-2  lg:justify-center">
-          <div className="w-full bg-black bg-opacity-45 border border-solid p-2 rounded-md  flex flex-col mx-auto lg:w-1/2">
-            <h2 className="block uppercase tracking-wide text-slate-400 text-sm font-bold mt-2 mb-2 ">
-              Details:
+        <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2   lg:justify-center">
+          <div className="w-full bg-custom-radial p-2 rounded-md  flex flex-col mx-auto lg:w-1/2">
+            <h2 className="block border-b uppercase tracking-wide text-slate-400 text-sm font-bold mt-2 mb-2 ">
+              Details
             </h2>
             <ul>
               {latestAssetValues && categoryRawData ? (
@@ -68,8 +68,8 @@ export default async function Dashboard() {
             </ul>
           </div>
         </div>
-        <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2  lg:justify-center">
-          <div className="w-full bg-black bg-opacity-45  p-2 rounded-md  flex items-center lg:w-1/2">
+        <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2   lg:justify-center">
+          <div className="w-full bg-custom-radial  p-2 rounded-md  flex items-center lg:w-1/2">
             {latestAssetValues && categoryComputedTotals ? (
               <AssetChart data={categoryComputedTotals} />
             ) : (
