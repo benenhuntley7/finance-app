@@ -5,9 +5,13 @@ import { formatCurrency } from "../functions/currency";
 export interface Category {
   category: string | null;
   value: number;
+  previousValue?: number;
+  comparison?: "up" | "down" | "same" | null;
 };
 
-export interface Asset {
+ 
+
+export interface AssetDash {
   assets: {
     id: number;
     name: string | null;
@@ -20,22 +24,74 @@ export interface Asset {
     asset_id: number;
     value: number | null;
   };
-}
-// Unused function in its current state
-export const fetchData = async () => {
-  try {
-    const result = await getAsset();
-    if (result !== undefined) {
-      console.log(result);
-      return result
-    } else if (!result) {
-      console.log("no result");
-    }
-  } catch (error) {
-    console.log(error);
-    return undefined;
-  }
 };
+
+export interface AssetOutputDash {
+  id: number;
+  name: string | null;
+  category: string | null;
+  updated_at?: Date;
+  value: number | null;
+  previousValue?: number | null;
+}
+
+
+export const getMostRecentAndPreviousAssetEntries = (data: AssetDash[]): AssetOutputDash[] => {
+  // Include previous value for comparison
+  let recentEntries: { [key: number]: { recent: AssetOutputDash, previous?: AssetOutputDash } } = {};
+
+  // Iterate over each Asset
+  data.forEach((entry) => {
+    const assetId = entry.assets.id;
+    const updatedAt = entry.asset_values_history?.updated_at;
+
+  // Check if recentEntries does not exist with given assetId, if true we create the entry 
+    if (!recentEntries[assetId]) {
+      recentEntries[assetId] = {
+        recent: {
+          id: entry.assets.id,
+          name: entry.assets.name,
+          category: entry.assets.category,
+          updated_at: new Date(updatedAt!),
+          value: entry.asset_values_history!.value,
+        },
+      };
+    } else {
+  // We compare updatedAt and the current assets updated_at, assigning the current value and previous value in "previous" & "recent" objects respectively
+      const currentRecent = recentEntries[assetId].recent;
+      if (updatedAt && new Date(updatedAt) > new Date(currentRecent.updated_at!)) {
+        recentEntries[assetId].previous = { ...currentRecent };
+        recentEntries[assetId].recent = {
+          id: entry.assets.id,
+          name: entry.assets.name,
+          category: entry.assets.category,
+          updated_at: new Date(updatedAt!),
+          value: entry.asset_values_history!.value,
+        };
+      } else if (updatedAt && (!recentEntries[assetId].previous || new Date(updatedAt) > new Date(recentEntries[assetId].previous!.updated_at!))) {
+        recentEntries[assetId].previous = {
+          id: entry.assets.id,
+          name: entry.assets.name,
+          category: entry.assets.category,
+          updated_at: new Date(updatedAt!),
+          value: entry.asset_values_history!.value,
+        };
+      }
+    }
+  });
+  // Finally we map the values into a new array of objects
+  const combinedEntries = Object.values(recentEntries).map(entry => ({
+    id: entry.recent.id,
+    name: entry.recent.name,
+    category: entry.recent.category,
+    updated_at: entry.recent.updated_at,
+    value: entry.recent.value,
+    previousValue: entry.previous ? entry.previous.value : undefined,
+  }));
+
+  return combinedEntries;
+};
+
 
 // Formatted Category values
 export const getCategoryTotalValue = (assetOutputs: AssetOutput[]): Category[] => {
@@ -65,19 +121,26 @@ export const getCategoryTotalValue = (assetOutputs: AssetOutput[]): Category[] =
 
   return categoryArray;
 };
+
+export const compareValues = (category: Category[]) => {
+
+}
+
 // Raw Category values 
-export const getCategoryTotalRawValue = (assetOutputs: AssetOutput[]): Category[] => {
-  const categoryTotals: { [category: string]: number } = {};
+export const getCategoryTotalRawValue = (assetOutputs: AssetOutputDash[]): Category[] => {
+  const categoryTotals: { [category: string]: {value: number; previousValue: number;} } = {};
 
   assetOutputs.forEach((assetOutput) => {
     const category = assetOutput.category;
     const value = assetOutput.value;
+    const previousValue = assetOutput.previousValue || 0;
 
     if (category && value !== null) {
       if (!categoryTotals[category]) {
-        categoryTotals[category] = value;
+        categoryTotals[category] = {value: value, previousValue: previousValue};
       } else {
-        categoryTotals[category] += value;
+        categoryTotals[category].value += value;
+        categoryTotals[category].previousValue += previousValue;
       }
     }
   });
@@ -85,9 +148,25 @@ export const getCategoryTotalRawValue = (assetOutputs: AssetOutput[]): Category[
   const categoryArray: Category[] = [];
 
   for (const category in categoryTotals) {
+    const current = categoryTotals[category].value;
+    const previous = categoryTotals[category].previousValue;
+    let comparison: "up" | "down" | "same" | null = null;
+
+    if(previous !== undefined) {
+      if(current > previous) {
+        comparison = "up"
+      } else if (current < previous) {
+        comparison = "down"
+      } else {
+        comparison = "same"
+      }
+    }
+
     categoryArray.push({
       category: category,
-      value: categoryTotals[category],
+      value: categoryTotals[category].value,
+      previousValue: categoryTotals[category].previousValue,
+      comparison: comparison,
     });
   }
 

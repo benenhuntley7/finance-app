@@ -8,19 +8,27 @@ import {
   getTotalAssetValue,
 } from "../assets/functions";
 import { formatCurrency } from "../functions/currency";
-import { getCategoryTotalValue, getCategoryTotalRawValue } from "./functions";
+import {
+  getCategoryTotalValue,
+  getCategoryTotalRawValue,
+  getMostRecentAndPreviousAssetEntries,
+} from "./functions";
 
 export default async function Dashboard() {
   const data = await getAsset();
 
   const latestAssetValues = data ? getMostRecentAssetEntries(data!) : null;
 
+  const previousAndRecentAssetValue = data
+    ? getMostRecentAndPreviousAssetEntries(data!)
+    : null;
+
   const categoryComputedTotals = latestAssetValues
     ? getCategoryTotalValue(latestAssetValues)
     : null;
 
   const categoryRawData = latestAssetValues
-    ? getCategoryTotalRawValue(latestAssetValues)
+    ? getCategoryTotalRawValue(previousAndRecentAssetValue!)
     : null;
 
   const totalAssets = latestAssetValues
@@ -57,8 +65,9 @@ export default async function Dashboard() {
                         : null}
                       :
                     </span>
+                    <span className=""></span>
                     <span className="text-green-400 text-lg ml-auto">
-                      {formatCurrency(item.value)}
+                    <span className=" text-sm text-white">{item.comparison}</span> {formatCurrency(item.value)}
                     </span>
                   </li>
                 ))
