@@ -6,10 +6,8 @@ export interface Category {
   category: string | null;
   value: number;
   previousValue?: number;
-  comparison?: "up" | "down" | "same" | null;
+  comparison?: '↑' | '↓' | '-' | null;
 };
-
- 
 
 export interface AssetDash {
   assets: {
@@ -35,7 +33,7 @@ export interface AssetOutputDash {
   previousValue?: number | null;
 }
 
-
+// Updated retrieval for latest asset entries including previous values
 export const getMostRecentAndPreviousAssetEntries = (data: AssetDash[]): AssetOutputDash[] => {
   // Include previous value for comparison
   let recentEntries: { [key: number]: { recent: AssetOutputDash, previous?: AssetOutputDash } } = {};
@@ -91,8 +89,6 @@ export const getMostRecentAndPreviousAssetEntries = (data: AssetDash[]): AssetOu
 
   return combinedEntries;
 };
-
-
 // Formatted Category values
 export const getCategoryTotalValue = (assetOutputs: AssetOutput[]): Category[] => {
   const categoryTotals: { [category: string]: number } = {};
@@ -121,11 +117,6 @@ export const getCategoryTotalValue = (assetOutputs: AssetOutput[]): Category[] =
 
   return categoryArray;
 };
-
-export const compareValues = (category: Category[]) => {
-
-}
-
 // Raw Category values 
 export const getCategoryTotalRawValue = (assetOutputs: AssetOutputDash[]): Category[] => {
   const categoryTotals: { [category: string]: {value: number; previousValue: number;} } = {};
@@ -150,15 +141,15 @@ export const getCategoryTotalRawValue = (assetOutputs: AssetOutputDash[]): Categ
   for (const category in categoryTotals) {
     const current = categoryTotals[category].value;
     const previous = categoryTotals[category].previousValue;
-    let comparison: "up" | "down" | "same" | null = null;
+    let comparison: '↑' | '↓' | "-" | null = null;
 
     if(previous !== undefined) {
       if(current > previous) {
-        comparison = "up"
+        comparison = '↑'
       } else if (current < previous) {
-        comparison = "down"
+        comparison = '↓'
       } else {
-        comparison = "same"
+        comparison = "-"
       }
     }
 
@@ -176,3 +167,13 @@ export const getCategoryTotalRawValue = (assetOutputs: AssetOutputDash[]): Categ
 export const formatValues = (num: number): number => {
  return Math.log10(num);  
 };
+// Compare comparison value and render tailwind text color class
+export const getComparisonClass = (comparison: string) => {
+  if (comparison === '↑') {
+    return 'text-green-500'; 
+  } else if (comparison === '↓') {
+    return 'text-red-500'; 
+  } else {
+    return 'text-gray-500'; 
+  }
+}
