@@ -1,6 +1,7 @@
 import { getAsset } from "./actions";
 import { AssetOutput } from "../assets/functions";
 import { formatCurrency } from "../functions/currency";
+import AssetIcons from '/icons/asset_images/home.png'
 
 export interface Category {
   category: string | null;
@@ -32,7 +33,12 @@ export interface AssetOutputDash {
   value: number | null;
   previousValue?: number | null;
 }
-
+export const getPercentageValue = (data: Category[], totalValue: number): number[] => {
+  const percentage = data.map((category) => {
+    return parseFloat(((category.value / totalValue) * 100).toFixed(0))
+  })
+  return percentage
+}
 // Updated retrieval for latest asset entries including previous values
 export const getMostRecentAndPreviousAssetEntries = (data: AssetDash[]): AssetOutputDash[] => {
   // Include previous value for comparison
