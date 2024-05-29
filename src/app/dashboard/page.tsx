@@ -45,9 +45,9 @@ export default async function Dashboard() {
 
   return (
     <>
-      <main className="main-container w-full h-screen flex flex-col bg-primary">
-        <div className="relative custom-radial flex flex-col items-center justify-center  mx-1 mt-4 mb-2   lg:justify-center">
-          <div className="w-full  p-2 flex items-center lg:w-1/2">
+      <main className="main-container px-2 w-full h-screen flex flex-col bg-primary">
+        <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2 lg:justify-center">
+          <div className="w-full flex items-center lg:w-1/2">
             <h1 className="block  border-b uppercase tracking-wide text-slate-400 text-xs font-bold">
               Net Worth:
             </h1>
@@ -55,24 +55,20 @@ export default async function Dashboard() {
               {formatCurrency(totalAssets)}
             </p>
           </div>
-          {/* <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2   lg:justify-center"> */}
-            <div className="w-full  rounded-md items-center lg:w-1/2">
-              {categoryRawData && categoryPercentage ? (
-                // <AssetChart data={categoryComputedTotals} />
-                <Percentages
-                  categories={categoryRawData}
-                  percentages={categoryPercentage}
-                />
-              ) : (
-                <Loading />
-              )}
-            </div>
-            <div className="w-full mx-1 mb-2   lg:justify-center">
-              <div className="w-full p-2 rounded-md  flex flex-col mx-auto lg:w-1/2">
-                <h2 className="block border-b uppercase tracking-wide text-slate-400 text-sm font-bold mt-2 mb-2 ">
-                  Details
-                </h2>
-                <ul>
+          <div className="w-full my-4 lg:w-1/2">
+            {categoryRawData && categoryPercentage ? (
+              <Percentages
+                categories={categoryRawData}
+                percentages={categoryPercentage}
+              />
+            ) : (
+              <Loading />
+            )}
+          </div>
+          <div className="w-full rounded-md  flex flex-col mx-auto lg:w-1/2">
+            <details className="text-right text-slate-400">
+              <summary className="font-semibold">Details</summary>
+                <ul className="border border-slate-400 rounded p-2 custom-radial">
                   {latestAssetValues && categoryRawData ? (
                     categoryRawData.map((item, index) => (
                       <li className="flex items-center" key={index}>
@@ -100,9 +96,8 @@ export default async function Dashboard() {
                     <li>No Data Available</li>
                   )}
                 </ul>
-              </div>
-            </div>
-          {/* </div> */}
+            </details>
+          </div>
         </div>
       </main>
     </>
