@@ -3,19 +3,18 @@ import "./style.css";
 import AssetChart from "./chart";
 import Loading from "../loading";
 import { getAsset } from "./actions";
+import Percentages from "./components/CategoryPercentages";
+import CategoryDetails from "./components/categoryDetails";
+import { formatCurrency } from "../functions/currency";
 import {
   getMostRecentAssetEntries,
   getTotalAssetValue,
 } from "../assets/functions";
-import { formatCurrency } from "../functions/currency";
 import {
-  getCategoryTotalValue,
   getCategoryTotalRawValue,
   getMostRecentAndPreviousAssetEntries,
-  getComparisonClass,
   getPercentageValue,
 } from "./functions";
-import Percentages from "./components/CategoryPercentages";
 
 export default async function Dashboard() {
   const data = await getAsset();
@@ -26,11 +25,7 @@ export default async function Dashboard() {
     ? getMostRecentAndPreviousAssetEntries(data!)
     : null;
 
-  const categoryComputedTotals = latestAssetValues
-    ? getCategoryTotalValue(latestAssetValues)
-    : null;
-
-  const categoryRawData = latestAssetValues
+  const categoryRawData = previousAndRecentAssetValue
     ? getCategoryTotalRawValue(previousAndRecentAssetValue!)
     : null;
 
@@ -65,38 +60,15 @@ export default async function Dashboard() {
               <Loading />
             )}
           </div>
-          <div className="w-full rounded-md  flex flex-col mx-auto lg:w-1/2">
-            <details className="text-right text-slate-400">
-              <summary className="font-semibold">Details</summary>
-                <ul className="border border-slate-400 rounded p-2 custom-radial">
-                  {latestAssetValues && categoryRawData ? (
-                    categoryRawData.map((item, index) => (
-                      <li className="flex items-center" key={index}>
-                        {" "}
-                        <span className="tracking-wide text-slate-300 text-xs font-bold ">
-                          {item.category
-                            ? item.category?.charAt(0).toUpperCase() +
-                              item.category?.slice(1)
-                            : null}
-                          :
-                        </span>
-                        <span className="text-green-400 text-lg ml-auto">
-                          <span
-                            className={`text-sm ${getComparisonClass(
-                              item.comparison!
-                            )}`}
-                          >
-                            {item.comparison}
-                          </span>{" "}
-                          {formatCurrency(item.value)}
-                        </span>
-                      </li>
-                    ))
-                  ) : (
-                    <li>No Data Available</li>
-                  )}
-                </ul>
-            </details>
+          <div className="w-full overflow-hidden rounded-md  flex flex-col mx-auto lg:w-1/2">
+            {categoryRawData && previousAndRecentAssetValue ? (
+              <CategoryDetails
+                categories={categoryRawData}
+                previousAndRecentAssetValue={previousAndRecentAssetValue}
+              />
+            ) : (
+              <Loading />
+            )}
           </div>
         </div>
       </main>

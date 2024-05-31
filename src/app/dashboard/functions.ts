@@ -33,6 +33,8 @@ export interface AssetOutputDash {
   value: number | null;
   previousValue?: number | null;
 }
+
+// Calculate percentage values for each category
 export const getPercentageValue = (data: Category[], totalValue: number): number[] => {
   const percentage = data.map((category) => {
     return parseFloat(((category.value / totalValue) * 100).toFixed(0))
