@@ -1,10 +1,9 @@
 // "use client";
-import "./style.css";
-import AssetChart from "./chart";
+// import "./style.css";
 import Loading from "../loading";
 import { getAsset } from "./actions";
-import Percentages from "./components/CategoryPercentages";
-import CategoryDetails from "./components/categoryDetails";
+import Percentages from "./components/categoryPercentages/CategoryPercentages";
+import CategoryDetails from "./components/categoryDetails/categoryDetails";
 import { formatCurrency } from "../functions/currency";
 import {
   getMostRecentAssetEntries,

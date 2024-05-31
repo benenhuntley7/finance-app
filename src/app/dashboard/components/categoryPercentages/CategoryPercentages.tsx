@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { Category } from "../functions";
-import "../style.css";
+import { Category } from "../../functions";
+import "./style.css";
 
 interface PercentagesProps {
   categories: Category[];
