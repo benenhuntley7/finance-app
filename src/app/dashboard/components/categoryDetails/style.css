@@ -1,16 +1,14 @@
-details[open] > summary ~ * {
-    animation: opening .5s ease-in-out;
-}
-
 .content {
-    position: relative;
-    top: 0;
-    /* right: -100%; */
+  position: relative;
+  top: 0;
+  right: -100%;
+  opacity: 0;
+  transition: right 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
-@keyframes opening {
-    0% { right: -100%; opacity: 0; }
-    100% { right: 0; opacity: 1; }
+.open {
+  right: 0;
 }
-
-
+.fade {
+  opacity: 1;
+}

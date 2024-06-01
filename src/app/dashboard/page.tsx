@@ -59,7 +59,7 @@ export default async function Dashboard() {
               <Loading />
             )}
           </div>
-          <div className="w-full overflow-hidden rounded-md  flex flex-col mx-auto lg:w-1/2">
+          <div className="w-full overflow-hidden flex flex-col mx-auto lg:w-1/4">
             {categoryRawData && previousAndRecentAssetValue ? (
               <CategoryDetails
                 categories={categoryRawData}
