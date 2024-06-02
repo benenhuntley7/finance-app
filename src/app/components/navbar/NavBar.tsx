@@ -110,12 +110,12 @@ const Navbar: React.FC = () => {
           </CSSTransition>      
         <button
           onClick={toggleMenu}
-          className="sm:hidden pe-4 font-semibold text-slate-300  leading-7"
+          className=" items-center align-center sm:hidden shadow shadow-white w-8 rounded-md font-semibold text-slate-300 text-2xl "
         >
           {menuOpen ? (
-            <p className="h-7 w-7">Close </p>
+            <p className="">&#10006;</p>
           ) : (
-            <p className="h-7 w-7">Menu</p>
+            <p className="">&#9776;</p>
           )}
         </button>
       </div>
