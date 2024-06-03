@@ -37,7 +37,7 @@ const CategoryDetails: React.FC<DetailsProps> = ({
         {!isOpen ? "Details" : "\u2716"}
       </div>
       <ul
-        className={`${handleVisibility()} content border border-slate-400 rounded p-2 custom-radial`}
+        className={`${handleVisibility()} content border-y border-slate-400  p-2 custom-radial`}
       >
         {previousAndRecentAssetValue && categories ? (
           categories.map((item, index) => (

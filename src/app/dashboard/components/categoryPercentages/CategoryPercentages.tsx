@@ -29,14 +29,14 @@ const Percentages: React.FC<PercentagesProps> = ({
           const percentage = percentages[index];
           if (matchedIcon) {
             return (
-              <div key={index} className="circle custom-radial lg:mx-6">
+              <div key={index} className="circle border border-slate-500 custom-radial  lg:mx-6">
                 <Image
                   src={matchedIcon.image}
                   alt={category.category ? category.category : "Image"}
                   width={20}
                   height={20}
                 />
-                <p className="font-bold">{percentage}%</p>
+                <p className="font-bold text-slate-300">{percentage}%</p>
               </div>
             );
           }
