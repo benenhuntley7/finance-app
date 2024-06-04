@@ -34,3 +34,6 @@
   font-size: 14px;
   text-transform: none;
 }
+ body {
+  height: calc(100% -4rem);
+ }

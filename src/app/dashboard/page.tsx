@@ -1,9 +1,10 @@
 // "use client";
-// import "./style.css";
+import "./style.css";
 import Loading from "../loading";
 import { getAsset } from "./actions";
 import Percentages from "./components/categoryPercentages/CategoryPercentages";
 import CategoryDetails from "./components/categoryDetails/categoryDetails";
+import NetWorth from "./components/NetWorth/NetWorth";
 import { formatCurrency } from "../functions/currency";
 import {
   getMostRecentAssetEntries,
@@ -39,16 +40,9 @@ export default async function Dashboard() {
 
   return (
     <>
-      <main className="main-container px-2 w-full h-screen flex flex-col bg-primary">
+      <main className="main-container min-h-custom px-2 flex flex-col bg-primary">
         <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2 lg:justify-center">
-          <div className="w-full flex items-center lg:w-1/2">
-            <h1 className="block  border-b uppercase tracking-wide text-slate-400 text-xs font-bold">
-              Net Worth:
-            </h1>
-            <p className="text-2xl text-green-400 ml-auto">
-              {formatCurrency(totalAssets)}
-            </p>
-          </div>
+          <NetWorth netWorth={totalAssets} />
           <div className="w-full my-4 lg:w-1/2">
             {categoryRawData && categoryPercentage ? (
               <Percentages

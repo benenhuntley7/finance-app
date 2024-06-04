@@ -7,8 +7,8 @@ import { AssetOutputDash } from "../../functions";
 import "./style.css";
 
 interface DetailsProps {
-  categories: Category[]; //CategoryRawData function will be passed here
-  previousAndRecentAssetValue: AssetOutputDash[];
+  categories: Category[] | null; //CategoryRawData function will be passed here
+  previousAndRecentAssetValue: AssetOutputDash[] | null;
 }
 
 const CategoryDetails: React.FC<DetailsProps> = ({
