@@ -33,21 +33,13 @@ const Navbar: React.FC = () => {
     setMenuOpen(!menuOpen);
     setInProp(!menuOpen);
   };
-  const currentNavStyle = () => {
-    const baseClass = "sticky top-0 z-50 border-b border-neutral-500";
-    const conditionalClass =
-      pathName === "/" ? "bg-transparent" : "bg-[#343F3E]";
-    const combinedClass = `${baseClass} ${conditionalClass}`;
-
-    return combinedClass;
-  };
 
   return (
-    <header id="navHeader" className={currentNavStyle()}>
+    <header id="navHeader" className="sticky top-0 z-50 bg-transparent">
       <div className="flex h-16 items-center justify-between px-6  lg:px-14">
         <div className="flex items-center">
           <Link href={"/"} className="shrink-0">
-            <h1 className="text-slate-300 text-xl   font-semibold font-sans">
+            <h1 className="text-black text-xl font-sans">
               Finance Advisor
             </h1>
           </Link>
@@ -110,7 +102,7 @@ const Navbar: React.FC = () => {
           </CSSTransition>      
         <button
           onClick={toggleMenu}
-          className=" items-center align-center sm:hidden shadow shadow-white w-8 rounded-md font-semibold text-slate-300 text-2xl "
+          className=" items-center align-center sm:hidden shadow shadow-black w-8 rounded-md font-semibold text-black text-2xl "
         >
           {menuOpen ? (
             <p className="">&#10006;</p>

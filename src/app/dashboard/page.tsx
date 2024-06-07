@@ -40,29 +40,34 @@ export default async function Dashboard() {
 
   return (
     <>
-      <main className="main-container min-h-custom px-2 flex flex-col bg-primary">
-        <div className="relative flex flex-col items-center justify-center  mx-1 mt-4 mb-2 lg:justify-center">
-          <NetWorth netWorth={totalAssets} />
-          <div className="w-full my-4 lg:w-1/2">
-            {categoryRawData && categoryPercentage ? (
-              <Percentages
-                categories={categoryRawData}
-                percentages={categoryPercentage}
-              />
-            ) : (
-              <Loading />
-            )}
+      <main className="main-container min-h-custom px-2 flex flex-col lg:items-center">
+        <div className="relative  bg-gradient-to-r from-customGradient to-customGradientTo z-0 w-full min-h-48 mt-2 rounded-tl-3xl rounded-br-3xl overflow-hidden shadow-md shadow-black lg:w-2/6">
+          <div className="pt-4 px-4">
+            <NetWorth netWorth={totalAssets} />
           </div>
-          <div className="w-full overflow-hidden flex flex-col mx-auto lg:w-1/4">
-            {categoryRawData && previousAndRecentAssetValue ? (
-              <CategoryDetails
-                categories={categoryRawData}
-                previousAndRecentAssetValue={previousAndRecentAssetValue}
-              />
-            ) : (
-              <Loading />
-            )}
+
+          <div className="absolute bg-white bg-opacity-30 border-t border-black w-full min-h-32 bottom-0 rounded-tl-3xl rounded-br-3xl">
+            <div className="px-4">
+              {categoryRawData && previousAndRecentAssetValue ? (
+                <CategoryDetails
+                  categories={categoryRawData}
+                  previousAndRecentAssetValue={previousAndRecentAssetValue}
+                />
+              ) : (
+                <Loading />
+              )}
+            </div>
           </div>
+        </div>
+        <div className="w-full mt-4 lg:w-2/6">
+          {categoryRawData && categoryPercentage ? (
+            <Percentages
+              categories={categoryRawData}
+              percentages={categoryPercentage}
+            />
+          ) : (
+            <Loading />
+          )}
         </div>
       </main>
     </>

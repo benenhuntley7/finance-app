@@ -8,10 +8,10 @@ interface totalIncome {
 const NetWorth: React.FC<totalIncome> = ({ netWorth }) => {
     return (
         <div className="w-full flex items-center lg:w-1/2">
-        <h1 className="block  border-b uppercase tracking-wide text-slate-400 text-xs font-bold">
+        <h1 className="block uppercase tracking-widest text-white text-xs">
           Net Worth:
         </h1>
-        <p className="text-2xl text-green-400 ml-auto">
+        <p className="text-2xl text-[#5DB85B] ml-auto tracking-widest">
           {formatCurrency(netWorth)}
         </p>
       </div>

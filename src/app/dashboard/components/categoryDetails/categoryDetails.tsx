@@ -30,40 +30,42 @@ const CategoryDetails: React.FC<DetailsProps> = ({
 
   return (
     <>
-      <div
-        onClick={handleMenu}
-        className="details text-xs  flex align-center items-center justify-center  text-right text-slate-500 cursor-pointer font-semibold  mb-4 ml-auto border-2 border-slate-600 hover:bg-accent hover:text-black rounded-md px-6 w-10"
-      >
-        {!isOpen ? "Details" : "\u2716"}
+      <div className="max-h-32 flex">
+        <ul className={`${handleVisibility()} content py-2 w-full`}>
+          {previousAndRecentAssetValue && categories ? (
+            categories.map((item, index) => (
+              <li className="flex items-center" key={index}>
+                {" "}
+                <span className="tracking-widest text-white text-xs">
+                  {item.category
+                    ? item.category?.charAt(0).toUpperCase() +
+                      item.category?.slice(1)
+                    : null}
+                  :
+                </span>
+                <span className="text-[#90EA8E] tracking-widest text-lg ml-auto mr-auto">
+                  <span
+                    className={`text-sm ${getComparisonClass(
+                      item.comparison!
+                    )}`}
+                  >
+                    {item.comparison}
+                  </span>{" "}
+                  {formatCurrency(item.value)}
+                </span>
+              </li>
+            ))
+          ) : (
+            <li>No Data Available</li>
+          )}
+        </ul>
+        <button
+          onClick={handleMenu}
+          className="details text-xl flex align-center items-center justify-end cursor-pointer font-semibold rounded-md mt-auto mb-2  "
+        >
+          {isOpen ? "\u2716" : "\u27A4"}
+        </button>
       </div>
-      <ul
-        className={`${handleVisibility()} content border-y border-slate-400  p-2 custom-radial`}
-      >
-        {previousAndRecentAssetValue && categories ? (
-          categories.map((item, index) => (
-            <li className="flex items-center" key={index}>
-              {" "}
-              <span className="tracking-wide text-slate-300 text-xs font-bold ">
-                {item.category
-                  ? item.category?.charAt(0).toUpperCase() +
-                    item.category?.slice(1)
-                  : null}
-                :
-              </span>
-              <span className="text-green-400 text-lg ml-auto">
-                <span
-                  className={`text-sm ${getComparisonClass(item.comparison!)}`}
-                >
-                  {item.comparison}
-                </span>{" "}
-                {formatCurrency(item.value)}
-              </span>
-            </li>
-          ))
-        ) : (
-          <li>No Data Available</li>
-        )}
-      </ul>
     </>
   );
 };
