@@ -15,35 +15,41 @@ export default async function Assets() {
   const totalAssets = latestAssetValues ? getTotalAssetValue(latestAssetValues) : null;
 
   return (
-    <main className="main-container w-full bg-gray-500 flex flex-col items-center px-6 lg:px-20">
+   
+    <>
+    <div className="background"></div>
+    <main className="main-container w-full  flex flex-col items-center px-6 lg:px-20">
+    
       <div className="flex flex-col w-full md:w-2/3">
-        <h1 className="flex text-slate-300 font-bold my-5 w-full justify-center">Assets</h1>
+        <h1 className="flex text-slate-600 font-bold my-5 w-full justify-center">Assets</h1>
         <div className="flex w-full justify-left">
           <div className="flex flex-col text-center">
-            <p className="text-slate-300">{formatCurrency(totalAssets).trim().slice(0, -3)}</p>
-            <p className="text-xs text-slate-300">CURRENT ASSET VALUE</p>
+            <p className="text-[#00f71d] bg-black bg-opacity-15 rounded-3xl">{formatCurrency(totalAssets).trim().slice(0, -3)}</p>
+            <p className="text-xs text-slate-600">CURRENT ASSET VALUE</p>
           </div>
         </div>
         <Form />
         {latestAssetValues && latestAssetValues.length > 0 && (
-          <div className="overflow-x-scroll md:overflow-auto w-full">
+          <div className="overflow-x-scroll  md:overflow-auto w-full">
             <AssetTable assets={latestAssetValues} />
           </div>
         )}
       </div>
     </main>
+    </>
+  
   );
 }
 
 const AssetTable = async ({ assets }: { assets: AssetOutput[] }) => {
   return (
-    <table className="table table-zebra table-sm md:table-md">
+    <table className="table bg-white bg-opacity-40 table-zebra table-sm md:table-md">
       <thead>
         <tr>
           <td className="hidden md:block"></td>
-          <td>Category</td>
-          <td>Asset Name</td>
-          <td>Asset Value</td>
+          <td className="text-slate-600">Category</td>
+          <td className="text-slate-600">Asset Name</td>
+          <td className="text-slate-600">Asset Value</td>
           <td></td>
         </tr>
       </thead>
