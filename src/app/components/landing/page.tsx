@@ -4,7 +4,7 @@ export default function Landing() {
   return (
     <section className="landing--section font-serif">
       <div className="hero--container ">
-        <div className="h-screen w-full text-white flex flex-wrap align-center justify-center flex-col pt-[30px] text-center p-6 fade-in-text lg:p-14">
+        <div className="h-screen w-full text-black flex flex-wrap align-center justify-center flex-col pt-[30px] text-center p-6 fade-in-text lg:p-14">
           <div className="text-left w-5/6">
             <div className="text-7xl lg:text-9xl">
               <h1>F.Visor</h1>

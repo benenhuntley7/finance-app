@@ -20,7 +20,7 @@ const Percentages: React.FC<PercentagesProps> = ({
   percentages,
 }) => {
   return (
-    <div className="w-full flex align-center items-center justify-between lg:justify-center">
+    <div className=" w-full flex  align-center items-center justify-between lg:justify-center">
       {categories.map((category, index) => {
         if (index < percentages.length) {
           const matchedIcon = AssetIcons.find(
@@ -29,14 +29,14 @@ const Percentages: React.FC<PercentagesProps> = ({
           const percentage = percentages[index];
           if (matchedIcon) {
             return (
-              <div key={index} className="circle lg:mx-6">
+              <div key={index} className="bg-customGradient border-l border-t border-[#b1002e]  shadow shadow-[#b1002e] circle lg:mx-6">
                 <Image
                   src={matchedIcon.image}
                   alt={category.category ? category.category : "Image"}
-                  width={30}
-                  height={30}
+                  width={25}
+                  height={25}
                 />
-                <p className="font-bold text-black font-sans">{percentage}%</p>
+                <p className="font-semibold text-xl text-[#b1002e] font-sans">{percentage}%</p>
               </div>
             );
           }

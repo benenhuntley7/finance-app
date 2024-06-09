@@ -4,8 +4,11 @@
 .circle {
     position: relative;
     width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    height: 70px;
+    border-bottom-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     /* border: 1px solid black; */
     display: flex;
     flex-direction: column;

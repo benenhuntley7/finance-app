@@ -18,8 +18,8 @@ const config: Config = {
         accent: "#94B0DA",
         secondaryAccent: "#8F91A2",
         background: "#DCEDFF",
-        customGradient: "#542323",
-        customGradientTo: "#BA4D4D"
+        customGradient: "#90b9c4",
+        customGradientTo: "#a70022"
       },
     },
   },

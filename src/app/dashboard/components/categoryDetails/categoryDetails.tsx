@@ -30,24 +30,24 @@ const CategoryDetails: React.FC<DetailsProps> = ({
 
   return (
     <>
-      <div className="max-h-32 flex">
-        <ul className={`${handleVisibility()} content py-2 w-full`}>
+      <div className="max-h-32 flex ">
+        <ul className={`${handleVisibility()} content w-full pt-2`}>
           {previousAndRecentAssetValue && categories ? (
             categories.map((item, index) => (
-              <li className="flex items-center" key={index}>
+              <li className=" li flex items-center  shadow-b shadow-black " key={index}>
                 {" "}
-                <span className="tracking-widest text-white text-xs">
+                <span className="tracking-widest text-black font-semibold  text-xs">
                   {item.category
                     ? item.category?.charAt(0).toUpperCase() +
                       item.category?.slice(1)
                     : null}
                   :
                 </span>
-                <span className="text-[#90EA8E] tracking-widest text-lg ml-auto mr-auto">
+                <span className="text-[#00f71d] tracking-widest text-lg ml-auto ">
                   <span
                     className={`text-sm ${getComparisonClass(
                       item.comparison!
-                    )}`}
+                    )} bg-black bg-opacity-40 rounded `}
                   >
                     {item.comparison}
                   </span>{" "}
@@ -61,7 +61,7 @@ const CategoryDetails: React.FC<DetailsProps> = ({
         </ul>
         <button
           onClick={handleMenu}
-          className="details text-xl flex align-center items-center justify-end cursor-pointer font-semibold rounded-md mt-auto mb-2  "
+          className="details text-xl flex align-center items-center justify-end cursor-pointer font-semibold rounded-md mt-auto ml-4 "
         >
           {isOpen ? "\u2716" : "\u27A4"}
         </button>

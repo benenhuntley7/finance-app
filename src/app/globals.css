@@ -36,4 +36,20 @@
 }
  body {
   height: calc(100% -4rem);
+  overflow: hidden;
+  background: url("/testImage.jpg") no-repeat center;
+  background-size: cover;
+  background-color: rgba(144, 185,196, 0.554);
+  background-blend-mode: multiply;
+  background-position-x: 30%;
+  background-position-y: 10%;
  }
+ @media screen and (max-width: 455px) {
+  body {
+    background-size: 800px 800px;
+    background-color: rgba(144, 185,196, 0.554);
+    background-blend-mode: multiply;
+    background-position-x: 50%;
+    background-position-y: 10%;
+  }
+}

@@ -8,6 +8,7 @@ import { useClerk } from "@clerk/clerk-react";
 import { useRouter, usePathname } from "next/navigation";
 import { CSSTransition } from "react-transition-group";
 
+
 const routes: { title: string; href: string }[] = [
   { title: "Features", href: "#features" },
   { title: "Pricing", href: "#pricing" },
@@ -20,6 +21,7 @@ const signedInRoutes: { title: string; href: string }[] = [
   { title: "Expenses", href: "/expenses" },
   { title: "Income", href: "/income" },
 ];
+
 
 const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -49,7 +51,7 @@ const Navbar: React.FC = () => {
                 <a
                   key={index}
                   href={route.href}
-                  className={`text-slate-300 hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
+                  className={`text-black hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
                 >
                   {route.title}
                 </a>
@@ -60,7 +62,7 @@ const Navbar: React.FC = () => {
                 <Link
                   key={index}
                   href={route.href}
-                  className={`text-slate-300 hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
+                  className={`text-black hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
                 >
                   {route.title}
                 </Link>
@@ -83,7 +85,7 @@ const Navbar: React.FC = () => {
           <SignedOut>
             <Link
               href="/sign-in"
-              className={` text-slate-300 hover:text-white-300 text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
+              className={` text-black hover:text-white-300 text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center px-4 py-2 text-sm transition-colors sm:w-auto`}
             >
               Sign In
             </Link>
@@ -121,14 +123,14 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
 
   return (
     <nav className="absolute right-0 top-16 flex h-[calc(100vh-70px)] w-full flex-col z-50 ">
-      <div className="custom-radial bg-opacity-90 text-white flex  w-full grow flex-col gap-1 px-4 pb-2 sm:hidden">
+      <div className="bg-customGradient bg-opacity-90 tracking-widest text-black font-semibold flex  w-full grow flex-col gap-1 px-4 pb-2 sm:hidden">
         <SignedOut>
           {routes.map((route, index) => (
             <Link
               key={index}
               href={route.href}
               onClick={toggleMenu}
-              className={`hover:text-accent-foreground text-muted-foreground  inline-flex h-10 w-full items-center text-sm justify-end transition-colors sm:w-auto`}
+              className={`linkItem hover:text-accent-foreground text-muted-foreground  inline-flex h-10 w-full items-center text-sm justify-end transition-colors sm:w-auto`}
             >
               {route.title}
             </Link>
@@ -136,7 +138,7 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
           <Link
             href="/sign-in"
             onClick={toggleMenu}
-            className={`hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center text-sm justify-end transition-colors sm:w-auto`}
+            className={`linkItem hover:text-accent-foreground text-muted-foreground inline-flex h-10 w-full items-center text-sm justify-end transition-colors sm:w-auto`}
           >
             Sign In
           </Link>
@@ -147,7 +149,7 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
               key={index}
               href={route.href}
               onClick={toggleMenu}
-              className={`hover:text-accent-foreground text-muted-foreground inline-flex h-11 w-full items-center justify-end text-sm transition-colors sm:w-auto`}
+              className={`linkItem hover:text-accent-foreground text-muted-foreground inline-flex h-11 w-full items-center justify-end text-sm transition-colors sm:w-auto`}
             >
               {route.title}
             </Link>
@@ -159,7 +161,7 @@ const MobileMenu: React.FC<{ toggleMenu: () => void }> = ({ toggleMenu }) => {
                 signOut(() => router.push("/"));
                 toggleMenu();
               }}
-              className={`hover:text-accent-foreground  inline-flex h-10 w-full items-center justify-center text-sm tracking-widest text-red-500 font-medium transition-colors sm:w-auto`}
+              className={`linkItem hover:text-accent-foreground  inline-flex h-10 w-full items-center justify-center text-sm tracking-widest text-red-500 font-medium transition-colors sm:w-auto`}
             >
               Sign Out
             </Link>

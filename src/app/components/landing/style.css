@@ -6,10 +6,12 @@
   left: 0;
 }
 .hero--container {
-  background: url("/hero2.jpg") no-repeat center;
+  background: url("/testImage.jpg") no-repeat center;
   background-size: cover;
-  background-color: rgba(220, 237, 255, 0.554);
+  background-color: rgba(144, 185,196, 0.554);
   background-blend-mode: multiply;
+  background-position-x: 30%;
+  background-position-y: 10%;
 }
 .fade-in-text {
   opacity: 0;
@@ -27,9 +29,9 @@
 @media screen and (max-width: 455px) {
   .hero--container {
     background-size: 800px 800px;
-    background-color: rgba(128, 138, 149, 0.554);
+    background-color: rgba(144, 185,196, 0.554);
     background-blend-mode: multiply;
-    background-position-x: 15%;
+    background-position-x: 50%;
     background-position-y: 10%;
   }
 }

@@ -42,11 +42,11 @@ export default async function Dashboard() {
     <>
       <main className="main-container min-h-custom px-2 flex flex-col lg:items-center">
         <div className="relative  bg-gradient-to-r from-customGradient to-customGradientTo z-0 w-full min-h-48 mt-2 rounded-tl-3xl rounded-br-3xl overflow-hidden shadow-md shadow-black lg:w-2/6">
-          <div className="pt-4 px-4">
+          <div className="m-3 p-1">
             <NetWorth netWorth={totalAssets} />
           </div>
 
-          <div className="absolute bg-white bg-opacity-30 border-t border-black w-full min-h-32 bottom-0 rounded-tl-3xl rounded-br-3xl">
+          <div className="absolute bg-white bg-opacity-30 w-full min-h-32 bottom-0 rounded-tl-3xl rounded-br-3xl">
             <div className="px-4">
               {categoryRawData && previousAndRecentAssetValue ? (
                 <CategoryDetails
@@ -59,7 +59,7 @@ export default async function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="w-full mt-4 lg:w-2/6">
+        <div className="w-full flex flex-wrap mt-4 lg:w-2/6">
           {categoryRawData && categoryPercentage ? (
             <Percentages
               categories={categoryRawData}
