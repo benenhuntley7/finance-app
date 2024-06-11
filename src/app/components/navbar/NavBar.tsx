@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <header id="navHeader" className="sticky top-0 z-50 bg-transparent">
+    <header id="navHeader" className="sticky top-0 z-50 border-b border-slate-300 bg-[#a2c7d1]">
       <div className="flex h-16 items-center justify-between px-6  lg:px-14">
         <div className="flex items-center">
           <Link href={"/"} className="shrink-0">
