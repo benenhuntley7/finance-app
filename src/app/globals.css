@@ -40,14 +40,9 @@ body {
   margin: 0; 
   padding: 0; 
   overflow-y: auto;
-  background: url("/testImage.jpg") no-repeat center;
-  background-size: cover;
-  background-color: rgba(144, 185, 196, 0.554);
-  background-blend-mode: multiply;
-  background-attachment: fixed;
-  background-position: 24% 10%;
+  background-color: #a2c7d1;
 }
 
-  .background {
-display:none; 
+.min-h-custom {
+  min-height: calc(100vh - 65px);
 } 
