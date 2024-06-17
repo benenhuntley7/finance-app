@@ -10,6 +10,11 @@ import { redirect } from "next/navigation";
 
 export const userInput = async (formData: FormData) => {
 
-    // Function to handle user input [Expenses]
+    // Function to handle user form input [Expenses]
+    //Encapsulates whole form data AFTER category choice OR addition
 
+};
+
+export const addCategory = async () => {
+    
 }

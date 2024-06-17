@@ -1,7 +1,23 @@
 "use client";
-
+import "./style.css";
 import React, { useRef } from "react";
 import { userInput } from "./actions"; //Function not implemented yet
+import Button from "./Components/button";
+
+const optionsCategory = [
+  {
+    name: "Groceries",
+  },
+  {
+    name: "Living",
+  },
+  {
+    name: "Subscriptions",
+  },
+  {
+    name: "Vehicle",
+  },
+];
 
 export default function Form({ user }: any) {
   const ref = useRef<HTMLFormElement>(null);
@@ -27,26 +43,34 @@ export default function Form({ user }: any) {
             id="weeklyIncome"
             name="weeklyIncome"
             type="text"
+            inputMode="numeric"
             placeholder="Example: $500"
           />
         </div>
-        <div className="flex w-full gap-6 mt-8">
-          <div className="flex flex-col">
+        <div className="flex flex-row w-full gap-6 mt-8">
+          <div className="flex flex-col w-1/2">
             <label
               className="block tracking-widest text-slate-500 text-xs font-semibold mb-2"
               htmlFor="Category"
             >
-              Category
+              Category{" "}
+              <span className="  float-right ml-auto text-slate-700 text-[18px]">
+                ✚
+              </span>
             </label>
-            <input
-              className={inputClass}
-              id="category"
-              name="category"
-              type="text"
-              placeholder="Choose Category"
-            />
+            <select className={inputClass} id="categorySelect" name="category">
+              {optionsCategory.map((category, index) => (
+                <option
+                  className="bg-slate-400"
+                  key={index}
+                  value={category.name}
+                >
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col w-1/2">
             <label
               className="block tracking-widest text-slate-500 text-xs font-semibold mb-2"
               htmlFor="Amount"
@@ -58,27 +82,22 @@ export default function Form({ user }: any) {
               id="amount"
               name="amount"
               type="text"
-              placeholder="Amount"
+              inputMode="numeric"
+              placeholder="$"
             />
           </div>
         </div>
-        <div className="flex flex-col w-full items-center">
+        <div className="w-1/2 flex ml-auto mr-auto mb-3">
+          <Button />
+        </div>
+        <div className="flex flex-col w-full items-center border border-slate-600 rounded-md">
           <label
-            className="block uppercase tracking-widest text-slate-500 text-xs  m-2"
+            className="block uppercase underline tracking-widest text-slate-600 text-xs  m-2"
             htmlFor="Amount"
           >
             Estimated Savings Amount:
           </label>
-          <div className="w-1/2">
-          <input
-            className={inputClass}
-            id="savings"
-            name="savings"
-            type="text"
-            value="$0.00"
-          />
-          </div>
-          
+          <div className="w-1/2 text-center text-xl">$300</div>
         </div>
       </div>
     </form>
