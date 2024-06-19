@@ -1,7 +1,7 @@
 "use client";
 import "./style.css";
 import React, { useRef } from "react";
-import { userInput, addCategory } from "./actions"; //Function not implemented yet
+import { userInput } from "./actions"; //Function not implemented yet
 import { Expenses } from "./types";
 import Button from "./Components/button";
 import { CategorySelect } from "./Components/categorySelect";
@@ -20,8 +20,8 @@ export default function Form({ expense }: { expense?: Expenses }) {
     <form
       className="flex max-w-md"
       ref={ref}
-      action={
-        async (formData) => userInput(formData)}
+      // action={
+      //   async (formData) => userInput(formData)}
     >
       <div className="flex flex-wrap w-full">
         <div className="w-full">
