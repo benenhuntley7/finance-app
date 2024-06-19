@@ -60,6 +60,5 @@ export const expenses = pgTable("expenses", {
 export const expenseCategory = pgTable("expenseCategory", {
   id: serial("id").primaryKey(),
   expense_id: serial("expense_id").references(() => expenses.id),
-  name: varchar("name", { length: 256 }),
-  value: integer("value"),
+  category: varchar("name", { length: 256 }),
 });
