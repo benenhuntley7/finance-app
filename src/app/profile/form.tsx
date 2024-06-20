@@ -31,7 +31,7 @@ export default function Form({ user }: any) {
     <form className="w-full max-w-md mt-5" ref={ref} action={async (formData) => updateUser(formData)}>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="first-name">
+          <label className="block uppercase tracking-wide text-slate-500 text-xs font-bold mb-2" htmlFor="first-name">
             First Name
           </label>
           <input
@@ -43,7 +43,7 @@ export default function Form({ user }: any) {
           />
         </div>
         <div className="w-full md:w-1/2 px-3">
-          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="last-name">
+          <label className="block uppercase tracking-wide text-slate-500 text-xs font-bold mb-2" htmlFor="last-name">
             Last Name
           </label>
           <input
@@ -57,7 +57,7 @@ export default function Form({ user }: any) {
       </div>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
-          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="email">
+          <label className="block uppercase tracking-wide text-slate-500 text-xs font-bold mb-2" htmlFor="email">
             Email
           </label>
           <input
@@ -74,7 +74,7 @@ export default function Form({ user }: any) {
       <p className="text-slate-500 text-xs italic mt-10 pb-2">Location information:</p>
       <div className="flex flex-wrap -mx-3 mb-2">
         <div className="w-full md:w-2/3 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="state">
+          <label className="block uppercase tracking-wide text-slate-500 text-xs font-bold mb-2" htmlFor="state">
             State
           </label>
           <div className="relative">
@@ -93,7 +93,7 @@ export default function Form({ user }: any) {
           </div>
         </div>
         <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="postcode">
+          <label className="block uppercase tracking-wide text-slate-500 text-xs font-bold mb-2" htmlFor="postcode">
             Postcode
           </label>
           <input className={inputClass} id="postcode" name="postcode" type="text" />
@@ -102,7 +102,7 @@ export default function Form({ user }: any) {
       <p className="text-slate-500 text-xs italic mt-10 pb-2">Finance Information:</p>
       <div className="flex flex-wrap -mx-3 mb-2">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="income">
+          <label className="block uppercase tracking-wide text-slate-500 text-xs font-bold mb-2" htmlFor="income">
             Income
           </label>
           <input
@@ -117,7 +117,7 @@ export default function Form({ user }: any) {
         </div>
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label
-            className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2"
+            className="block uppercase tracking-wide text-slate-500 text-xs font-bold mb-2"
             htmlFor="income-frequency"
           >
             Frequency

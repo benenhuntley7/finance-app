@@ -4,6 +4,7 @@
 
  :root {
   --primary-color: #343f3e;
+  --primary-color-light: #5a6866;
   --secondary-color: #505A5B;
   --accent-color: #94B0DA;
   --secondary-accent: #8F91A2;
@@ -33,3 +34,15 @@
   font-size: 14px;
   text-transform: none;
 }
+
+body {
+  height: 100%; 
+  margin: 0; 
+  padding: 0; 
+  overflow-y: auto;
+  background-color: #a2c7d1;
+}
+
+.min-h-custom {
+  min-height: calc(100vh - 65px);
+} 

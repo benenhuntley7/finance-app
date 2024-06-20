@@ -41,13 +41,13 @@ export default function Form({ asset }: { asset?: Asset }) {
         <div className="w-full md:w-1/3 px-3 md:mb-0">
           <input type="hidden" value={asset_id} id="id" name="id" />
           <input type="hidden" value={asset_value} id="original_value" name="original_value" />
-          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="category">
+          <label className="block uppercase tracking-wide text-slate-600 text-xs font-bold mb-2" htmlFor="category">
             Asset Type
           </label>
           <AssetList category={asset_category} />
         </div>
         <div className="w-full md:w-1/3 px-3">
-          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="name">
+          <label className="block uppercase tracking-wide text-slate-600 text-xs font-bold mb-2" htmlFor="name">
             Name
           </label>
           <input
@@ -60,7 +60,7 @@ export default function Form({ asset }: { asset?: Asset }) {
           />
         </div>
         <div className="w-full md:w-1/3 px-3">
-          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2" htmlFor="value">
+          <label className="block uppercase tracking-wide text-slate-600 text-xs font-bold mb-2" htmlFor="value">
             Value
           </label>
           <input
@@ -74,7 +74,7 @@ export default function Form({ asset }: { asset?: Asset }) {
           />
         </div>
         <div className="w-full mx-3">
-          <label className="block uppercase tracking-wide text-slate-300 text-xs font-bold mb-2 invisible">-</label>
+          <label className="block uppercase tracking-wide text-slate-600 text-xs font-bold mb-2 invisible">-</label>
           <Button update={asset ? true : false} />
         </div>
       </div>

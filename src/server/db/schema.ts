@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { serial, text, timestamp, pgTable, integer, real } from "drizzle-orm/pg-core";
+import { serial, text, timestamp, pgTable, integer, real, varchar } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   row_id: serial("row_id").primaryKey(),
@@ -47,4 +47,18 @@ export const assetValuesHistory = pgTable("asset_values_history", {
     .references(() => assets.id),
   value: integer("value"),
   updated_at: timestamp("updated_at").default(sql`now()`),
+});
+
+export const expenses = pgTable("expenses", {
+  id: serial("id").primaryKey(),
+  user_id: text("user_id").references(() => user.id),
+  name: varchar("name", { length: 256 }),
+  value: integer("value"),
+  created_at: timestamp("created_at").default(sql`now()`)
+});
+
+export const expenseCategory = pgTable("expenseCategory", {
+  id: serial("id").primaryKey(),
+  expense_id: serial("expense_id").references(() => expenses.id),
+  category: varchar("name", { length: 256 }),
 });

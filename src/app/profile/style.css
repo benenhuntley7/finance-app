@@ -1,11 +1,2 @@
-#formPage {
-    background-color: var(--primary-color);
-}
-.min-h-custom {
-    min-height: calc(100vh - 65px);
-  }
-@media screen and (max-width: 678px ) {
-    #formPage {
-        padding: 1.5rem;
-    }
-}
+
+
