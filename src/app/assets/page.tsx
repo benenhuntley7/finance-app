@@ -36,6 +36,20 @@ export default async function Assets() {
 }
 
 const AssetTable = async ({ assets }: { assets: AssetOutput[] }) => {
+  // Sort assets by category
+  // Sort assets by category and then by name
+  assets.sort((a, b) => {
+    // Compare categories
+    if (a.category! < b.category!) return -1;
+    if (a.category! > b.category!) return 1;
+
+    // If categories are   the same, compare names
+    if (a.name! < b.name!) return -1;
+    if (a.name! > b.name!) return 1;
+
+    return 0; // If both category and name are the same
+  });
+
   return (
     <table className="table table-zebra table-sm md:table-md">
       <thead>
