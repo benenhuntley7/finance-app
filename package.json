@@ -21,7 +21,7 @@
     "react-dom": "^18",
     "react-transition-group": "^4.4.5",
     "recharts": "^2.12.3",
-    "yahoo-finance2": "^2.11.0"
+    "yahoo-finance2": "^2.11.3"
   },
   "devDependencies": {
     "@types/node": "^20",
